@@ -1,4 +1,5 @@
 nozer0.github.io
 ================
 
-somewhere to write something by nozer0
+nozer0's blog
+Life may has Zero, but thought never

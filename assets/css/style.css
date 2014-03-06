@@ -1,0 +1,100 @@
+@charset 'utf-8';
+
+/* reset */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+audio, canvas, video { display: inline-block }
+
+audio:not([controls]) { display: none; height: 0 }
+
+/* global */
+
+a { text-decoration: none; color: #666A6A; }
+a:hover { color: #052124; }
+a.disabled, a.disabled:hover { color: #999; }
+
+html { background: #44555E; height: 100%; }
+
+body {
+	margin: 10px auto;
+	width: 960px;
+	background: #BDC4C4;
+	color: #434747;
+	font: 400 14px/1.5 helvetica, arial, \5b8b\4f53, sans-serif;
+}
+
+code {
+	font: 400 12px/1.5 Monaco, \5b8b\4f53, sans-serif;
+	color: #f8f8f2;
+	background: #3a3c42;
+	padding: 3px 5px;
+	margin: 0 5px;
+}
+
+pre code {
+	display: block;
+	padding: 10px;
+	margin: 0 20px;
+}
+
+nav a {
+	margin: 0 10px;
+	font-size: 18px;
+}
+
+/* header */
+
+header.navbar {
+	padding: 20px;
+	height: 60px;
+}
+
+.navbar nav {
+	float: right;
+	padding-top: 10px;
+}
+
+.navbar .brand {
+	color: #434747;
+	font-size: 24px;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.brand .tagline {
+	color: #688;
+	font-size: 16px;
+	font-style: italic;
+}
+
+/* main */
+
+main, article {
+	padding: 0 20px;
+	min-height: 600px;
+}
+
+.pagination {
+	padding: 10px 0;
+}
+
+.pagination .next {
+	float: right;
+}
+
+/* footer */
+
+footer {
+	height: 36px;
+	padding: 20px;
+	background: #312905;
+	color: #BFC6C5;
+	text-align: center;
+}
+
+footer a { color: #BFC6C5; }
+
+footer a:hover { color: #FFF; }

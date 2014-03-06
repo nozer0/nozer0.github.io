@@ -1,8 +1,18 @@
----
-# Remember to set production_url in your _config.yml file!
-title : Sitemap
----
-{% for page in site.pages %}
-{{site.production_url}}{{ page.url }}{% endfor %}
-{% for post in site.posts %}
-{{site.production_url}}{{ post.url }}{% endfor %}
+
+http://nozer0.github.io/atom.xml
+http://nozer0.github.io/en/archive/index.html
+http://nozer0.github.io/en/categories/index.html
+http://nozer0.github.io/en/index.html
+http://nozer0.github.io/en/tags/index.html
+http://nozer0.github.io/index.html
+http://nozer0.github.io/rss.xml
+http://nozer0.github.io/sitemap.txt
+http://nozer0.github.io/zh/archive/index.html
+http://nozer0.github.io/zh/categories/index.html
+http://nozer0.github.io/zh/index.html
+http://nozer0.github.io/zh/tags/index.html
+
+http://nozer0.github.io/zh/program/how-to-use-git/
+http://nozer0.github.io/en/program/how-to-use-git/
+http://nozer0.github.io/zh/program/how-to-use-svn/
+http://nozer0.github.io/en/program/how-to-use-svn/

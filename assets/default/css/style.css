@@ -1,0 +1,145 @@
+@charset 'utf-8';
+
+/* reset */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+audio, canvas, video { display: inline-block; }
+
+pre { white-space: pre-wrap; }
+
+audio:not([controls]) { display: none; height: 0; }
+
+/* global */
+a { text-decoration: none; color: #666A6A; }
+a:hover { color: #052124; }
+a.disabled, a.disabled:hover { color: #999; }
+
+html { background: #44555E; height: 100%; }
+
+body {
+	margin: 10px auto;
+	width: 960px;
+	background: #BDC4C4;
+	color: #434747;
+	font: 400 14px/1.5 helvetica, arial, \5b8b\4f53, sans-serif;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+
+section { margin: 20px; }
+
+section:before {
+    border: 1px dashed;
+    content: '';
+    display: block;
+}
+
+code {
+	font: 400 12px/1.5 Monaco, \5b8b\4f53, sans-serif;
+	padding: 3px 5px;
+	background: #F2F8F2;
+}
+
+pre code {
+	color: #f8f8f2;
+	background: #3a3c42;
+	display: block;
+	padding: 10px;
+	margin: 0 20px;
+	border: 0;
+}
+
+nav a, nav span {
+	margin: 0 10px;
+	font-size: 18px;
+}
+
+nav span {
+	padding-bottom: 5px;
+	border-bottom: 5px solid;
+}
+
+h2 small, h3 small {
+	color: #666A6A;
+	vertical-align: super;
+	font-size: 0.6em;
+}
+
+/* header */
+header.navbar {
+	padding: 20px;
+	height: 60px;
+}
+
+.navbar nav {
+	float: right;
+	padding-top: 10px;
+}
+
+.navbar .brand {
+	color: #434747;
+	font-size: 24px;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.brand .tagline {
+	color: #688;
+	font-size: 16px;
+	font-style: italic;
+}
+
+/* main */
+#main, article {
+	padding: 0 20px;
+	min-height: 600px;
+}
+
+.pagination {
+	padding: 10px 0;
+}
+
+.pagination .next {
+	float: right;
+}
+
+.posts h2 { margin: 0; }
+
+/* footer */
+footer {
+	height: 36px;
+	padding: 20px;
+	background: #312905;
+	color: #BFC6C5;
+	text-align: center;
+}
+
+footer a { color: #BFC6C5; }
+
+footer a:hover { color: #FFF; }
+
+/* tags_box */
+.tags_box a {
+	padding: 3px 6px;
+	margin: 2px;
+	background: #eee;
+	border-radius: 3px;
+	border: 1px dashed #CCC;
+}
+
+.tags_box a small {
+	vertical-align: super;
+	font-size: 0.8em;
+}
+
+.tags_box a:hover {
+	background-color: #E5E5E5;
+}
+
+/* tags */
+li:target h2, h2:target {
+	color: #966;
+}

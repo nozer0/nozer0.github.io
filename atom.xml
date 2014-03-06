@@ -1,28 +1,1370 @@
----
-layout: nil
-title : Atom Feed
----
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  
- <title>{{ site.title }}</title>
- <link href="{{ site.production_url }}/{{ site.atom_path }}" rel="self"/>
- <link href="{{ site.production_url }}"/>
- <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>{{ site.production_url }}</id>
+ <title>nozer0's blog</title>
+ <link href="http://nozer0.github.io/" rel="self"/>
+ <link href="http://nozer0.github.io"/>
+ <updated>2014-03-06T12:24:16+08:00</updated>
+ <id>http://nozer0.github.io</id>
  <author>
-   <name>{{ site.author.name }}</name>
-   <email>{{ site.author.email }}</email>
+   <name>nozer0</name>
+   <email>c.nozer0@gmail.com</email>
  </author>
 
- {% for post in site.posts %}
+ 
  <entry>
-   <title>{{ post.title }}</title>
-   <link href="{{ site.production_url }}{{ post.url }}"/>
-   <updated>{{ post.date | date_to_xmlschema }}</updated>
-   <id>{{ site.production_url }}{{ post.id }}</id>
-   <content type="html">{{ post.content | xml_escape }}</content>
+   <title>如何使用Git</title>
+   <link href="http://nozer0.github.io/zh/program/how-to-use-git/"/>
+   <updated>2014-03-04T00:00:00+08:00</updated>
+   <id>http://nozer0.github.io/zh/program/how-to-use-git</id>
+   <content type="html">&lt;p&gt;分享本人在使用Git的过程中积累的一些笔记。&lt;/p&gt;
+
+&lt;p&gt;简单索引:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#launch_&quot;&gt;&lt;code&gt;git clone &amp;lt;仓库地址&amp;gt;&lt;/code&gt; -&amp;gt; 首先，我们要从远程仓库取得数据。&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#working_cycle_&quot;&gt;如何更改数据。&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#update&quot;&gt;&lt;code&gt;git fetch&lt;/code&gt; -&amp;gt; 从远程仓库更新数据到本地仓库。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#update&quot;&gt;&lt;code&gt;git checkout&lt;/code&gt; -&amp;gt; 从本地仓库检出到工作目录。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#change&quot;&gt;&lt;code&gt;git add &amp;lt;new files&amp;gt;&lt;/code&gt; -&amp;gt; 新增文件加入版本控制。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#revert&quot;&gt;&lt;code&gt;git reset&lt;/code&gt; -&amp;gt; 撤销未提交的改动。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#commit&quot;&gt;&lt;code&gt;git commit&lt;/code&gt; -&amp;gt; 提交修改到本地仓库。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#commit&quot;&gt;&lt;code&gt;git push&lt;/code&gt; -&amp;gt; 同步本地仓库更改到远程。&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#branch_&quot;&gt;分支&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;git branch &amp;lt;name&amp;gt; &amp;lt;commit&amp;gt;&lt;/code&gt; -&amp;gt; 创建分支。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git merge &amp;lt;name&amp;gt;&lt;/code&gt; -&amp;gt; 合并由’name’指定分支的更改。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git cherry-pick &amp;lt;commit&amp;gt;&lt;/code&gt; -&amp;gt; 选择复制指定的提交。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git rebase &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt; -&amp;gt; 复制’dest’的提交到’src’。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git branch -d &amp;lt;name&amp;gt;&lt;/code&gt; -&amp;gt; 删除废弃分支。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git checkout &amp;lt;name&amp;gt;&lt;/code&gt; -&amp;gt; 切换到另一分支。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#tag_&quot;&gt;标签&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#auxiliary_commands_&quot;&gt;&lt;code&gt;git status&lt;/code&gt;, &lt;code&gt;git diff&lt;/code&gt;, … -&amp;gt; 一些帮助检查版本信息之类的辅助命令。&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#additional_info_&quot;&gt;附带内容&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#compare_table&quot;&gt;SVN对比表&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;install_&quot;&gt;安装(Install) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;安装Git最简单的方法就是从&lt;a href=&quot;http://git-scm.com/downloads&quot;&gt;官网&lt;/a&gt;下载安装程序。&lt;/p&gt;
+
+&lt;p&gt;或者我们也可以选择使用一些安装包管理工具，比如Debian的’apt-get’，或OSX下的’port’和’brew’之类。在安装前请先确认是否已安装所需的其他组件。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ubuntu
+apt-get install git
+# mac
+brew install git&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果是之前已经安装了Git，可以使用以下命令进行升级。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone git://git.kernel.org/pub/scm/git/git.git&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;setup_&quot;&gt;配置(Setup) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;在开始使用Git之前，我们需要先设置一些相关信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 将&amp;#39;nozer0&amp;#39;和&amp;#39;c.nozer0@gmail.com&amp;#39;替换成你的信息
+git config --global user.name nozer0
+git config --global user.email c.nozer0@gmail.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者用编辑器一次性更改所有配置。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global -e&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;launch_&quot;&gt;开始(Launch) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;通常我们需要先从远程仓库中取得数据，这个操作和其他如CVS或Subversion之类的VCS的’checkout’操作非常类似。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 克隆远程仓库
+git clone https://github.com/nozer0/one-piece.git
+git clone /usr/local/codes/one-piece ./op
+
+# 克隆分支&amp;#39;branch1&amp;#39;
+git clone -b branch1 https://github.com/nozer0/one-piece.git&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;或者，我们也可以选择初始化一个目录后，再设置需要连接的远程仓库。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 创建&amp;#39;.git&amp;#39;目录
+git init
+git remote add origin https://github.com/nozer0/one-piece.git&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;working_cycle_&quot;&gt;工作循环(Working cycle) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;由于Git是所谓的DVCS（分布式版本控制系统），所以拥有本地仓库，和另外一个称之为’index’或’staged’的区域，用来保存那些跟踪但还未提交的文件信息。相对的，那些新增或修改的还没有进入版本控制的文件，我们称之为’unstaged’文件。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+---------+   add   +-------+  commit  +------------+  push   +------------+
+| Working | ------&amp;gt; | Index | -------&amp;gt; |   Local    | ------&amp;gt; |   Remote   |
+|  Area   | &amp;lt;------ | Area  |          | Repository | &amp;lt;------ | Repository |
++---------+  reset  +-------+          +------------+  fetch  +------------+
+     ^                  ^      checkout       |
+     +------------------+---------------------+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;update&quot;&gt;更新(Update)&lt;/h2&gt;
+
+&lt;p&gt;首先，我们要从远程仓库将最新代码更新到本地。&lt;/p&gt;
+
+&lt;p&gt;第一步，使用&lt;code&gt;git fetch&lt;/code&gt;命令将代码同步到本地仓库。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git fetch
+# 从远程取得&amp;#39;origin/master~2&amp;#39;为止的commit数据到本地&amp;#39;foo&amp;#39;分支
+git fetch origin master~2:foo&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后，我们可以选择合并(merge)还是衍合(rebase)远程数据，或者直接检出远程数据覆盖工作目录。可以在下一节&lt;a href=&quot;#branch_&quot;&gt;分支&lt;/a&gt;看到更详细的说明。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 保留本地修改时使用合并
+git merge origin/master
+# 或者直接应用远程数据
+git checkout origin/master&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Git还提供了一个一步到位的命令，&lt;code&gt;git pull&lt;/code&gt;。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 等同于`git fetch`以及`git merge FETCH_HEAD`
+git pull
+# 采用衍合代替合并
+git pull --rebase
+# 也支持类似fetch的复杂格式
+git pull origin foo:bar&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;change&quot;&gt;更改(Change)&lt;/h2&gt;
+
+&lt;p&gt;OK，现在我们可以开始在工作目录中做更改，并使用&lt;code&gt;git add&lt;/code&gt;或其他的命令提交到index区域。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 在前后都使用`git status`，看看有何不同
+# 修改
+git status
+git add test.txt
+git status
+
+# 只影响index
+git rm old.txt --cached
+# 同时从index和工作目录删除
+git rm unused.txt
+
+# 重命名文件
+git mv old.c new.c
+# 等效写法
+mv old.c new.c
+git rm old.c
+git add new.c&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;revert&quot;&gt;回复(Revert)&lt;/h2&gt;
+
+&lt;p&gt;有时候，我们可能提交失误，或者想回复最近的更改，Git同样提供了相应的命令来回复更改。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 回复index，但保留工作目录中的更改
+git reset text.txt
+# 回复到前2个提交时的状态
+git reset HEAD~2
+# 如果是在&amp;#39;master&amp;#39;分支，等效的写法
+git branch -f master HEAD~2
+
+# 或者同时回复index和工作目录
+git reset --hard&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;commit&quot;&gt;提交(Commit)&lt;/h2&gt;
+
+&lt;p&gt;比起其他的VCS，Git多了个本地仓库，我们需要比普通的提交多一个步骤以将更改提交到远程。&lt;/p&gt;
+
+&lt;p&gt;如果所有的更改已经是’staged’状态，就像一般的做法一样，我们可以用&lt;code&gt;git commit&lt;/code&gt;将更改提交到本地仓库。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -m &amp;#39;first commit&amp;#39;
+# 如果文件之前已经递交到index，可以省略`git add`步骤
+git commit -am &amp;#39;commit again&amp;#39; test.txt&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果我们在提交后发现遗漏了某些更改或文件，可以使用下面的命令修改最近的一次提交。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit --amend&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;要注意的是，如果文件之前已经是’staged’，提交时会采用工作目录的版本，而不是index中的版本。比如&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;echo 1 &amp;gt; test
+git add test
+echo 2 &amp;gt;&amp;gt; test
+# 提交的内容是&amp;#39;1 2&amp;#39;
+git commit test -m &amp;#39;test file&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当我们需要将本地仓库的更改提交到远程仓库时，请使用&lt;code&gt;git push&lt;/code&gt;命令。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git push
+# 同步&amp;#39;HEAD~2&amp;#39; commit到远程的&amp;#39;origin/foo&amp;#39;分支
+git push origin HEAD~2:foo&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;branch_&quot;&gt;分支(Branch) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;在Git中，分支好比一个指向某个commit的别名，因此在Git中，分支的使用频率相当高，开发新功能时，我们使用分支；修复bug，还是分支，其他很多的情况，同样是分支。总之，’branch early, and branch often’（早用多用 @_@!! ）。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 显示所有分支
+git branch -a
+# 基于&amp;#39;HEAD~2&amp;#39;创建分支&amp;#39;new&amp;#39;
+git branch new HEAD~2
+# 重命名&amp;#39;new&amp;#39;为&amp;#39;branch1&amp;#39;
+git branch -m new branch1
+# 将&amp;#39;branch1&amp;#39;指向&amp;#39;afe9...&amp;#39;
+git branch -f branch1 afe9
+# 删除&amp;#39;branch1&amp;#39;
+git branch -d branch1&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;实际使用时，我们会同时存在很多分支，这就需要使用&lt;code&gt;git checkout&lt;/code&gt;在不同分支间切换。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 切换到master分支并更新index，同时HEAD也指向该分支
+git checkout master
+# 创建一个分支后，立即切换到刚创建的分支
+git checkout -b branch2 HEAD~2
+# 合并branch2到master，并切换到master
+git checkout -B master branch2&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在需要重新排布分支时，Git提供了&lt;code&gt;merge&lt;/code&gt;，&lt;code&gt;rebase&lt;/code&gt;和&lt;code&gt;cherry-pick&lt;/code&gt;三种不同模式。让我们用具体的例子来看到底有何区别。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# C0--C1 &amp;lt;- master*
+#  \
+#  C2--C3 &amp;lt;- develop
+
+git merge develop
+# C0--C1--C4 &amp;lt;- master*
+#  \     /
+#  C2--C3 &amp;lt;- develop
+# 如果合并时有冲突，我们可以回复到合并前状态
+git merge --abort
+
+git rebase master develop
+#      C2&amp;#39;--C3&amp;#39; &amp;lt;- develop*
+#      /
+# C0--C1 &amp;lt;- master
+#  \
+#  C2--C3
+# 使用&amp;#39;-i&amp;#39;选项后，可开启衍合(rebase)的交互模式
+
+git cherry-pick C2 C3
+# C0--C1--C2&amp;#39;--C3&amp;#39; &amp;lt;- master*
+#  \
+#  C2--C3 &amp;lt;- develop&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;tag_&quot;&gt;标签(Tag) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;标签是另一种指向commit的别名，通常用来标注某一个里程碑，开发版本之类的的东东，和’Branch’很相似。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 显示所有标签
+git tag -a
+# 给HEAD~2打上‘v1.0&amp;#39;标签
+git tag v1.0 HEAD~2
+# 重新打标签
+git tag -f v1.0 HEAD
+# 删除标签
+git tag -d v1.0-test&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;auxiliary_commands_&quot;&gt;辅助命令(Auxiliary Commands) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;之前我们已经使用过了&lt;code&gt;git status&lt;/code&gt;命令，我们还可以用&lt;code&gt;git log&lt;/code&gt;命令来查看更多的历史信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log
+# 显示详细的diff信息
+git log -p
+# 显示统计diff信息
+git log --stat
+# 显示最近的n条日志
+git log -2
+# 只显示符合条件的日志
+git log --since=&amp;lt;time&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们也可以使用&lt;code&gt;git diff&lt;/code&gt;命令来比较两个状态的不同。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 比较index和工作目录
+git diff
+# 比较已提交的更改和index
+git diff --cached
+# 比较HEAD和工作目录
+git diff HEAD&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;git show&lt;/code&gt;和&lt;code&gt;git blame&lt;/code&gt;可以让我们查看更进一步的具体信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git show 4c18
+# 显示每一行的相关信息
+git blame readme.txt
+# 输出:
+# 	^4c18e3c (nozer0 2014-03-05 14:17:44 +0800  1) hi
+# 	^4c18e3c (nozer0 2014-03-05 14:17:44 +0800  1) I&amp;#39;m nozer0&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;additional_info_&quot;&gt;附带内容(Additional Info) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;提交(Commit)，是Git中最重要的概念，我们会在许多命令中需要指定相关的commit，有多种不同的方式来表示一个commit。假设，我们目前的提交如下。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   v1 (tag)
+      |
++-----------+     +-----------+
+| a9e82f... | --- | 39e768... | &amp;lt;- master* (branch)
++-----------+     +-----------+
+               /
++-----------+
+| 36bc54... |
++-----------+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;‘HEAD’也是Git的保留关键字，与其他如SVN之类的VCS不同的是，HEAD代表的是目前工作目录相关的commit。比如上面所举的那个例子，’HEAD’就是指’master’。所以，如果我们需要指定’a9e82f…‘，等效的写法可以是’a9e8’、’v1’、’master~’以及’HEAD^’，而’36bc’和’master^2’可以指代’36bc54…‘。其中’~’和’^’的区别，’~’代表的是上溯的步数，而’^’代表的是上溯的分支，也可以组合使用，例如，’HEAD^2~3’。&lt;/p&gt;
+
+&lt;h2 id=&quot;compare_table&quot;&gt;对比表(Compare Table)&lt;/h2&gt;
+
+&lt;p&gt;下面列举了SVN和Git相似的命令，以便于之前使用过SVN的同学理解。&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;SVN&lt;/th&gt;&lt;th&gt;Git&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn checkout&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git clone&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn update&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git pull&lt;/code&gt;, &lt;code&gt;git fetch&lt;/code&gt; + &lt;code&gt;git checkout&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn add&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git add&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn move&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git move&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn revert&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git reset --hard&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn commit&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git commit&lt;/code&gt; + &lt;code&gt;git push&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn status&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn diff&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git diff&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn log&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git log&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn copy &amp;lt;src&amp;gt; &amp;lt;branch path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git branch &amp;lt;branch name&amp;gt; &amp;lt;commit&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn rm &amp;lt;branch path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git branch -d &amp;lt;branch name&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn merge &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git merge &amp;lt;name&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn merge -r&amp;lt;rev&amp;gt; &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git cherry-pick &amp;lt;commit&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;&lt;hr /&gt;
+&lt;p&gt;推荐一个很有意思的&lt;a href=&quot;http://pcottle.github.io/learnGitBranching/&quot;&gt;网站&lt;/a&gt;。&lt;/p&gt;</content>
  </entry>
- {% endfor %}
+ 
+ <entry>
+   <title>How to use Git</title>
+   <link href="http://nozer0.github.io/en/program/how-to-use-git/"/>
+   <updated>2014-03-04T00:00:00+08:00</updated>
+   <id>http://nozer0.github.io/en/program/how-to-use-git</id>
+   <content type="html">&lt;p&gt;Here are some notes I’d like to share about using Git, let’s start.&lt;/p&gt;
+
+&lt;p&gt;The index as cheetsheet:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#launch_&quot;&gt;&lt;code&gt;git clone &amp;lt;repository path&amp;gt;&lt;/code&gt; -&amp;gt; First, we need to get data from remote repository.&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#working_cycle_&quot;&gt;How to do changes with the repository.&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#update&quot;&gt;&lt;code&gt;git fetch&lt;/code&gt; -&amp;gt; Get data from remote repository to local repository.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#update&quot;&gt;&lt;code&gt;git checkout&lt;/code&gt; -&amp;gt; Checkout data from local repository to working tree.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#change&quot;&gt;&lt;code&gt;git add &amp;lt;new files&amp;gt;&lt;/code&gt; -&amp;gt; Add files to version control.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#revert&quot;&gt;&lt;code&gt;git reset&lt;/code&gt; -&amp;gt; Revert the changes uncommitted.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#commit&quot;&gt;&lt;code&gt;git commit&lt;/code&gt; -&amp;gt; Commit the change to local repository.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#commit&quot;&gt;&lt;code&gt;git push&lt;/code&gt; -&amp;gt; Synchronise the commits from local repository to remote.&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#branch_&quot;&gt;Branch&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;git branch &amp;lt;name&amp;gt; &amp;lt;commit&amp;gt;&lt;/code&gt; -&amp;gt; Create branches.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git merge &amp;lt;name&amp;gt;&lt;/code&gt; -&amp;gt; Merge changes from branch indicates by ‘name’.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git cherry-pick &amp;lt;commit&amp;gt;&lt;/code&gt; -&amp;gt; Choose to duplicate specified commits.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git rebase &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt; -&amp;gt; Duplicate the commits from ‘dest’ to ‘src’.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git branch -d &amp;lt;name&amp;gt;&lt;/code&gt; -&amp;gt; Remove unused branch.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;git checkout &amp;lt;name&amp;gt;&lt;/code&gt; -&amp;gt; Switch to another branch.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#tag_&quot;&gt;Tag&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#auxiliary_commands_&quot;&gt;&lt;code&gt;git status&lt;/code&gt;, &lt;code&gt;git diff&lt;/code&gt;, … -&amp;gt; Auxiliary Commands to help us check version info.&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#additional_info_&quot;&gt;Additional info&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#compare_table&quot;&gt;Comparing table with SVN&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;install_&quot;&gt;Install &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;The most simple way to install Git is to download the installer file directly from &lt;a href=&quot;http://git-scm.com/downloads&quot;&gt;official site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Or we can also choose to use some package manage tools that help us to do this job, such as ‘apt-get’ on Debian, or ‘port’ and ‘brew’ on OSX. Ensure that we already install the depending packages (curl, zlib, openssl, expat, and libiconv) before running.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# for ubuntu
+apt-get install git
+# for mac
+brew install git&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For the users who already installed Git before, try this to get latest one.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone git://git.kernel.org/pub/scm/git/git.git&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;setup_&quot;&gt;Setup &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Set some configurations before we start to use Git.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# replace &amp;#39;nozer0&amp;#39; and &amp;#39;c.nozer0@gmail.com&amp;#39; to what you use
+git config --global user.name nozer0
+git config --global user.email c.nozer0@gmail.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or change all configurations using editor at one time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git config --global -e&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;launch_&quot;&gt;Launch &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Usually we need to get codes from existing remote repository first. This operation is mostly like the &lt;code&gt;checkout&lt;/code&gt; operation of other VCS such as CVS or Subversion.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# copying files from repository
+git clone https://github.com/nozer0/one-piece.git
+git clone /usr/local/codes/one-piece ./op
+
+# use `-b` option if want to use branch instead of HEAD
+git clone -b branch1 https://github.com/nozer0/one-piece.git&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or, we can also choose to init a local directory as working area first, then set remote url to be connected.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# create &amp;#39;.git&amp;#39; directory contains all repository info needed.
+git init
+git remote add origin https://github.com/nozer0/one-piece.git&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;working_cycle_&quot;&gt;Working Cycle &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Since Git is DVCS(Distributed control version system), it has a local repository and one more place to store info of files which are tracked but uncommitted, called ‘index’ or ‘staged’ area, correspondingly, the new created or modified files out of version control are named as ‘unstaged’ files.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;+---------+   add   +-------+  commit  +------------+  push   +------------+
+| Working | ------&amp;gt; | Index | -------&amp;gt; |   Local    | ------&amp;gt; |   Remote   |
+|  Area   | &amp;lt;------ | Area  |          | Repository | &amp;lt;------ | Repository |
++---------+  reset  +-------+          +------------+  fetch  +------------+
+     ^                  ^      checkout       |
+     +------------------+---------------------+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;update&quot;&gt;Update&lt;/h2&gt;
+
+&lt;p&gt;First, we need ‘update’ latest data from remote repository to working area.&lt;/p&gt;
+
+&lt;p&gt;Use &lt;code&gt;git fetch&lt;/code&gt; command to synchronize the data from remote repository to local repository.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git fetch
+# fetch &amp;#39;origin/master~2&amp;#39; commit from remote to local &amp;#39;foo&amp;#39; branch
+git fetch origin master~2:foo&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After that, we can choose to merge or rebase the remote changes or checkout directly. For more details, please check the next &lt;a href=&quot;#branch_&quot;&gt;Branch&lt;/a&gt; section.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# do merge work if some local changes
+git merge origin/master
+# or apply the remote data to working area
+git checkout origin/master&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Git also has a shorthand command &lt;code&gt;git pull&lt;/code&gt; to update the data from remote repository to working tree in one go.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# shorthand one for `git fetch` and `git merge FETCH_HEAD`
+git pull
+# or choose &amp;#39;rebase&amp;#39; instead of &amp;#39;merge&amp;#39;
+git pull --rebase
+# also support the complex format like `fetch`
+git pull origin foo:bar&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;change&quot;&gt;Change&lt;/h2&gt;
+
+&lt;p&gt;OK, now we start to do some changes in working area to index by using &lt;code&gt;git add&lt;/code&gt; or other commands.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# try `git status` before and after this command to see the difference
+# edit
+git status
+git add test.txt
+git status
+
+# affect index only
+git rm old.txt --cached
+# remove from index and working tree both
+git rm unused.txt
+
+# rename files
+git mv old.c new.c
+# equivalent one
+mv old.c new.c
+git rm old.c
+git add new.c&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;revert&quot;&gt;Revert&lt;/h2&gt;
+
+&lt;p&gt;Sometimes, we may mistake to commit something, or we want to revert the recent changes, here are some commands satisify the purpose.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# revert change on index only, and keep in working directory
+git reset text.txt
+# reset to 2 commits before
+git reset HEAD~2
+# equivalent one if in &amp;#39;master&amp;#39; branch
+git branch -f master HEAD~2
+
+# or revert change on both index and working area
+git reset --hard&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;commit&quot;&gt;Commit&lt;/h2&gt;
+
+&lt;p&gt;Since there are more areas in Git than other VCS, we need to one more step to do this job instead of single ‘commit’ operation.&lt;/p&gt;
+
+&lt;p&gt;After all files are staged, we can commit the changes to our local repository, yes, use &lt;code&gt;git commit&lt;/code&gt; like normal.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit -m &amp;#39;first commit&amp;#39;
+# if the files are staged before, we can merge `add` and `commit` steps into one go
+git commit -am &amp;#39;commit again&amp;#39; test.txt&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Especially, if we want to change last commit, this is always happened when finding some changes forgot to give or files forgot to add after commit.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git commit --amend&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;One thing to be noticed here, if the file has tracked once, it will commit with the newest one in working area instead of staged area, for example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;echo 1 &amp;gt; test
+git add test
+echo 2 &amp;gt;&amp;gt; test
+# the actual commit file content is &amp;#39;1 2&amp;#39;
+git commit test -m &amp;#39;test file&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And after some commits done in local repository, that we want to apply these changes to remote, we use &lt;code&gt;git push&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git push
+# push &amp;#39;HEAD~2&amp;#39; commit to the remote &amp;#39;origin/foo&amp;#39; branch
+git push origin HEAD~2:foo&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;branch_&quot;&gt;Branch &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Branch is just reference points to commit in Git, so it is used more frequently than others, as always said, ‘branch early, and branch often’. We create new branches for developing new feature, bug fixing, or some other things.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# show all branches
+git branch -a
+# create a branch named &amp;#39;new&amp;#39; on HEAD~2
+git branch new HEAD~2
+# rename branch
+git branch -m new branch1
+# move branch1 pointing to commit &amp;#39;afe9...&amp;#39;
+git branch -f branch1 afe9
+# delete unused branch
+git branch -d branch1&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Since we always have some branches in practise, we need to switch between them via &lt;code&gt;git checkout&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# switch to the branch and set HEAD and index based on that branch
+git checkout master
+# create a new branch and switch to it in one go
+git checkout -b branch2 HEAD~2
+# or merge move and checkout branch operations into one
+git checkout -B master branch2&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here are several ways to rearrange the branches if necessary, &lt;code&gt;merge&lt;/code&gt;, &lt;code&gt;rebase&lt;/code&gt; or &lt;code&gt;cherry-pick&lt;/code&gt;, let’s see some examples to compare the difference.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# C0--C1 &amp;lt;- master*
+#  \
+#  C2--C3 &amp;lt;- develop
+
+git merge develop
+# C0--C1--C4 &amp;lt;- master*
+#  \     /
+#  C2--C3 &amp;lt;- develop
+# if conflicts happen between merging, we can choose to reset status before merge
+git merge --abort
+
+git rebase master develop
+#      C2&amp;#39;--C3&amp;#39; &amp;lt;- develop*
+#      /
+# C0--C1 &amp;lt;- master
+#  \
+#  C2--C3
+# we can also implement this on interative mode with `-i` option
+
+git cherry-pick C2 C3
+# C0--C1--C2&amp;#39;--C3&amp;#39; &amp;lt;- master*
+#  \
+#  C2--C3 &amp;lt;- develop&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;tag_&quot;&gt;Tag &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Tag is another type of reference to commit, usually used for milestone mark or something else, which is very similiar as ‘Branch’.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# show all tags
+git tag -a
+# create a tag named &amp;#39;v1.0&amp;#39; on HEAD~2
+git tag v1.0 HEAD~2
+# tag again if references to wrong commit
+git tag -f v1.0 HEAD
+# delete tag
+git tag -d v1.0-test&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;auxiliary_commands_&quot;&gt;Auxiliary Commands &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;We already use the &lt;code&gt;git status&lt;/code&gt; before, and &lt;code&gt;git log&lt;/code&gt; can give us more detail history info.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git log
+# show detail diff info
+git log -p
+# show statistics diff info
+git log --stat
+# show latest &amp;lt;n&amp;gt; log
+git log -2
+# show log based on conditions
+git log --since=&amp;lt;time&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And we can also get the difference between 2 states by running &lt;code&gt;git diff&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# compare between index and working area
+git diff
+# compare between commit and index
+git diff --cached
+# compare between HEAD and working area
+git diff HEAD&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;git show&lt;/code&gt; and &lt;code&gt;git blame&lt;/code&gt; can let us check more detail info if need.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git show 4c18
+# more interesting, this can show commit change info for each line
+git blame readme.txt
+# output:
+# 	^4c18e3c (nozer0 2014-03-05 14:17:44 +0800  1) hi
+# 	^4c18e3c (nozer0 2014-03-05 14:17:44 +0800  1) I&amp;#39;m nozer0&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;additional_info_&quot;&gt;Additional info &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;‘Commit’, is the most important concept in Git, and there are many places we need to specify the detail commit id to be used in commands, Git provides several choices for us. Assume we have such commit tree.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   v1 (tag)
+      |
++-----------+     +-----------+
+| a9e82f... | --- | 39e768... | &amp;lt;- master* (branch)
++-----------+     +-----------+
+               /
++-----------+
+| 36bc54... |
++-----------+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Git also have the same predefined keyword ‘HEAD’, different than other VCS like SVN, it indicates the current relevant commit working with. For the situation above, ‘HEAD’ is equivlant to ‘master’. So, If we want to assign with ‘a9e82f…’ commit, we can use one of ‘a9e8’, ‘v1’, ‘master~’ and ‘HEAD^’, and ‘36bc..’, ‘master^2’ for ‘36bc54…’ commit. And the difference between ‘~’ and ‘^’ is, ‘~’ shows the step goes backwards, and ‘^’ shows which path goes, we can also combine these two, like, ‘HEAD^2~3’.&lt;/p&gt;
+
+&lt;h2 id=&quot;compare_table&quot;&gt;Compare Table&lt;/h2&gt;
+
+&lt;p&gt;As extra candy for the one who used SVN before, this is the compare table, which lists similiar commands between SVN and Git.&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;SVN&lt;/th&gt;&lt;th&gt;Git&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn checkout&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git clone&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn update&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git pull&lt;/code&gt;, &lt;code&gt;git fetch&lt;/code&gt; + &lt;code&gt;git checkout&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn add&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git add&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn move&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git move&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn revert&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git reset --hard&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn commit&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git commit&lt;/code&gt; + &lt;code&gt;git push&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn status&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn diff&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git diff&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn log&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git log&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn copy &amp;lt;src&amp;gt; &amp;lt;branch path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git branch &amp;lt;branch name&amp;gt; &amp;lt;commit&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn rm &amp;lt;branch path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git branch -d &amp;lt;branch name&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn merge &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git merge &amp;lt;name&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;text-align: right;&quot;&gt;&lt;code&gt;svn merge -r&amp;lt;rev&amp;gt; &amp;lt;path&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;text-align: left;&quot;&gt;&lt;code&gt;git cherry-pick &amp;lt;commit&amp;gt;&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;&lt;hr /&gt;
+&lt;p&gt;Here is very interesting study &lt;a href=&quot;http://pcottle.github.io/learnGitBranching/&quot;&gt;site&lt;/a&gt; with interactive visualize graphic case.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>如何使用SVN</title>
+   <link href="http://nozer0.github.io/zh/program/how-to-use-svn/"/>
+   <updated>2014-02-11T00:00:00+08:00</updated>
+   <id>http://nozer0.github.io/zh/program/how-to-use-svn</id>
+   <content type="html">&lt;p&gt;这是在学习使用&lt;em&gt;SVN&lt;/em&gt;的过程中，做的一些记录。如果需要查看更加详细的信息，请参考&lt;code&gt;svn help&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;简单索引:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#launch_&quot;&gt;&lt;code&gt;svn checkout &amp;lt;仓库地址&amp;gt;&lt;/code&gt; -&amp;gt; 首先，我们要有一个工作副本。&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#working_cycle_&quot;&gt;如何更改数据。&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#update&quot;&gt;&lt;code&gt;svn update&lt;/code&gt; -&amp;gt; 从仓库拿到最新的代码。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#change&quot;&gt;&lt;code&gt;svn add &amp;lt;新文件&amp;gt;&lt;/code&gt; -&amp;gt; 新增文件加入版本控制。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#change&quot;&gt;&lt;code&gt;svn revert&lt;/code&gt; -&amp;gt; 撤销未提交的改动。&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#commit&quot;&gt;&lt;code&gt;svn commit&lt;/code&gt; -&amp;gt; 提交修改到仓库。&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#branch_&quot;&gt;分支&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;svn copy &amp;lt;源路径&amp;gt; &amp;lt;目的路径&amp;gt;&lt;/code&gt; -&amp;gt; 创建分支。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn merge &amp;lt;路径&amp;gt;&lt;/code&gt; -&amp;gt; 从主干合并代码。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn merge &amp;lt;分支路径&amp;gt; --reintegrate&lt;/code&gt; -&amp;gt; 合并回主干。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn remove &amp;lt;分支路径&amp;gt;&lt;/code&gt; -&amp;gt; 删除废弃分支。&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn switch &amp;lt;分支路径&amp;gt;&lt;/code&gt; -&amp;gt; 切换到另一分支。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#auxiliary_commands_&quot;&gt;&lt;code&gt;svn status&lt;/code&gt;, &lt;code&gt;svn diff&lt;/code&gt;, … -&amp;gt; 一些帮助检查版本信息之类的辅助命令。&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#additional_info_&quot;&gt;附带内容&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;concepts_&quot;&gt;概念(Concepts) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;仓库(Repository)&lt;/p&gt;
+
+&lt;p&gt;仓库，顾名思义，是用来存放所有历史数据的地方，用户可以从仓库读写各自想要的数据。&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;工作副本(Working copy)&lt;/p&gt;
+
+&lt;p&gt;仓库对应的本地副本，包含一部分历史数据和版本管理信息。&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;版本(Revision)&lt;/p&gt;
+
+&lt;p&gt;一旦仓库有改动发生，版本数字就会自动增长。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;launch&quot;&gt;开始(Launch)&lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;首先，我们使用&lt;code&gt;svn checkout&lt;/code&gt;将文件从远程仓库拷贝到本地的工作目录。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 拷贝整个项目到one-piece目录
+svn co http://www.nozer0.com/one-piece --username nozer0 --password nozer0
+# 拷贝版本10的trunk到本地trunk_r10目录
+svn co http://www.nozer0.com/one-piece/trunk@10 trunk_r10&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;working_cycle_&quot;&gt;工作循环(Working cycle) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;简单的工作循环如下图。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;     +----- checkout ------+
+     v                     |
++---------+  commit  +------------+
+| Working | -------&amp;gt; |   Remote   |
+|  Area   | &amp;lt;------- | Repository |
++---------+  update  +------------+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;update&quot;&gt;更新(Update)&lt;/h2&gt;
+
+&lt;p&gt;使用&lt;code&gt;svn update&lt;/code&gt;在开始工作时和提交之前先做一次更新是一个良好的习惯。&lt;/p&gt;
+
+&lt;p&gt;假如在我们修改工作目录的同时，有人也更新了同样的文件并已经提交到远程仓库，那我们在更新时有可能就会遇到冲突(conflict)。可以设定’accept’参数，指定’working’, ‘base’, ‘mine-conflict(mc)’, ‘theirs-conflict(tc)’, ‘mine-full(mf)’, ‘theirs-full(tf)’, ‘edit(e)’中的一个作为冲突解决的策略；或者我们也可以选择’postpone(p)’，之后用&lt;code&gt;svn resolve&lt;/code&gt;标识已解决冲突的文件。&lt;/p&gt;
+
+&lt;p&gt;让我们看一些示例代码。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 更新到BASE
+svn up
+# 更新到修订版本5
+svn up -r 5
+# 有冲突时，完全已远程文件为准
+svn up --accept tf
+
+svn up conf.txt
+# Conflict discovered in ...
+# p
+edit conf.txt
+svn resolve conf.txt --accept working&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;change&quot;&gt;更改(Change)&lt;/h2&gt;
+
+&lt;p&gt;Subversion提供了多个命令供我们修改工作目录结构，并且可以使用&lt;code&gt;svn revert&lt;/code&gt;来回滚之前的更改。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn rm old.txt
+# 将新建文件加入版本控制
+svn add new.txt new2.txt
+svn mv old2.txt new3.txt
+svn mkdir backup
+# 拷贝修订版本为5的&amp;#39;old3.txt&amp;#39;到&amp;#39;old3_r5.txt&amp;#39;
+svn cp old3.txt@5 backup/old3_r5.txt
+
+svn rm required.txt
+# 回滚&amp;#39;required.txt&amp;#39;到BASE
+svn revert required.txt&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们也可以通过这些命令来直接更改远程目录，甚至不需要有相应的本地工作目录。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn mkdir ^/branches
+# 拷贝修订版本为5的trunk下所有文件到branches/b1目录
+svn cp ^/trunk@5 ^/branches/b1 -m &amp;#39;create branch b1 with revision 5&amp;#39;
+svn mv ^/branches/b1 ^/branches/b2 -m &amp;#39;rename branch b1 to b2&amp;#39;
+# 删除远程分支b2
+svn rm http://www.nozer0.com/svn/branches/b2&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;commit&quot;&gt;提交(Commit)&lt;/h2&gt;
+
+&lt;p&gt;使用&lt;code&gt;svn commit&lt;/code&gt;将所做更改提交到远程仓库，在提交之前记得先做更新操作。当然，能在提交前用&lt;code&gt;svn diff&lt;/code&gt;进行比较操作则更是一个好习惯。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn up
+svn diff
+svn ci -m &amp;#39;what changes you have done&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;revert_commit&quot;&gt;回复已提交更改(Revert commit)&lt;/h2&gt;
+
+&lt;p&gt;有时候，我们想要回复已经提交的更改，这时候就可以使用&lt;code&gt;svn merge&lt;/code&gt;。事实上，就像常规理解的那样，该命令更多的是用在接下来我们要介绍的分支相关操作中，我们可以使用’-r M:N’或’-c N’来选择合并特定的一些更改。然而，我们同样可以使用’-r N:M’或’-c -N’的选项，做反向的合并操作来实现撤销已提交更改的效果。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn ci -m &amp;#39;some changes&amp;#39;
+# 输出:
+# 	Committed revision 23.
+# 糟糕，上次的提交有问题
+svn up
+svn merge ^/trunk -c-23
+svn ci -m &amp;#39;revert commit 23&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;branch_&quot;&gt;分支(Branch) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;何为分支？&lt;/p&gt;
+
+&lt;p&gt;大多数情况下，一个项目会同时开发几个功能或者错误修复，最好能在各自独立的目录下完成工作以更清楚的区分，避免相互影响。区别于主干，我们将这些拷贝出来的独立目录称之为“分支”。通常的仓库目录结构如以下所示。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;|-- branches
+|     |-- feature1
+|     |-- ...
+|-- tags
+|     |-- 1.0.1
+|     |-- ...
+|-- trunk&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其中，’branches’和’tags’都以’trunk’为基础，’branches’代表了不同的工作流，’tags’也可以视为持久性的特殊分支。&lt;/p&gt;
+
+&lt;p&gt;让我们举个实际例子。比如说我们有几个人在同一个项目组，有一天，我被安排实现一个新的功能，这个功能会花费较长时间，所以我建立了一个新的分支，并在新分支上工作。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd trunk
+svn cp ^/trunk ^/branches/feature1 -m &amp;#39;create branch feature1&amp;#39;
+svn co ^/branches/feature1 ../feature1
+cd ../feature1
+
+# edit
+svn up
+svn ci -m &amp;#39;logic codes of feature1 is done&amp;#39;
+# r0..r10 &amp;lt;- trunk
+#      \
+#      r11--r12 &amp;lt;- feature1
+#       |
+#      r11&amp;#39; &amp;lt;- feature1 working copy&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;同时，其余的同学也会在主干上做些修改，我需要合并其中的一部分到新分支上，通常这被称为选择合并(cherry-pick merge)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn up
+# r0..r10..r18 &amp;lt;- trunk
+#      \
+#      r11--r12 &amp;lt;- feature1
+#            |
+#           r12&amp;#39; &amp;lt;- feature1 working copy
+
+# r14到16的更改就是我想同步的，加上&amp;#39;dry-run&amp;#39;选项可以先模拟一遍
+svn merge ^/trunk -r 14:16 --dry-run
+svn merge ^/trunk -r 14:16
+# 看情况是否提交到远程
+svn ci -m &amp;#39;merge r14:16 from trunk to feature1&amp;#39;
+# r0..r10..r14..r16..r18 &amp;lt;- trunk
+#      \          \
+#      r11--r12--r19 &amp;lt;- feature1
+#            |
+#           r12&amp;#39; + r14:16 &amp;lt;- feature1 working copy&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;几天后，新功能开发完成，我需要同步所有主干的改动到分支以便测试。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn up
+# 显示上次合并的版本
+svn mergeinfo ^/trunk
+# 和目前需要合并的版本
+svn mergeinfo ^/trunk --show-revs eligible
+svn merge ^/trunk
+# r0..r10..r23 &amp;lt;- trunk
+#      \
+#      r11..r19 &amp;lt;- feature1
+#            |
+#           r19&amp;#39; + r13:23 &amp;lt;- feature1 working copy&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;最后，测试完成，合并分支回主干并删除该分支。请注意’reintegrate’选项，用来指示将分支上从主干最新同步的版本开始到最近一个版本为止的所有更改合并到主干副本。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn ci -m &amp;#39;feature1 complete&amp;#39;
+cd ../trunk
+svn up
+# 没带&amp;#39;reintegrate&amp;#39;选项的话会合并r11:24的更改
+svn merge ^/branches/feature1 --reintegrate
+svn ci -m &amp;#39;merge feature1 back to trunk&amp;#39;
+#          r23&amp;#39; &amp;lt;- trunk working copy
+#           |
+# r0..r10..r23--r25 &amp;lt;- trunk
+#      \        /
+#      r11 .. r24 &amp;lt;- feature1
+svn rm ^/branches/feature1 -m &amp;#39;delete branch feature1&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然，某些时候，可能我们希望在不同的分支间切换, 可以使用&lt;code&gt;svn switch&lt;/code&gt;来达成目的。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn sw ^/branches/feature2&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;auxiliary_commands_&quot;&gt;辅助命令(Auxiliary Commands) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Subversion同样提供了一些辅助命令来帮助我们查询当前状态或历史信息。&lt;/p&gt;
+
+&lt;p&gt;我们通常使用&lt;code&gt;svn status&lt;/code&gt;来查询工作目录当前的状态信息，&lt;code&gt;svn info&lt;/code&gt;查询对应文件的具体信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 查询&amp;#39;src&amp;#39;目录的状态信息
+svn st src/
+# 输出:
+# 	M     README.md
+
+# 查询修订版本为5的&amp;#39;readme.txt&amp;#39;的具体信息
+svn info readme.txt -r 5&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;之前也提到过，&lt;code&gt;svn diff&lt;/code&gt;也会被经常使用，比较文件区别。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 比较BASE和当前工作目录
+svn di
+# 比较&amp;#39;readme.txt&amp;#39;和&amp;#39;a.js&amp;#39;的修订版本3和5
+svn di -r 3:5 readme.txt a.js
+# 等效于`svn diff -r 4:5`
+svn di -c 5
+
+# 比较版本3的主干和版本5的&amp;#39;develop&amp;#39;分支
+svn di -r 3:5 --old=^/trunk --new=^/branches/develop
+# 等效的简略写法
+svn di ^/trunk@3 ^/branches/develop@5&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用&lt;code&gt;svn log&lt;/code&gt;来查询历史记录。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 从上至下，显示信息越来越详细
+svn log -q
+# 显示提交的注释
+svn log
+# 显示更改的文件列表
+svn log -v
+# 显示更改的文件内容
+svn log --diff
+
+# 显示修订版本3到5的&amp;#39;readme.txt&amp;#39;的记录
+svn log readme.txt -r 3:5&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;svn cat&lt;/code&gt;，&lt;code&gt;svn blame&lt;/code&gt;和&lt;code&gt;svn list&lt;/code&gt;可以帮助我们查看文件具体内容和结构的历史信息。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 显示修订版本5的&amp;#39;readme.txt&amp;#39;内容
+svn cat readme.txt -r 5
+
+# 可以帮助我们查看文件每行的修改版本
+svn blame readme.txt
+# 输出:
+# 	3   hello
+# 	5	world
+
+# 显示修订版本3的&amp;#39;trunk&amp;#39;目录信息
+svn list ^/trunk@3&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;additional_info_&quot;&gt;附带内容(Additional Info) &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;我们可以看到之前的很多命令都带了’-r’这个参数，除了指定具体版本数字之外，我们还可以使用一些预定义的字符串来指定。&lt;/p&gt;
+
+&lt;p&gt;‘HEAD’表示目前仓库中最新的版本，’BASE’表示当前工作目录下缓存的最新版本，’COMMITTED’等同于最近提交的版本，而’PREV’则表示上一个提交版本。&lt;/p&gt;
+
+&lt;p&gt;如果我们不确定具体的版本数字，我们还可以使用指定时间的方式。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 比较最近与上一个提交版本
+svn diff readme.txt -r PREV:COMMITTED
+# 显示指定时间段内的历史记录
+svn log -r {2013-10-01}:{2013-12-31}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;有时候我们也会看到这种写法，’url@rev’。事实上，Subversion有专门名称来区分，’peg revision’相对于’@’，’operative revision’相对于’-r’。&lt;/p&gt;
+
+&lt;p&gt;’@‘不支持上面提到的那些预定义关键字。更加重要的是，当我们重命名一个文件时，比如说，版本1时候创建了’what.js’，然后在版本5的时候改名成’where.js’。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 错误，文件找不到
+svn cat -r 1 what.js
+# 这个才是正确的
+svn cat what.js@1
+# 或者
+svn cat -r 1 where.js&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;用文件路径加’@’可以确定给定版本和给定路径对应的唯一文件，而通过’-r’选项则可以跟踪重命名操作到原始的文件路径。&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>How to use SVN</title>
+   <link href="http://nozer0.github.io/en/program/how-to-use-svn/"/>
+   <updated>2014-02-11T00:00:00+08:00</updated>
+   <id>http://nozer0.github.io/en/program/how-to-use-svn</id>
+   <content type="html">&lt;p&gt;Here are some notes for using &lt;em&gt;SVN&lt;/em&gt;, for more details, &lt;code&gt;svn help&lt;/code&gt; is a good choice.&lt;/p&gt;
+
+&lt;p&gt;The index as cheetsheet:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#launch_&quot;&gt;&lt;code&gt;svn checkout &amp;lt;repository path&amp;gt;&lt;/code&gt; -&amp;gt; First, we need to have a working copy.&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#working_cycle_&quot;&gt;How to do changes with the repository.&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;#update&quot;&gt;&lt;code&gt;svn update&lt;/code&gt; -&amp;gt; Get latest codes from repository.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#change&quot;&gt;&lt;code&gt;svn add &amp;lt;new files&amp;gt;&lt;/code&gt; -&amp;gt; Add files to version control.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#change&quot;&gt;&lt;code&gt;svn revert&lt;/code&gt; -&amp;gt; Revert the changes uncommitted.&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href=&quot;#commit&quot;&gt;&lt;code&gt;svn commit&lt;/code&gt; -&amp;gt; Commit the change to repository.&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#branch_&quot;&gt;Branch&lt;/a&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;svn copy &amp;lt;src&amp;gt; &amp;lt;dest&amp;gt;&lt;/code&gt; -&amp;gt; Create branches.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn merge &amp;lt;path&amp;gt;&lt;/code&gt; -&amp;gt; Merge changes from trunk.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn merge &amp;lt;branch_path&amp;gt; --reintegrate&lt;/code&gt; -&amp;gt; Merge back to trunk.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn remove &amp;lt;branch_path&amp;gt;&lt;/code&gt; -&amp;gt; Remove unused branch.&lt;/li&gt;
+
+&lt;li&gt;&lt;code&gt;svn switch &amp;lt;new_path&amp;gt;&lt;/code&gt; -&amp;gt; Switch to another branch.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#auxiliary_commands_&quot;&gt;&lt;code&gt;svn status&lt;/code&gt;, &lt;code&gt;svn diff&lt;/code&gt;, … -&amp;gt; Auxiliary Commands to help us check version info.&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#additional_info_&quot;&gt;Additional info&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;concepts_&quot;&gt;Concepts &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Repository&lt;/p&gt;
+
+&lt;p&gt;Repository is a place on where to store all history data, and different users can read and write the data they want when connecting.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Working copy&lt;/p&gt;
+
+&lt;p&gt;A local copy with special version of data from the connect repository and some version control info included.&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Revision&lt;/p&gt;
+
+&lt;p&gt;Once the data are changed in a repository, the revision number will increment globally.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;launch_&quot;&gt;Launch &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Of course, the first thing we should do is to make a working copy from remote repository by using &lt;code&gt;svn checkout&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# checkout whole project
+svn co http://www.nozer0.com/one-piece --username nozer0 --password nozer0
+# checkout revision 10 of trunk only to trunk_r10 directory
+svn co http://www.nozer0.com/one-piece/trunk@10 trunk_r10&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;working_cycle_&quot;&gt;Working Cycle &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;This is the simple form for normal working cycle.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;     +----- checkout ------+
+     v                     |
++---------+  commit  +------------+
+| Working | -------&amp;gt; |   Remote   |
+|  copy   | &amp;lt;------- | Repository |
++---------+  update  +------------+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;update&quot;&gt;Update&lt;/h2&gt;
+
+&lt;p&gt;We’d like to suggest to update first every time before starting works, use &lt;code&gt;svn update&lt;/code&gt; to reach the objective, and also do update operation again before commit.&lt;/p&gt;
+
+&lt;p&gt;Sometimes, we may meet conflicts, that means someone else already did changes on what we are working now and committed to repository already before.&lt;/p&gt;
+
+&lt;p&gt;Here, the ‘accept’ option may give help to us, we can choose one of ‘working’, ‘base’, ‘mine-conflict(mc)’, ‘theirs-conflict(tc)’, ‘mine-full(mf)’, ‘theirs-full(tf)’, ‘edit(e)’ as our resolve mode.&lt;/p&gt;
+
+&lt;p&gt;Or we can choose ‘postpone(p)’ to resolve conflicts later, after we manually edit the file, we can use &lt;code&gt;svn resolve&lt;/code&gt; command to notify resolving.&lt;/p&gt;
+
+&lt;p&gt;Let’s see some codes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# update to BASE
+svn up
+# update to revision 5
+svn up -r 5
+# ignore all our changes if conflict exists
+svn up --accept tf
+
+svn up conf.txt
+# Conflict discovered in ...
+# p
+edit conf.txt
+svn resolve conf.txt --accept working&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;change&quot;&gt;Change&lt;/h2&gt;
+
+&lt;p&gt;There are several commands can help us to do changes in working copy area, and apply these changes to repsitory when next commit. Furthermore, we can use &lt;code&gt;svn revert&lt;/code&gt; to revert any changes we do not want.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn rm old.txt
+# add the new created files under the version control
+svn add new.txt new2.txt
+svn mv old2.txt new3.txt
+svn mkdir backup
+# copy &amp;#39;old3.txt&amp;#39; on revision 5 to &amp;#39;old3_r5.txt&amp;#39;
+svn cp old3.txt@5 backup/old3_r5.txt
+
+svn rm required.txt
+# restore the &amp;#39;required.txt&amp;#39; file
+svn revert required.txt&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And we can also change on remote repository directly even without regarding working area.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn mkdir ^/branches
+# create branch &amp;#39;b1&amp;#39; based on revision 5 of trunk
+svn cp ^/trunk@5 ^/branches/b1 -m &amp;#39;create branch b1 with revision 5&amp;#39;
+svn mv ^/branches/b1 ^/branches/b2 -m &amp;#39;rename branch b1 to b2&amp;#39;
+# remove branch b2
+svn rm http://www.nozer0.com/svn/branches/b2&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;commit&quot;&gt;Commit&lt;/h2&gt;
+
+&lt;p&gt;If we want to upload the changes to remote repository, we use &lt;code&gt;svn commit&lt;/code&gt;, remember that we’d better to update again before commit. And also, use &lt;code&gt;svn diff&lt;/code&gt; to check what changes you did between working copy and repository is a good habit you should have.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn up
+svn diff
+svn ci -m &amp;#39;what changes you have done&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;revert_commit&quot;&gt;Revert commit&lt;/h2&gt;
+
+&lt;p&gt;Sometimes, we may want to revert the changes of some commits to repository, and the new command we will meet is called &lt;code&gt;svn merge&lt;/code&gt;. Actually, in contrast to the normal usage to merge specified changes from remote path to current working copy by appending ‘-r M:N’ or ‘-c N’ options, which is more often used in branch operations we introduce next, however, it can also be used to do reverse merge by giving ‘-r N:M’ or ‘-c -N’ options.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn ci -m &amp;#39;some changes&amp;#39;
+# output:
+# 	Committed revision 23.
+# oops, the commit is complete incorrect
+svn up
+svn merge ^/trunk -c-23
+svn ci -m &amp;#39;revert commit 23&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;branch_&quot;&gt;Branch &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;What is branch?&lt;/p&gt;
+
+&lt;p&gt;On most situations, the project may need to implement several features or bug fixes parallelly, to distiguish the work clearly, we may create different copies for each work line. This is much helpful for work coporation. Here is the normal repository structure.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;|-- branches
+|     |-- feature1
+|     |-- ...
+|-- tags
+|     |-- 1.0.1
+|     |-- ...
+|-- trunk&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Either ‘branches’ or ‘tags’ are based on ‘trunk’, another words, coping from ‘trunk’, ‘branches’ indicates different work line, and ‘tags’ used to tag the different versions of trunk.&lt;/p&gt;
+
+&lt;p&gt;Let us go to a practical scene. We’re working in a project, one day, I am asked to implement a new feature, this will take a little long time, the good choice is to work on a new branch.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd trunk
+svn cp ^/trunk ^/branches/feature1 -m &amp;#39;create branch feature1&amp;#39;
+svn co ^/branches/feature1 ../feature1
+cd ../feature1
+
+# edit
+svn up
+svn ci -m &amp;#39;logic codes of feature1 is done&amp;#39;
+# r0..r10 &amp;lt;- trunk
+#      \
+#      r11--r12 &amp;lt;- feature1
+#       |
+#      r11&amp;#39; &amp;lt;- feature1 working copy&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Meanwhile, other guys also do some works on trunk, I need to merge part of that, this is always called as ‘cherry-pick’ merge.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn up
+# r0..r10..r18 &amp;lt;- trunk
+#      \
+#      r11--r12 &amp;lt;- feature1
+#            |
+#           r12&amp;#39; &amp;lt;- feature1 working copy
+
+# the changes between r14 to r16 is what to be merged, we can append &amp;#39;dry-run&amp;#39; option to see what will be merged first
+svn merge ^/trunk -r 14:16 --dry-run
+svn merge ^/trunk -r 14:16
+# optional step
+svn ci -m &amp;#39;merge r14:16 from trunk to feature1&amp;#39;
+# r0..r10..r14..r16..r18 &amp;lt;- trunk
+#      \          \
+#      r11--r12--r19 &amp;lt;- feature1
+#            |
+#           r12&amp;#39; + r14:16 &amp;lt;- feature1 working copy&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After several days, all new feature work is done, and want to sync all trunk changes for test.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn up
+# to see revisions already merged
+svn mergeinfo ^/trunk
+# and the one could be merged
+svn mergeinfo ^/trunk --show-revs eligible
+svn merge ^/trunk
+# r0..r10..r23 &amp;lt;- trunk
+#      \
+#      r11..r19 &amp;lt;- feature1
+#            |
+#           r19&amp;#39; + r13:23 &amp;lt;- feature1 working copy&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The last step, merge back to trunk and delete the branch. Please pay notice that ‘reintegrate’ option is required for this situation, used to indicate merge the change differences back to parent path from branch between the latest synchronise revision and ‘HEAD’.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn ci -m &amp;#39;feature1 complete&amp;#39;
+cd ../trunk
+svn up
+# without &amp;#39;reintegrate&amp;#39; option, the merge includes the changes from r11 to r24
+svn merge ^/branches/feature1 --reintegrate
+svn ci -m &amp;#39;merge feature1 back to trunk&amp;#39;
+#          r23&amp;#39; &amp;lt;- trunk working copy
+#           |
+# r0..r10..r23--r25 &amp;lt;- trunk
+#      \        /
+#      r11 .. r24 &amp;lt;- feature1
+svn rm ^/branches/feature1 -m &amp;#39;delete branch feature1&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sometimes, we may need to switch from one branch to another, &lt;code&gt;svn switch&lt;/code&gt; is what we want.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;svn sw ^/branches/feature2&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;auxiliary_commands_&quot;&gt;Auxiliary Commands &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;Some commands used to help us to check the svn status and history info.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;svn status&lt;/code&gt; shows current status in working copy area, and &lt;code&gt;svn info&lt;/code&gt; shows detail info of given file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# show status under &amp;#39;src&amp;#39;
+svn st src/
+# output:
+# 	M     README.md
+
+# show info about &amp;#39;readme.txt&amp;#39; in revision 5
+svn info readme.txt -r 5&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Already mentioned a little above, &lt;code&gt;svn diff&lt;/code&gt; is the command we often use to get the difference between 2 states.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# compare difference between BASE and working copy
+svn di
+# compare difference between revision 3 and 5 for &amp;#39;readme.txt&amp;#39; and &amp;#39;a.js&amp;#39;
+svn di -r 3:5 readme.txt a.js
+# equivalent to `svn diff -r 4:5`
+svn di -c 5
+
+# compare between revision 3 of trunk and revision 5 of &amp;#39;develop&amp;#39; branch
+svn di -r 3:5 --old=^/trunk --new=^/branches/develop
+# equivalent simple way
+svn di ^/trunk@3 ^/branches/develop@5&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using &lt;code&gt;svn log&lt;/code&gt; to show the changed logs we want to know.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# from top to bottom, the next one output more details than previous.
+svn log -q
+# show comment strings
+svn log
+# show change files
+svn log -v
+# show differences
+svn log --diff
+
+# show log of &amp;#39;readme.txt&amp;#39; file between revision 3 and 5
+svn log readme.txt -r 3:5&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;svn cat&lt;/code&gt;, &lt;code&gt;svn blame&lt;/code&gt; and &lt;code&gt;svn list&lt;/code&gt; can let us check the history content or structure by assigning revision argument.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# show content of &amp;#39;readme.txt&amp;#39; in revision 5
+svn cat readme.txt -r 5
+
+# more interesting, this can show revision change info for each line
+svn blame readme.txt
+# output:
+# 	3   hello
+# 	5	world
+
+# show file list under &amp;#39;trunk&amp;#39; in revision 3
+svn list ^/trunk@3&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h1 id=&quot;additional_info_&quot;&gt;Additional info &lt;a href=&quot;#&quot;&gt;↑&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;As we can see from above, most commands can support ‘-r’ argument, besides the normal way to set revision number like &lt;code&gt;-r 5&lt;/code&gt;, we can also use more flex ways.&lt;/p&gt;
+
+&lt;p&gt;Subversion predefines several keywords working similiarlly as numbers. ‘HEAD’ indicates the latest revision of repository, and ‘BASE’ indicates the latest unchanged revision of working area, ‘COMMITTED’ is equal to the lastest change revision, and ‘PREV’ means the last changed revision.&lt;/p&gt;
+
+&lt;p&gt;We can also give date time if we are not sure the revision number by wrapping with braces.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# show difference between last commit revision and previous one
+svn diff readme.txt -r PREV:COMMITTED
+# show logs between the given date period
+svn log -r {2013-10-01}:{2013-12-31}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Sometimes, we can see the way assigning revision like this, ‘url@rev’. Actually, Subversion has special names for these two, ‘peg revision’ for ‘@’ synmal way, and ‘operative revision’ for ‘-r’ option.&lt;/p&gt;
+
+&lt;p&gt;’@’ doesn’t support the predefined keywords showing above. And more important, if we renamed one file, for example, ‘what.js’ in revision 1 to ‘where.js’ in revision 5.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# error, no such file found
+svn cat -r 1 what.js
+# that is what we want
+svn cat what.js@1
+# or
+svn cat -r 1 where.js&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See? The path plus ‘@’ can get the unique file in which the path given and that history revision, and ‘-r’ option can track the renaming operation to the origin file in the assigned revision.&lt;/p&gt;</content>
+ </entry>
+ 
  
 </feed>

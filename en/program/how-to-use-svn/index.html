@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>How to use SVN</title>
+	<!-- <meta name="keywords" content=""> -->
+	<meta name="description" content="A note about how to use SVN, which can be taken as a simple mannual.">
+	<meta name="author" content="nozer0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="all">
+
+	<link rel="stylesheet" type="text/css" href="/assets/default/css/style.css">
+
+	<!-- atom & rss feed
+	<link href="" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+	<link href="" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+	-->
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	
+	
+
+	<header class="navbar">
+	<a class="brand" href="/">
+		nozer0's blog
+		<div class="tagline">Life may has Zero, but thought never</div>
+	</a>
+	
+		<a href="/zh/">Chinese</a>
+	
+	<nav>
+		
+			
+		
+			
+				
+      				<a href="/en/archive/">Archive</a>
+      			
+      		
+		
+			
+				
+      				<a href="/en/categories/">Categories</a>
+      			
+      		
+		
+			
+		
+			
+				
+      				<a href="/en/tags/">Tags</a>
+      			
+      		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+	</nav>
+</header>
+	<aside></aside>
+	
+
+
+<article class="post">
+	
+	
+	<nav>
+	
+		&raquo;
+		
+			<a href="/en/categories">Categories</a>
+		
+	
+		&raquo;
+		
+			<a href="/en/categories/#program">program</a>
+		
+	
+	</nav>
+	
+
+	<h1>
+		How to use SVN
+		
+			
+		
+		
+			
+		
+			
+		
+			<a href=/zh/program/how-to-use-svn/>&</a>
+		
+	</h1>
+
+	<div>
+		<span class="date">2014-02-11</span>
+		by <a href="mailto:c.nozer0@gmail.com">nozer0</a>
+	</div>
+	<div class="content"><p>Here are some notes for using <em>SVN</em>, for more details, <code>svn help</code> is a good choice.</p>
+
+<p>The index as cheetsheet:</p>
+
+<ul>
+<li>
+<p><a href="#launch_"><code>svn checkout &lt;repository path&gt;</code> -&gt; First, we need to have a working copy.</a></p>
+</li>
+
+<li>
+<p><a href="#working_cycle_">How to do changes with the repository.</a></p>
+
+<ol>
+<li><a href="#update"><code>svn update</code> -&gt; Get latest codes from repository.</a></li>
+
+<li><a href="#change"><code>svn add &lt;new files&gt;</code> -&gt; Add files to version control.</a></li>
+
+<li><a href="#change"><code>svn revert</code> -&gt; Revert the changes uncommitted.</a></li>
+
+<li><a href="#commit"><code>svn commit</code> -&gt; Commit the change to repository.</a></li>
+</ol>
+</li>
+
+<li>
+<p><a href="#branch_">Branch</a></p>
+
+<ol>
+<li><code>svn copy &lt;src&gt; &lt;dest&gt;</code> -&gt; Create branches.</li>
+
+<li><code>svn merge &lt;path&gt;</code> -&gt; Merge changes from trunk.</li>
+
+<li><code>svn merge &lt;branch_path&gt; --reintegrate</code> -&gt; Merge back to trunk.</li>
+
+<li><code>svn remove &lt;branch_path&gt;</code> -&gt; Remove unused branch.</li>
+
+<li><code>svn switch &lt;new_path&gt;</code> -&gt; Switch to another branch.</li>
+</ol>
+</li>
+
+<li>
+<p><a href="#auxiliary_commands_"><code>svn status</code>, <code>svn diff</code>, … -&gt; Auxiliary Commands to help us check version info.</a></p>
+</li>
+
+<li>
+<p><a href="#additional_info_">Additional info</a></p>
+</li>
+</ul>
+<hr />
+<h1 id="concepts_">Concepts <a href="#">↑</a></h1>
+
+<ul>
+<li>
+<p>Repository</p>
+
+<p>Repository is a place on where to store all history data, and different users can read and write the data they want when connecting.</p>
+</li>
+
+<li>
+<p>Working copy</p>
+
+<p>A local copy with special version of data from the connect repository and some version control info included.</p>
+</li>
+
+<li>
+<p>Revision</p>
+
+<p>Once the data are changed in a repository, the revision number will increment globally.</p>
+</li>
+</ul>
+<hr />
+<h1 id="launch_">Launch <a href="#">↑</a></h1>
+
+<p>Of course, the first thing we should do is to make a working copy from remote repository by using <code>svn checkout</code></p>
+
+<pre><code># checkout whole project
+svn co http://www.nozer0.com/one-piece --username nozer0 --password nozer0
+# checkout revision 10 of trunk only to trunk_r10 directory
+svn co http://www.nozer0.com/one-piece/trunk@10 trunk_r10</code></pre>
+<hr />
+<h1 id="working_cycle_">Working Cycle <a href="#">↑</a></h1>
+
+<p>This is the simple form for normal working cycle.</p>
+
+<pre><code>     +----- checkout ------+
+     v                     |
++---------+  commit  +------------+
+| Working | -------&gt; |   Remote   |
+|  copy   | &lt;------- | Repository |
++---------+  update  +------------+</code></pre>
+
+<h2 id="update">Update</h2>
+
+<p>We’d like to suggest to update first every time before starting works, use <code>svn update</code> to reach the objective, and also do update operation again before commit.</p>
+
+<p>Sometimes, we may meet conflicts, that means someone else already did changes on what we are working now and committed to repository already before.</p>
+
+<p>Here, the ‘accept’ option may give help to us, we can choose one of ‘working’, ‘base’, ‘mine-conflict(mc)’, ‘theirs-conflict(tc)’, ‘mine-full(mf)’, ‘theirs-full(tf)’, ‘edit(e)’ as our resolve mode.</p>
+
+<p>Or we can choose ‘postpone(p)’ to resolve conflicts later, after we manually edit the file, we can use <code>svn resolve</code> command to notify resolving.</p>
+
+<p>Let’s see some codes.</p>
+
+<pre><code># update to BASE
+svn up
+# update to revision 5
+svn up -r 5
+# ignore all our changes if conflict exists
+svn up --accept tf
+
+svn up conf.txt
+# Conflict discovered in ...
+# p
+edit conf.txt
+svn resolve conf.txt --accept working</code></pre>
+
+<h2 id="change">Change</h2>
+
+<p>There are several commands can help us to do changes in working copy area, and apply these changes to repsitory when next commit. Furthermore, we can use <code>svn revert</code> to revert any changes we do not want.</p>
+
+<pre><code>svn rm old.txt
+# add the new created files under the version control
+svn add new.txt new2.txt
+svn mv old2.txt new3.txt
+svn mkdir backup
+# copy &#39;old3.txt&#39; on revision 5 to &#39;old3_r5.txt&#39;
+svn cp old3.txt@5 backup/old3_r5.txt
+
+svn rm required.txt
+# restore the &#39;required.txt&#39; file
+svn revert required.txt</code></pre>
+
+<p>And we can also change on remote repository directly even without regarding working area.</p>
+
+<pre><code>svn mkdir ^/branches
+# create branch &#39;b1&#39; based on revision 5 of trunk
+svn cp ^/trunk@5 ^/branches/b1 -m &#39;create branch b1 with revision 5&#39;
+svn mv ^/branches/b1 ^/branches/b2 -m &#39;rename branch b1 to b2&#39;
+# remove branch b2
+svn rm http://www.nozer0.com/svn/branches/b2</code></pre>
+
+<h2 id="commit">Commit</h2>
+
+<p>If we want to upload the changes to remote repository, we use <code>svn commit</code>, remember that we’d better to update again before commit. And also, use <code>svn diff</code> to check what changes you did between working copy and repository is a good habit you should have.</p>
+
+<pre><code>svn up
+svn diff
+svn ci -m &#39;what changes you have done&#39;</code></pre>
+
+<h2 id="revert_commit">Revert commit</h2>
+
+<p>Sometimes, we may want to revert the changes of some commits to repository, and the new command we will meet is called <code>svn merge</code>. Actually, in contrast to the normal usage to merge specified changes from remote path to current working copy by appending ‘-r M:N’ or ‘-c N’ options, which is more often used in branch operations we introduce next, however, it can also be used to do reverse merge by giving ‘-r N:M’ or ‘-c -N’ options.</p>
+
+<pre><code>svn ci -m &#39;some changes&#39;
+# output:
+# 	Committed revision 23.
+# oops, the commit is complete incorrect
+svn up
+svn merge ^/trunk -c-23
+svn ci -m &#39;revert commit 23&#39;</code></pre>
+<hr />
+<h1 id="branch_">Branch <a href="#">↑</a></h1>
+
+<p>What is branch?</p>
+
+<p>On most situations, the project may need to implement several features or bug fixes parallelly, to distiguish the work clearly, we may create different copies for each work line. This is much helpful for work coporation. Here is the normal repository structure.</p>
+
+<pre><code>|-- branches
+|     |-- feature1
+|     |-- ...
+|-- tags
+|     |-- 1.0.1
+|     |-- ...
+|-- trunk</code></pre>
+
+<p>Either ‘branches’ or ‘tags’ are based on ‘trunk’, another words, coping from ‘trunk’, ‘branches’ indicates different work line, and ‘tags’ used to tag the different versions of trunk.</p>
+
+<p>Let us go to a practical scene. We’re working in a project, one day, I am asked to implement a new feature, this will take a little long time, the good choice is to work on a new branch.</p>
+
+<pre><code>cd trunk
+svn cp ^/trunk ^/branches/feature1 -m &#39;create branch feature1&#39;
+svn co ^/branches/feature1 ../feature1
+cd ../feature1
+
+# edit
+svn up
+svn ci -m &#39;logic codes of feature1 is done&#39;
+# r0..r10 &lt;- trunk
+#      \
+#      r11--r12 &lt;- feature1
+#       |
+#      r11&#39; &lt;- feature1 working copy</code></pre>
+
+<p>Meanwhile, other guys also do some works on trunk, I need to merge part of that, this is always called as ‘cherry-pick’ merge.</p>
+
+<pre><code>svn up
+# r0..r10..r18 &lt;- trunk
+#      \
+#      r11--r12 &lt;- feature1
+#            |
+#           r12&#39; &lt;- feature1 working copy
+
+# the changes between r14 to r16 is what to be merged, we can append &#39;dry-run&#39; option to see what will be merged first
+svn merge ^/trunk -r 14:16 --dry-run
+svn merge ^/trunk -r 14:16
+# optional step
+svn ci -m &#39;merge r14:16 from trunk to feature1&#39;
+# r0..r10..r14..r16..r18 &lt;- trunk
+#      \          \
+#      r11--r12--r19 &lt;- feature1
+#            |
+#           r12&#39; + r14:16 &lt;- feature1 working copy</code></pre>
+
+<p>After several days, all new feature work is done, and want to sync all trunk changes for test.</p>
+
+<pre><code>svn up
+# to see revisions already merged
+svn mergeinfo ^/trunk
+# and the one could be merged
+svn mergeinfo ^/trunk --show-revs eligible
+svn merge ^/trunk
+# r0..r10..r23 &lt;- trunk
+#      \
+#      r11..r19 &lt;- feature1
+#            |
+#           r19&#39; + r13:23 &lt;- feature1 working copy</code></pre>
+
+<p>The last step, merge back to trunk and delete the branch. Please pay notice that ‘reintegrate’ option is required for this situation, used to indicate merge the change differences back to parent path from branch between the latest synchronise revision and ‘HEAD’.</p>
+
+<pre><code>svn ci -m &#39;feature1 complete&#39;
+cd ../trunk
+svn up
+# without &#39;reintegrate&#39; option, the merge includes the changes from r11 to r24
+svn merge ^/branches/feature1 --reintegrate
+svn ci -m &#39;merge feature1 back to trunk&#39;
+#          r23&#39; &lt;- trunk working copy
+#           |
+# r0..r10..r23--r25 &lt;- trunk
+#      \        /
+#      r11 .. r24 &lt;- feature1
+svn rm ^/branches/feature1 -m &#39;delete branch feature1&#39;</code></pre>
+
+<p>Sometimes, we may need to switch from one branch to another, <code>svn switch</code> is what we want.</p>
+
+<pre><code>svn sw ^/branches/feature2</code></pre>
+<hr />
+<h1 id="auxiliary_commands_">Auxiliary Commands <a href="#">↑</a></h1>
+
+<p>Some commands used to help us to check the svn status and history info.</p>
+
+<p><code>svn status</code> shows current status in working copy area, and <code>svn info</code> shows detail info of given file.</p>
+
+<pre><code># show status under &#39;src&#39;
+svn st src/
+# output:
+# 	M     README.md
+
+# show info about &#39;readme.txt&#39; in revision 5
+svn info readme.txt -r 5</code></pre>
+
+<p>Already mentioned a little above, <code>svn diff</code> is the command we often use to get the difference between 2 states.</p>
+
+<pre><code># compare difference between BASE and working copy
+svn di
+# compare difference between revision 3 and 5 for &#39;readme.txt&#39; and &#39;a.js&#39;
+svn di -r 3:5 readme.txt a.js
+# equivalent to `svn diff -r 4:5`
+svn di -c 5
+
+# compare between revision 3 of trunk and revision 5 of &#39;develop&#39; branch
+svn di -r 3:5 --old=^/trunk --new=^/branches/develop
+# equivalent simple way
+svn di ^/trunk@3 ^/branches/develop@5</code></pre>
+
+<p>Using <code>svn log</code> to show the changed logs we want to know.</p>
+
+<pre><code># from top to bottom, the next one output more details than previous.
+svn log -q
+# show comment strings
+svn log
+# show change files
+svn log -v
+# show differences
+svn log --diff
+
+# show log of &#39;readme.txt&#39; file between revision 3 and 5
+svn log readme.txt -r 3:5</code></pre>
+
+<p><code>svn cat</code>, <code>svn blame</code> and <code>svn list</code> can let us check the history content or structure by assigning revision argument.</p>
+
+<pre><code># show content of &#39;readme.txt&#39; in revision 5
+svn cat readme.txt -r 5
+
+# more interesting, this can show revision change info for each line
+svn blame readme.txt
+# output:
+# 	3   hello
+# 	5	world
+
+# show file list under &#39;trunk&#39; in revision 3
+svn list ^/trunk@3</code></pre>
+<hr />
+<h1 id="additional_info_">Additional info <a href="#">↑</a></h1>
+
+<p>As we can see from above, most commands can support ‘-r’ argument, besides the normal way to set revision number like <code>-r 5</code>, we can also use more flex ways.</p>
+
+<p>Subversion predefines several keywords working similiarlly as numbers. ‘HEAD’ indicates the latest revision of repository, and ‘BASE’ indicates the latest unchanged revision of working area, ‘COMMITTED’ is equal to the lastest change revision, and ‘PREV’ means the last changed revision.</p>
+
+<p>We can also give date time if we are not sure the revision number by wrapping with braces.</p>
+
+<pre><code># show difference between last commit revision and previous one
+svn diff readme.txt -r PREV:COMMITTED
+# show logs between the given date period
+svn log -r {2013-10-01}:{2013-12-31}</code></pre>
+
+<p>Sometimes, we can see the way assigning revision like this, ‘url@rev’. Actually, Subversion has special names for these two, ‘peg revision’ for ‘@’ synmal way, and ‘operative revision’ for ‘-r’ option.</p>
+
+<p>’@’ doesn’t support the predefined keywords showing above. And more important, if we renamed one file, for example, ‘what.js’ in revision 1 to ‘where.js’ in revision 5.</p>
+
+<pre><code># error, no such file found
+svn cat -r 1 what.js
+# that is what we want
+svn cat what.js@1
+# or
+svn cat -r 1 where.js</code></pre>
+
+<p>See? The path plus ‘@’ can get the unique file in which the path given and that history revision, and ‘-r’ option can track the renaming operation to the origin file in the assigned revision.</p></div>
+
+	
+	
+	
+
+
+<div class="tags_box">
+
+	<a href="/en/tags/#VCS">VCS <small>2</small></a>
+
+	<a href="/en/tags/#Subversion">Subversion <small>1</small></a>
+
+	<a href="/en/tags/#SVN">SVN <small>1</small></a>
+
+	<a href="/en/tags/#note">note <small>2</small></a>
+
+</div>
+	
+
+	<hr>
+	<div class="pagination">
+	
+	
+		
+			
+				<a class="prev disabled">&larr; Previous</a>
+			
+
+			
+				
+				<a class="next" href="/en/program/how-to-use-git/" title="How to use Git">&rarr; How to use Git</a>
+			
+		
+	
+		
+	
+	</div>
+</article>
+	<footer>
+	&copy; 2014 ~ <br>
+	<a href="mailto:c.nozer0@gmail.com">nozer0</a>
+</footer>
+</body>
+</html>
