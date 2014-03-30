@@ -1,0 +1,67 @@
+---
+layout: default
+---
+
+{% assign lang = page.language | default: 'en' %}
+{% assign locales = site.data.locale[lang] %}
+
+<article class="post">
+	{% assign categories = page.categories %}
+	{% if categories != empty %}
+	<nav>
+	{% for cat in categories %}
+		&raquo;
+		{% if cat == lang %}
+			<a href="/{{ lang }}/categories">{{ locales.Categories }}</a>
+		{% else %}
+			<a href="/{{ lang }}/categories/#{{ cat }}">{% if locales[cat] %}{{ locales[cat] }}{% else %}{{ cat }}{% endif %}</a>
+		{% endif %}
+	{% endfor %}
+	</nav>
+	{% endif %}
+
+	<h1>
+		{{ page.title }}{% if page.tagline %}<small class="tagline">{{page.tagline}}</small>{% endif %}
+		{% if lang == 'en' %}
+			{% assign id = page.id | replace_first: 'en', 'zh' %}
+		{% else %}
+			{% assign id = page.id | replace_first: 'zh', 'en' %}
+		{% endif %}
+		{% for p in site.related_posts %}
+			{% if p.id == id %}<a href={{ p.url }}>&</a>{% endif %}
+		{% endfor %}
+	</h1>
+
+	<div>
+		<span class="date">{{ page.date | date: '%Y-%m-%d' }}</span>
+		by <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a>
+	</div>
+	<div class="content">{{ content }}</div>
+
+	{% if page.tags != empty %}
+	{% include tags.html tags=page.tags %}
+	{% endif %}
+
+	<hr>
+	<div class="pagination">
+	{% assign posts = site.categories[lang] | sort: 'date' %}
+	{% for post in posts %}
+		{% if post.id == page.id %}
+			{% if forloop.first == true %}
+				<a class="prev disabled">&larr; {{ locales.prev }}</a>
+			{% else %}
+				{% assign i = forloop.index0 | minus: 1 %}
+				{% assign p = posts[i] %}
+				<a class="prev" href="{{ p.url }}" title="{{ p.title }}">&larr; {{ p.title }}</a>
+			{% endif %}
+
+			{% if forloop.last == true %}
+				<a class="next disabled">&rarr; {{ locales.next }}</a>
+			{% else %}
+				{% assign p = posts[forloop.index] %}
+				<a class="next" href="{{ p.url }}" title="{{ p.title }}">&rarr; {{ p.title }}</a>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+	</div>
+</article>

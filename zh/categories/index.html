@@ -1,150 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-	<meta charset="utf-8">
-	<title>分类</title>
-	<!-- <meta name="keywords" content=""> -->
-	<meta name="description" content="">
-	<meta name="author" content="nozer0">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="robots" content="all">
+---
+layout: page
+title: 分类
+language: zh
+group: navigation
+---
 
-	<link rel="stylesheet" type="text/css" href="/assets/default/css/style.css">
-
-	<!-- atom & rss feed
-	<link href="" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
-	<link href="" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
-	-->
-
-	<!-- Le fav and touch icons -->
-	<!-- Update these with your own images
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-	-->
-
-	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
-	<!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-</head>
-<body>
-	
-	
-
-	<header class="navbar">
-	<a class="brand" href="/">
-		nozer0's blog
-		<div class="tagline">Life may has Zero, but thought never</div>
-	</a>
-	
-		<a href="/en/">英文</a>
-	
-	<nav>
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-				
-      				<a href="/zh/archive/">档案</a>
-      			
-      		
-		
-			
-				
-					<span>分类</span>
-				
-      		
-		
-			
-		
-			
-				
-      				<a href="/zh/tags/">标签</a>
-      			
-      		
-		
-	</nav>
-</header>
-	<aside></aside>
-	<main id="main">
-	<h1>分类 </h1>
-	
-
-
-
+{% assign lang = page.language | default: 'zh' %}
+{% assign exclude_langs = 'en' %}
+{% assign locales = site.data.locale[lang] %}
+{% assign sc = site.categories %}
 
 <ul>
-
-	
-	
+{% for post in sc[lang] %}
+	{% assign c = post.categories[1] %}
+	{% unless categories contains c %}
 	<li>
-		
-		<h2 id="program">
-			编程
-			<small>2</small>
+		{% assign categories = categories | append: ' ' | append: c %}
+		<h2 id="{{ c }}">
+			{% if locales[c] %}{{ locales[c] }}{% else %}{{ c }}{% endif %}
+			<small>{{ sc[c] | map: 'language' | join: ' ' | remove: exclude_langs | split: ' ' | size }}</small>
 		</h2>
-		
-
-	
-
-
-
-
-
-
-	
-
-
-<ul class="posts">
-	
-		
-	
-
-	
-		
-		<li>
-			<a href="/zh/program/how-to-use-git/">如何使用Git</a>
-		</li>
-		
-	
-		
-	
-		
-		<li>
-			<a href="/zh/program/how-to-use-svn/">如何使用SVN</a>
-		</li>
-		
-	
-		
-	
-</ul>
+		{% include categories.html category=c next=3 %}
 	</li>
-	
-
-	
-	
-
+	{% endunless %}
+{% endfor %}
 </ul>
-</main>
-	<footer>
-	&copy; 2014 ~ <br>
-	<a href="mailto:c.nozer0@gmail.com">nozer0</a>
-</footer>
-</body>
-</html>

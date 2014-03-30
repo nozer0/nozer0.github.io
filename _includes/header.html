@@ -1,0 +1,22 @@
+<header class="navbar">
+	<a class="brand" href="/">
+		{{ site[language].title }}
+		<div class="tagline">{{ site[language].tagline }}</div>
+	</a>
+	{% if language == 'en' %}
+		<a href="/zh/">Chinese</a>
+	{% else %}
+		<a href="/en/">英文</a>
+	{% endif %}
+	<nav>
+		{% for p in site.pages %}
+			{% if p.group == 'navigation' and p.language == language %}
+				{% if page.url == p.url %}
+					<span>{{ p.title }}</span>
+				{% else %}
+      				<a href="{{ p.url | remove: 'index.html' }}">{{ p.title }}</a>
+      			{% endif %}
+      		{% endif %}
+		{% endfor %}
+	</nav>
+</header>

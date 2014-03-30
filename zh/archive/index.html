@@ -1,138 +1,36 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-	<meta charset="utf-8">
-	<title>档案</title>
-	<!-- <meta name="keywords" content=""> -->
-	<meta name="description" content="">
-	<meta name="author" content="nozer0">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="robots" content="all">
+---
+layout: page
+title : 档案
+language: zh
+group: navigation
+---
 
-	<link rel="stylesheet" type="text/css" href="/assets/default/css/style.css">
-
-	<!-- atom & rss feed
-	<link href="" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
-	<link href="" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
-	-->
-
-	<!-- Le fav and touch icons -->
-	<!-- Update these with your own images
-	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-	-->
-
-	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
-	<!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-</head>
-<body>
-	
-	
-
-	<header class="navbar">
-	<a class="brand" href="/">
-		nozer0's blog
-		<div class="tagline">Life may has Zero, but thought never</div>
-	</a>
-	
-		<a href="/en/">英文</a>
-	
-	<nav>
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-				
-					<span>档案</span>
-				
-      		
-		
-			
-				
-      				<a href="/zh/categories/">分类</a>
-      			
-      		
-		
-			
-		
-			
-				
-      				<a href="/zh/tags/">标签</a>
-      			
-      		
-		
-	</nav>
-</header>
-	<aside></aside>
-	<main id="main">
-	<h1>档案 </h1>
-	
-
+{% assign lang = page.language | default: 'zh' %}
+{% assign posts = site.posts %}
 
 <ul class="posts">
-
-	
-		
-		
-		
-			
-			
-			<li><h2>2014</h2><ul>
-		
-
-		
-			
-			
-			<li><h3>03</h3><ul>
-		
-
-		<li><a href="/zh/program/how-to-use-git/">如何使用Git</a></li>
-	
-
-	
-
-	
-		
-		
-		
-
-		
-			
+{% for post in posts %}
+	{% if post.language == lang %}
+		{% assign ny = post.date | date: '%Y' %}
+		{% assign nm = post.date | date: '%m' %}
+		{% if ny != y %}
+			{% if y %}
 			</ul></li>
-			
-			
-			<li><h3>02</h3><ul>
-		
+			{% endif %}
+			{% assign y = ny %}
+			<li><h2>{{ y }}</h2><ul>
+		{% endif %}
 
-		<li><a href="/zh/program/how-to-use-svn/">如何使用SVN</a></li>
-	
+		{% if nm != m %}
+			{% if m %}
+			</ul></li>
+			{% endif %}
+			{% assign m = nm %}
+			<li><h3>{{ m }}</h3><ul>
+		{% endif %}
 
-	
-
+		<li><a href="{{ post.url }}">{{ post.title }}</a></li>
+	{% endif %}
+{% endfor %}
 	</ul></li></ul></li>
 </ul>
-</main>
-	<footer>
-	&copy; 2014 ~ <br>
-	<a href="mailto:c.nozer0@gmail.com">nozer0</a>
-</footer>
-</body>
-</html>

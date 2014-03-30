@@ -1,0 +1,46 @@
+---
+theme : default
+---
+
+<!DOCTYPE html>
+<html lang="{{ page.language }}">
+<head>
+	<meta charset="utf-8">
+	<title>{{ page.title }}</title>
+	<!-- <meta name="keywords" content="{{ page.keywords }}"> -->
+	<meta name="description" content="{{ page.description }}">
+	<meta name="author" content="{{ site.author.name }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="all">
+
+	<link rel="stylesheet" type="text/css" href="/assets/{{ page.theme }}/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/assets/{{ page.theme }}/css/syntax.css">
+
+	<!-- atom & rss feed
+	<link href="{{ BASE_PATH }}{{ site.JB.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+	<link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+	-->
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	{% assign language = page.language | default: 'en' %}
+	{% assign locales = site.data.locale[language] %}
+
+	{% include header.html %}
+	{% include aside.html %}
+	{{ content }}
+	{% include footer.html %}
+</body>
+</html>

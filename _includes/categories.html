@@ -1,0 +1,45 @@
+{% assign lang = page.language %}
+{% if lang == 'en' %}
+	{% assign exclude = 'zh' %}
+{% else %}
+	{% assign exclude = 'en' %}
+{% endif %}
+{% assign category = include.category %}
+{% assign posts = site.categories[category] %}
+{% assign next = include.next %}
+
+{% if next %}
+	{% assign subs = posts | map: 'categories' | join: ' ' | remove: 'en' | remove: 'zh' | remove: category | split: ' ' %}
+{% endif %}
+
+<ul class="posts">
+	{% if subs %}
+		{% for cat in subs %}
+			{% assign _posts = site.categories[cat] %}
+			{% if _posts %}
+			<li>
+				<h{{ next }} id="{{ cat }}">
+					<!-- <a href="{{ page.url | replace: 'index.html', cat }}/"></a> -->
+					{{ cat }} <small>{{ _posts | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</small></h{{ next }}>
+				<ul>
+					{% for post in _posts %}
+						{% if post.language == lang %}
+						<li>
+							<a href="{{ post.url }}">{{ post.title }}</a>
+						</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</li>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+
+	{% for post in posts %}
+		{% if post.language == lang and post.categories.last == category %}
+		<li>
+			<a href="{{ post.url }}">{{ post.title }}</a>
+		</li>
+		{% endif %}
+	{% endfor %}
+</ul>

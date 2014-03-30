@@ -1,0 +1,38 @@
+permalink: /:categories/:title/
+relative_permalinks: false
+
+exclude: [".rvmrc", ".rbenv-version", "Rakefile", "changelog.md"]
+pygments: true
+#markdown: redcarpet
+#redcarpet:
+#  extensions: ["fenced_code_blocks", "tables"]
+
+# Themes are encouraged to use these universal variables
+# so be sure to set them if your theme uses them.
+#
+title: nozer0's blog
+tagline: Life may has Zero, but thought never
+
+en:
+  title: nozer0's blog
+  tagline: Life may has Zero, but thought never
+zh:
+  title: nozer0的博客
+  tagline: 生有尽时思无涯
+
+author:
+  name: nozer0
+  email: c.nozer0@gmail.com
+  github: nozer0
+  twitter: nozer0x
+  feedburner: feedname
+
+# The production_url is only used when full-domain names are needed
+# such as sitemap.txt
+# Most places will/should use BASE_PATH to make the urls
+#
+# If you have set a CNAME (pages.github.com) set your custom domain here.
+# Else if you are pushing to username.github.io, replace with your username.
+# Finally if you are pushing to a GitHub project page, include the project name at the end.
+#
+production_url : http://nozer0.github.io

@@ -1,0 +1,27 @@
+en:
+  Index: Index
+  Archive: Archive
+  Categories: Categories
+  Pages: Pages
+  Tags: Tags
+
+  top: Top
+  prev: Previous
+  next: Next
+
+  program: program
+
+zh:
+  Index: 首页
+  Archive: 档案
+  Categories: 分类
+  Pages: 页面
+  Tags: 标签
+
+  top: 顶
+  prev: 前篇
+  next: 后篇
+
+  program: 编程
+  history: 历史
+  other: 杂类

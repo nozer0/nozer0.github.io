@@ -1,0 +1,12 @@
+
+{% for post in site.posts %}
+	{% if post.layout != 'list' and post.categories[0] == page.language %}
+	<section>
+		<hgroup>
+			<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+			<span>{{ post.date | date: '%Y-%m-%d' }}</span>
+		</hgroup>
+		{{ post.excerpt }}
+	</section>
+	{% endif %}
+{% endfor %}

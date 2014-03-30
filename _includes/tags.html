@@ -1,0 +1,11 @@
+{% if lang == 'en' %}
+	{% assign exclude = 'zh' %}
+{% else %}
+	{% assign exclude = 'en' %}
+{% endif %}
+
+<div class="tags_box">
+{% for tag in include.tags %}
+	<a href="/{{ lang }}/tags/#{{ tag }}">{{ tag }} <small>{{ site.tags[tag] | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</small></a>
+{% endfor %}
+</div>
