@@ -23,7 +23,7 @@ body {
 	width: 960px;
 	background: #BDC4C4;
 	color: #434747;
-	font: 400 14px/1.5 helvetica, arial, \5b8b\4f53, sans-serif;
+	font: 400 14px/1.8 helvetica, arial, \5b8b\4f53, sans-serif;
 }
 
 h1 { font-size: 2em; }
@@ -93,11 +93,18 @@ blockquote {
 table {
 	background: #EEE;
 	margin: 1em 2em;
+	border-spacing: 0;
+	border-collapse: collapse;
 }
 
 table td, table th {
 	border: 1px solid;
 	padding: 0.2em 0.5em;
+	height: 1em;
+}
+
+tbody tr:nth-child(2n+1) {
+	background: #DDD;
 }
 
 /* header */
@@ -140,11 +147,6 @@ header.navbar {
 }
 
 .posts h2 { margin: 0; }
-
-.content {
-	font-size: 16px;
-	line-height: 1.8em;
-}
 
 .content a {
 	color: #366;
