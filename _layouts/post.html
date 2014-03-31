@@ -48,7 +48,7 @@ layout: default
 	{% for post in posts %}
 		{% if post.id == page.id %}
 			{% if forloop.first == true %}
-				<a class="prev disabled">&larr; {{ locales.prev }}</a>
+				<a class="prev disabled">&larr; {{ locales.prev_post }}</a>
 			{% else %}
 				{% assign i = forloop.index0 | minus: 1 %}
 				{% assign p = posts[i] %}
@@ -56,7 +56,7 @@ layout: default
 			{% endif %}
 
 			{% if forloop.last == true %}
-				<a class="next disabled">&rarr; {{ locales.next }}</a>
+				<a class="next disabled">&rarr; {{ locales.next_post }}</a>
 			{% else %}
 				{% assign p = posts[forloop.index] %}
 				<a class="next" href="{{ p.url }}" title="{{ p.title }}">&rarr; {{ p.title }}</a>

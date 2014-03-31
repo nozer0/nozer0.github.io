@@ -6,8 +6,10 @@ en:
   Tags: Tags
 
   top: Top
-  prev: Previous
+  prev: Prev
   next: Next
+  prev_post: Previous
+  next_post: Next
 
   program: program
 
@@ -19,8 +21,10 @@ zh:
   Tags: 标签
 
   top: 顶
-  prev: 前篇
-  next: 后篇
+  prev: 前
+  next: 后
+  prev_post: 前篇
+  next_post: 后篇
 
   program: 编程
   history: 历史
