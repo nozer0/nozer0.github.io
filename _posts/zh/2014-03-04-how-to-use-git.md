@@ -7,7 +7,7 @@ tags: VCS Git 窥径
 
 description: Git使用笔记, 可做简单手册检索
 ---
-
+{{ site | debug }}
 分享本人在使用Git的过程中积累的一些笔记。
 
 简单索引:
@@ -34,19 +34,20 @@ description: Git使用笔记, 可做简单手册检索
 
 - [`git status`, `git diff`, ... -> 一些帮助检查版本信息之类的辅助命令。](#auxiliary_commands)
 
-- [附带内容](#additional_info)
+- [附带内容](#addition)
 
 - [SVN对比表](#compare_table)
 
 
 - - -
-## 安装(Install) ##
+<a id="install"></a>
+## 安装 ##
 
 安装Git最简单的方法就是从[官网](http://git-scm.com/downloads)下载安装程序。
 
 或者我们也可以选择使用一些安装包管理工具，比如Debian的'apt-get'，或OSX下的'port'和'brew'之类。在安装前请先确认是否已安装所需的其他组件。
 
-```bash
+```sh
 	# ubuntu
 	apt-get install git
 	# mac
@@ -55,17 +56,18 @@ description: Git使用笔记, 可做简单手册检索
 
 如果是之前已经安装了Git，可以使用以下命令进行升级。
 
-```bash
+```sh
 	git clone git://git.kernel.org/pub/scm/git/git.git
 ```
 
 
 - - -
-## 配置(Setup) ##
+<a id="setup"></a>
+## 配置 ##
 
 在开始使用Git之前，我们需要先设置一些相关信息。
 
-```bash
+```sh
 	# 将'nozer0'和'c.nozer0@gmail.com'替换成你的信息
 	git config --global user.name nozer0
 	git config --global user.email c.nozer0@gmail.com
@@ -73,17 +75,18 @@ description: Git使用笔记, 可做简单手册检索
 
 或者用编辑器一次性更改所有配置。
 
-```bash
+```sh
 	git config --global -e
 ```
 
 
 - - -
-## 开始(Launch) ##
+<a id="launch"></a>
+## 开始 ##
 
 通常我们需要先从远程仓库中取得数据，这个操作和其他如CVS或Subversion之类的VCS的'checkout'操作非常类似。
 
-```bash
+```sh
 	# 克隆远程仓库
 	git clone https://github.com/nozer0/one-piece.git
 	git clone /usr/local/codes/one-piece ./op
@@ -94,7 +97,7 @@ description: Git使用笔记, 可做简单手册检索
 
 或者，我们也可以选择初始化一个目录后，再设置需要连接的远程仓库。
 
-```bash
+```sh
 	# 创建'.git'目录
 	git init
 	git remote add origin https://github.com/nozer0/one-piece.git
@@ -102,7 +105,8 @@ description: Git使用笔记, 可做简单手册检索
 
 
 - - -
-## 工作循环(Working cycle) ##
+<a id="working_cycle"></a>
+## 工作循环 ##
 
 由于Git是所谓的DVCS（分布式版本控制系统），所以拥有本地仓库，和另外一个称之为'index'或'staged'的区域，用来保存那些跟踪但还未提交的文件信息。相对的，那些新增或修改的还没有进入版本控制的文件，我们称之为'unstaged'文件。
 
@@ -113,13 +117,14 @@ description: Git使用笔记, 可做简单手册检索
 	     ^                  ^      checkout       |
 	     +------------------+---------------------+
 
-### 更新(Update) ###
+<a id="update"></a>
+### 更新 ###
 
 首先，我们要从远程仓库将最新代码更新到本地。
 
 第一步，使用`git fetch`命令将代码同步到本地仓库。
 
-```bash
+```sh
 	git fetch
 	# 从远程取得'origin/master~2'为止的commit数据到本地'foo'分支
 	git fetch origin master~2:foo
@@ -127,7 +132,7 @@ description: Git使用笔记, 可做简单手册检索
 
 然后，我们可以选择合并(merge)还是衍合(rebase)远程数据，或者直接检出远程数据覆盖工作目录。可以在下一节[分支](#branch_)看到更详细的说明。
 
-```bash
+```sh
 	# 保留本地修改时使用合并
 	git merge origin/master
 	# 或者直接应用远程数据
@@ -136,7 +141,7 @@ description: Git使用笔记, 可做简单手册检索
 
 Git还提供了一个一步到位的命令，`git pull`。
 
-```bash
+```sh
 	# 等同于`git fetch`以及`git merge FETCH_HEAD`
 	git pull
 	# 采用衍合代替合并
@@ -145,11 +150,12 @@ Git还提供了一个一步到位的命令，`git pull`。
 	git pull origin foo:bar
 ```
 
-### 更改(Change) ###
+<a id="change"></a>
+### 更改 ###
 
 OK，现在我们可以开始在工作目录中做更改，并使用`git add`或其他的命令提交到index区域。
 
-```bash
+```sh
 	# 在前后都使用`git status`，看看有何不同
 	# 修改
 	git status
@@ -169,11 +175,12 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 	git add new.c
 ```
 
-### 回复(Revert) ###
+<a id="revert"></a>
+### 回复 ###
 
 有时候，我们可能提交失误，或者想回复最近的更改，Git同样提供了相应的命令来回复更改。
 
-```bash
+```sh
 	# 回复index，但保留工作目录中的更改
 	git reset text.txt
 	# 回复到前2个提交时的状态
@@ -185,13 +192,14 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 	git reset --hard
 ```
 
-### 提交(Commit) ###
+<a id="commit"></a>
+### 提交 ###
 
 比起其他的VCS，Git多了个本地仓库，我们需要比普通的提交多一个步骤以将更改提交到远程。
 
 如果所有的更改已经是'staged'状态，就像一般的做法一样，我们可以用`git commit`将更改提交到本地仓库。
 
-```bash
+```sh
 	git commit -m 'first commit'
 	# 如果文件之前已经递交到index，可以省略`git add`步骤
 	git commit -am 'commit again' test.txt
@@ -199,13 +207,13 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 如果我们在提交后发现遗漏了某些更改或文件，可以使用下面的命令修改最近的一次提交。
 
-```bash
+```sh
 	git commit --amend
 ```
 
 要注意的是，如果文件之前已经是'staged'，提交时会采用工作目录的版本，而不是index中的版本。比如
 
-```bash
+```sh
 	echo 1 > test
 	git add test
 	echo 2 >> test
@@ -215,7 +223,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 当我们需要将本地仓库的更改提交到远程仓库时，请使用`git push`命令。
 
-```bash
+```sh
 	git push
 	# 同步'HEAD~2' commit到远程的'origin/foo'分支
 	git push origin HEAD~2:foo
@@ -223,11 +231,12 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-## 分支(Branch) ##
+<a id="branch"></a>
+## 分支 ##
 
 在Git中，分支好比一个指向某个commit的别名，因此在Git中，分支的使用频率相当高，开发新功能时，我们使用分支；修复bug，还是分支，其他很多的情况，同样是分支。总之，'branch early, and branch often'（早用多用 @_@!! ）。
 
-```bash
+```sh
 	# 显示所有分支
 	git branch -a
 	# 基于'HEAD~2'创建分支'new'
@@ -242,7 +251,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 实际使用时，我们会同时存在很多分支，这就需要使用`git checkout`在不同分支间切换。
 
-```bash
+```sh
 	# 切换到master分支并更新index，同时HEAD也指向该分支
 	git checkout master
 	# 创建一个分支后，立即切换到刚创建的分支
@@ -253,7 +262,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 在需要重新排布分支时，Git提供了`merge`，`rebase`和`cherry-pick`三种不同模式。让我们用具体的例子来看到底有何区别。
 
-```bash
+```sh
 	# C0--C1 <- master*
 	#  \
 	#  C2--C3 <- develop
@@ -281,11 +290,12 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-## 标签(Tag) ##
+<a id="tag"></a>
+## 标签 ##
 
 标签是另一种指向commit的别名，通常用来标注某一个里程碑，开发版本之类的的东东，和'Branch'很相似。
 
-```bash
+```sh
 	# 显示所有标签
 	git tag -a
 	# 给HEAD~2打上‘v1.0'标签
@@ -298,11 +308,12 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-## 辅助命令(Auxiliary Commands) ##
+<a id="auxiliary_commands"></a>
+## 辅助命令 ##
 
 之前我们已经使用过了`git status`命令，我们还可以用`git log`命令来查看更多的历史信息。
 
-```bash
+```sh
 	git log
 	# 显示详细的diff信息
 	git log -p
@@ -316,7 +327,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 我们也可以使用`git diff`命令来比较两个状态的不同。
 
-```bash
+```sh
 	# 比较index和工作目录
 	git diff
 	# 比较已提交的更改和index
@@ -327,7 +338,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 `git show`和`git blame`可以让我们查看更进一步的具体信息。
 
-```bash
+```sh
 	git show 4c18
 	# 显示每一行的相关信息
 	git blame readme.txt
@@ -338,7 +349,8 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-## 附带内容(Additional Info) ##
+<a id="addition"></a>
+## 附带内容 ##
 
 提交(Commit)，是Git中最重要的概念，我们会在许多命令中需要指定相关的commit，有多种不同的方式来表示一个commit。假设，我们目前的提交如下。
 
@@ -356,7 +368,8 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-## 对比表(Compare Table) ##
+<a id="compare_table"></a>
+## 对比表 ##
 
 下面列举了SVN和Git相似的命令，以便于之前使用过SVN的同学理解。
 

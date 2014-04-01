@@ -29,10 +29,11 @@ The index as cheetsheet:
 
 - [`svn status`, `svn diff`, ... -> Auxiliary Commands to help us check version info.](#auxiliary_commands)
 
-- [Additional info](#additional_info)
+- [Additional info](#addition)
 
 
 - - -
+<a id="concepts"></a>
 ## Concepts ##
 
 - Repository
@@ -49,11 +50,12 @@ The index as cheetsheet:
 
 
 - - -
+<a id="launch"></a>
 ## Launch ##
 
 Of course, the first thing we should do is to make a working copy from remote repository by using `svn checkout`
 
-```bash
+```sh
 	# checkout whole project
 	svn co http://www.nozer0.com/one-piece --username nozer0 --password nozer0
 	# checkout revision 10 of trunk only to trunk_r10 directory
@@ -62,6 +64,7 @@ Of course, the first thing we should do is to make a working copy from remote re
 
 
 - - -
+<a id="working_cycle"></a>
 ## Working Cycle ##
 
 This is the simple form for normal working cycle.
@@ -73,19 +76,18 @@ This is the simple form for normal working cycle.
 	|  copy   | <------- | Repository |
 	+---------+  update  +------------+
 
+<a id="update"></a>
 ### Update ###
 
 We'd like to suggest to update first every time before starting works, use `svn update` to reach the objective, and also do update operation again before commit.
 
 Sometimes, we may meet conflicts, that means someone else already did changes on what we are working now and committed to repository already before.
-
 Here, the 'accept' option may give help to us, we can choose one of 'working', 'base', 'mine-conflict(mc)', 'theirs-conflict(tc)', 'mine-full(mf)', 'theirs-full(tf)', 'edit(e)' as our resolve mode.
-
 Or we can choose 'postpone(p)' to resolve conflicts later, after we manually edit the file, we can use `svn resolve` command to notify resolving.
 
 Let's see some codes.
 
-```bash
+```sh
 	# update to BASE
 	svn up
 	# update to revision 5
@@ -100,11 +102,12 @@ Let's see some codes.
 	svn resolve conf.txt --accept working
 ```
 
+<a id="change"></a>
 ### Change ###
 
 There are several commands can help us to do changes in working copy area, and apply these changes to repsitory when next commit. Furthermore, we can use `svn revert` to revert any changes we do not want.
 
-```bash
+```sh
 	svn rm old.txt
 	# add the new created files under the version control
 	svn add new.txt new2.txt
@@ -120,7 +123,7 @@ There are several commands can help us to do changes in working copy area, and a
 
 And we can also change on remote repository directly even without regarding working area.
 
-```bash
+```sh
 	svn mkdir ^/branches
 	# create branch 'b1' based on revision 5 of trunk
 	svn cp ^/trunk@5 ^/branches/b1 -m 'create branch b1 with revision 5'
@@ -129,21 +132,23 @@ And we can also change on remote repository directly even without regarding work
 	svn rm http://www.nozer0.com/svn/branches/b2
 ```
 
+<a id="commit"></a>
 ### Commit ###
 
 If we want to upload the changes to remote repository, we use `svn commit`, remember that we'd better to update again before commit. And also, use `svn diff` to check what changes you did between working copy and repository is a good habit you should have.
 
-```bash
+```sh
 	svn up
 	svn diff
 	svn ci -m 'what changes you have done'
 ```
 
+<a id="revert"></a>
 ### Revert commit ###
 
 Sometimes, we may want to revert the changes of some commits to repository, and the new command we will meet is called `svn merge`. Actually, in contrast to the normal usage to merge specified changes from remote path to current working copy by appending '-r M:N' or '-c N' options, which is more often used in branch operations we introduce next, however, it can also be used to do reverse merge by giving '-r N:M' or '-c -N' options.
 
-```bash
+```sh
 	svn ci -m 'some changes'
 	# output:
 	# 	Committed revision 23.
@@ -155,6 +160,7 @@ Sometimes, we may want to revert the changes of some commits to repository, and 
 
 
 - - -
+<a id="branch"></a>
 ## Branch ##
 
 What is branch?
@@ -173,7 +179,7 @@ Either 'branches' or 'tags' are based on 'trunk', another words, coping from 'tr
 
 Let us go to a practical scene. We're working in a project, one day, I am asked to implement a new feature, this will take a little long time, the good choice is to work on a new branch.
 
-```bash
+```sh
 	cd trunk
 	svn cp ^/trunk ^/branches/feature1 -m 'create branch feature1'
 	svn co ^/branches/feature1 ../feature1
@@ -191,7 +197,7 @@ Let us go to a practical scene. We're working in a project, one day, I am asked 
 
 Meanwhile, other guys also do some works on trunk, I need to merge part of that, this is always called as 'cherry-pick' merge.
 
-```bash
+```sh
 	svn up
 	# r0..r10..r18 <- trunk
 	#      \
@@ -213,7 +219,7 @@ Meanwhile, other guys also do some works on trunk, I need to merge part of that,
 
 After several days, all new feature work is done, and want to sync all trunk changes for test.
 
-```bash
+```sh
 	svn up
 	# to see revisions already merged
 	svn mergeinfo ^/trunk
@@ -229,7 +235,7 @@ After several days, all new feature work is done, and want to sync all trunk cha
 
 The last step, merge back to trunk and delete the branch. Please pay notice that 'reintegrate' option is required for this situation, used to indicate merge the change differences back to parent path from branch between the latest synchronise revision and 'HEAD'.
 
-```bash
+```sh
 	svn ci -m 'feature1 complete'
 	cd ../trunk
 	svn up
@@ -246,19 +252,20 @@ The last step, merge back to trunk and delete the branch. Please pay notice that
 
 Sometimes, we may need to switch from one branch to another, `svn switch` is what we want.
 
-```bash
+```sh
 	svn sw ^/branches/feature2
 ```
 
 
 - - -
+<a id="auxiliary_commands"></a>
 ## Auxiliary Commands ##
 
 Some commands used to help us to check the svn status and history info.
 
 `svn status` shows current status in working copy area, and `svn info` shows detail info of given file.
 
-```bash
+```sh
 	# show status under 'src'
 	svn st src/
 	# output:
@@ -270,7 +277,7 @@ Some commands used to help us to check the svn status and history info.
 
 Already mentioned a little above, `svn diff` is the command we often use to get the difference between 2 states.
 
-```bash
+```sh
 	# compare difference between BASE and working copy
 	svn di
 	# compare difference between revision 3 and 5 for 'readme.txt' and 'a.js'
@@ -286,7 +293,7 @@ Already mentioned a little above, `svn diff` is the command we often use to get 
 
 Using `svn log` to show the changed logs we want to know.
 
-```bash
+```sh
 	# from top to bottom, the next one output more details than previous.
 	svn log -q
 	# show comment strings
@@ -302,7 +309,7 @@ Using `svn log` to show the changed logs we want to know.
 
 `svn cat`, `svn blame` and `svn list` can let us check the history content or structure by assigning revision argument.
 
-```bash
+```sh
 	# show content of 'readme.txt' in revision 5
 	svn cat readme.txt -r 5
 
@@ -318,6 +325,7 @@ Using `svn log` to show the changed logs we want to know.
 
 
 - - -
+<a id="addition"></a>
 ## Additional info ##
 
 As we can see from above, most commands can support '-r' argument, besides the normal way to set revision number like `-r 5`, we can also use more flex ways.
@@ -326,7 +334,7 @@ Subversion predefines several keywords working similiarlly as numbers. 'HEAD' in
 
 We can also give date time if we are not sure the revision number by wrapping with braces.
 
-```bash
+```sh
 	# show difference between last commit revision and previous one
 	svn diff readme.txt -r PREV:COMMITTED
 	# show logs between the given date period
@@ -334,10 +342,9 @@ We can also give date time if we are not sure the revision number by wrapping wi
 ```
 
 Sometimes, we can see the way assigning revision like this, 'url@rev'. Actually, Subversion has special names for these two, 'peg revision' for '@' synmal way, and 'operative revision' for '-r' option.
-
 '@' doesn't support the predefined keywords showing above. And more important, if we renamed one file, for example, 'what.js' in revision 1 to 'where.js' in revision 5.
 
-```bash
+```sh
 	# error, no such file found
 	svn cat -r 1 what.js
 	# that is what we want

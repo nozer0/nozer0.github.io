@@ -29,11 +29,12 @@ description: SVN使用笔记, 可做简单手册检索
 
 - [`svn status`, `svn diff`, ... -> 一些帮助检查版本信息之类的辅助命令。](#auxiliary_commands)
 
-- [附带内容](#additional_info)
+- [附带内容](#addition)
 
 
 - - -
-## 概念(Concepts) ##
+<a id="concepts"></a>
+## 概念 ##
 
 - 仓库(Repository)
 
@@ -49,11 +50,12 @@ description: SVN使用笔记, 可做简单手册检索
 
 
 - - -
-## 开始(Launch) ##
+<a id="launch"></a>
+## 开始 ##
 
 首先，我们使用`svn checkout`将文件从远程仓库拷贝到本地的工作目录。
 
-```bash
+```sh
 	# 拷贝整个项目到one-piece目录
 	svn co http://www.nozer0.com/one-piece --username nozer0 --password nozer0
 	# 拷贝版本10的trunk到本地trunk_r10目录
@@ -61,7 +63,8 @@ description: SVN使用笔记, 可做简单手册检索
 ```
 
 - - -
-## 工作循环(Working cycle) ##
+<a id="working_cycle"></a>
+## 工作循环 ##
 
 简单的工作循环如下图。
 
@@ -72,7 +75,8 @@ description: SVN使用笔记, 可做简单手册检索
 	|  Area   | <------- | Repository |
 	+---------+  update  +------------+
 
-### 更新(Update) ###
+<a id="update"></a>
+### 更新 ###
 
 使用`svn update`在开始工作时和提交之前先做一次更新是一个良好的习惯。
 
@@ -80,7 +84,7 @@ description: SVN使用笔记, 可做简单手册检索
 
 让我们看一些示例代码。
 
-```bash
+```sh
 	# 更新到BASE
 	svn up
 	# 更新到修订版本5
@@ -95,11 +99,12 @@ description: SVN使用笔记, 可做简单手册检索
 	svn resolve conf.txt --accept working
 ```
 
-### 更改(Change) ###
+<a id="change"></a>
+### 更改 ###
 
 Subversion提供了多个命令供我们修改工作目录结构，并且可以使用`svn revert`来回滚之前的更改。
 
-```bash
+```sh
 	svn rm old.txt
 	# 将新建文件加入版本控制
 	svn add new.txt new2.txt
@@ -115,7 +120,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 我们也可以通过这些命令来直接更改远程目录，甚至不需要有相应的本地工作目录。
 
-```bash
+```sh
 	svn mkdir ^/branches
 	# 拷贝修订版本为5的trunk下所有文件到branches/b1目录
 	svn cp ^/trunk@5 ^/branches/b1 -m 'create branch b1 with revision 5'
@@ -124,21 +129,23 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 	svn rm http://www.nozer0.com/svn/branches/b2
 ```
 
-### 提交(Commit) ###
+<a id="commit"></a>
+### 提交 ###
 
 使用`svn commit`将所做更改提交到远程仓库，在提交之前记得先做更新操作。当然，能在提交前用`svn diff`进行比较操作则更是一个好习惯。
 
-```bash
+```sh
 	svn up
 	svn diff
 	svn ci -m 'what changes you have done'
 ```
 
-### 回复已提交更改(Revert commit) ###
+<a id="revert"></a>
+### 回复已提交更改 ###
 
 有时候，我们想要回复已经提交的更改，这时候就可以使用`svn merge`。事实上，就像常规理解的那样，该命令更多的是用在接下来我们要介绍的分支相关操作中，我们可以使用'-r M:N'或'-c N'来选择合并特定的一些更改。然而，我们同样可以使用'-r N:M'或'-c -N'的选项，做反向的合并操作来实现撤销已提交更改的效果。
 
-```bash
+```sh
 	svn ci -m 'some changes'
 	# 输出:
 	# 	Committed revision 23.
@@ -150,6 +157,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 
 - - -
+<a id="branch"></a>
 ## 分支(Branch) ##
 
 何为分支？
@@ -168,7 +176,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 让我们举个实际例子。比如说我们有几个人在同一个项目组，有一天，我被安排实现一个新的功能，这个功能会花费较长时间，所以我建立了一个新的分支，并在新分支上工作。
 
-```bash
+```sh
 	cd trunk
 	svn cp ^/trunk ^/branches/feature1 -m 'create branch feature1'
 	svn co ^/branches/feature1 ../feature1
@@ -186,7 +194,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 同时，其余的同学也会在主干上做些修改，我需要合并其中的一部分到新分支上，通常这被称为选择合并(cherry-pick merge)。
 
-```bash
+```sh
 	svn up
 	# r0..r10..r18 <- trunk
 	#      \
@@ -208,7 +216,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 几天后，新功能开发完成，我需要同步所有主干的改动到分支以便测试。
 
-```bash
+```sh
 	svn up
 	# 显示上次合并的版本
 	svn mergeinfo ^/trunk
@@ -224,7 +232,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 最后，测试完成，合并分支回主干并删除该分支。请注意'reintegrate'选项，用来指示将分支上从主干最新同步的版本开始到最近一个版本为止的所有更改合并到主干副本。
 
-```bash
+```sh
 	svn ci -m 'feature1 complete'
 	cd ../trunk
 	svn up
@@ -241,19 +249,20 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 当然，某些时候，可能我们希望在不同的分支间切换, 可以使用`svn switch`来达成目的。
 
-```bash
+```sh
 	svn sw ^/branches/feature2
 ```
 
 
 - - -
-## 辅助命令(Auxiliary Commands) ##
+<a id="auxiliary_commands"></a>
+## 辅助命令 ##
 
 Subversion同样提供了一些辅助命令来帮助我们查询当前状态或历史信息。
 
 我们通常使用`svn status`来查询工作目录当前的状态信息，`svn info`查询对应文件的具体信息。
 
-```bash
+```sh
 	# 查询'src'目录的状态信息
 	svn st src/
 	# 输出:
@@ -265,7 +274,7 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 
 之前也提到过，`svn diff`也会被经常使用，比较文件区别。
 
-```bash
+```sh
 	# 比较BASE和当前工作目录
 	svn di
 	# 比较'readme.txt'和'a.js'的修订版本3和5
@@ -281,7 +290,7 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 
 使用`svn log`来查询历史记录。
 
-```bash
+```sh
 	# 从上至下，显示信息越来越详细
 	svn log -q
 	# 显示提交的注释
@@ -297,7 +306,7 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 
 `svn cat`，`svn blame`和`svn list`可以帮助我们查看文件具体内容和结构的历史信息。
 
-```bash
+```sh
 	# 显示修订版本5的'readme.txt'内容
 	svn cat readme.txt -r 5
 
@@ -313,7 +322,8 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 
 
 - - -
-## 附带内容(Additional Info) ##
+<a id="addition"></a>
+## 附带内容 ##
 
 我们可以看到之前的很多命令都带了'-r'这个参数，除了指定具体版本数字之外，我们还可以使用一些预定义的字符串来指定。
 
@@ -321,7 +331,7 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 
 如果我们不确定具体的版本数字，我们还可以使用指定时间的方式。
 
-```bash
+```sh
 	# 比较最近与上一个提交版本
 	svn diff readme.txt -r PREV:COMMITTED
 	# 显示指定时间段内的历史记录
@@ -329,10 +339,9 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 ```
 
 有时候我们也会看到这种写法，'url@rev'。事实上，Subversion有专门名称来区分，'peg revision'相对于'@'，'operative revision'相对于'-r'。
-
 ’@‘不支持上面提到的那些预定义关键字。更加重要的是，当我们重命名一个文件时，比如说，版本1时候创建了'what.js'，然后在版本5的时候改名成'where.js'。
 
-```bash
+```sh
 	# 错误，文件找不到
 	svn cat -r 1 what.js
 	# 这个才是正确的

@@ -34,18 +34,19 @@ The index as cheetsheet:
 
 - [`git status`, `git diff`, ... -> Auxiliary Commands to help us check version info.](#auxiliary_commands)
 
-- [Additional info](#additional_info)
+- [Additional info](#addition)
 
 - [Comparing table with SVN](#compare_table)
 
 - - -
+<a id="install"></a>
 ## Install ##
 
 The most simple way to install Git is to download the installer file directly from [official site](http://git-scm.com/downloads).
 
 Or we can also choose to use some package manage tools that help us to do this job, such as 'apt-get' on Debian, or 'port' and 'brew' on OSX. Ensure that we already install the depending packages (curl, zlib, openssl, expat, and libiconv) before running.
 
-```bash
+```sh
 	# for ubuntu
 	apt-get install git
 	# for mac
@@ -54,17 +55,18 @@ Or we can also choose to use some package manage tools that help us to do this j
 
 For the users who already installed Git before, try this to get latest one.
 
-```bash
+```sh
 	git clone git://git.kernel.org/pub/scm/git/git.git
 ```
 
 
 - - -
+<a id="setup"></a>
 ## Setup ##
 
 Set some configurations before we start to use Git.
 
-```bash
+```sh
 	# replace 'nozer0' and 'c.nozer0@gmail.com' to what you use
 	git config --global user.name nozer0
 	git config --global user.email c.nozer0@gmail.com
@@ -72,17 +74,18 @@ Set some configurations before we start to use Git.
 
 Or change all configurations using editor at one time.
 
-```bash
+```sh
 	git config --global -e
 ```
 
 
 - - -
+<a id="launch"></a>
 ## Launch ##
 
 Usually we need to get codes from existing remote repository first. This operation is mostly like the `checkout` operation of other VCS such as CVS or Subversion.
 
-```bash
+```sh
 	# copying files from repository
 	git clone https://github.com/nozer0/one-piece.git
 	git clone /usr/local/codes/one-piece ./op
@@ -93,7 +96,7 @@ Usually we need to get codes from existing remote repository first. This operati
 
 Or, we can also choose to init a local directory as working area first, then set remote url to be connected.
 
-```bash
+```sh
 	# create '.git' directory contains all repository info needed.
 	git init
 	git remote add origin https://github.com/nozer0/one-piece.git
@@ -101,6 +104,7 @@ Or, we can also choose to init a local directory as working area first, then set
 
 
 - - -
+<a id="working_cycle"></a>
 ## Working Cycle ##
 
 Since Git is DVCS(Distributed control version system), it has a local repository and one more place to store info of files which are tracked but uncommitted, called 'index' or 'staged' area, correspondingly, the new created or modified files out of version control are named as 'unstaged' files.
@@ -112,13 +116,14 @@ Since Git is DVCS(Distributed control version system), it has a local repository
 	     ^                  ^      checkout       |
 	     +------------------+---------------------+
 
+<a id="update"></a>
 ### Update ###
 
 First, we need 'update' latest data from remote repository to working area.
 
 Use `git fetch` command to synchronize the data from remote repository to local repository.
 
-```bash
+```sh
 	git fetch
 	# fetch 'origin/master~2' commit from remote to local 'foo' branch
 	git fetch origin master~2:foo
@@ -126,7 +131,7 @@ Use `git fetch` command to synchronize the data from remote repository to local 
 
 After that, we can choose to merge or rebase the remote changes or checkout directly. For more details, please check the next [Branch](#branch_) section.
 
-```bash
+```sh
 	# do merge work if some local changes
 	git merge origin/master
 	# or apply the remote data to working area
@@ -135,7 +140,7 @@ After that, we can choose to merge or rebase the remote changes or checkout dire
 
 Git also has a shorthand command `git pull` to update the data from remote repository to working tree in one go.
 
-```bash
+```sh
 	# shorthand one for `git fetch` and `git merge FETCH_HEAD`
 	git pull
 	# or choose 'rebase' instead of 'merge'
@@ -144,11 +149,12 @@ Git also has a shorthand command `git pull` to update the data from remote repos
 	git pull origin foo:bar
 ```
 
+<a id="change"></a>
 ### Change ###
 
 OK, now we start to do some changes in working area to index by using `git add` or other commands.
 
-```bash
+```sh
 	# try `git status` before and after this command to see the difference
 	# edit
 	git status
@@ -168,11 +174,12 @@ OK, now we start to do some changes in working area to index by using `git add` 
 	git add new.c
 ```
 
+<a id="revert"></a>
 ### Revert ###
 
 Sometimes, we may mistake to commit something, or we want to revert the recent changes, here are some commands satisify the purpose.
 
-```bash
+```sh
 	# revert change on index only, and keep in working directory
 	git reset text.txt
 	# reset to 2 commits before
@@ -184,13 +191,14 @@ Sometimes, we may mistake to commit something, or we want to revert the recent c
 	git reset --hard
 ```
 
+<a id="commit"></a>
 ### Commit ###
 
 Since there are more areas in Git than other VCS, we need to one more step to do this job instead of single 'commit' operation.
 
 After all files are staged, we can commit the changes to our local repository, yes, use `git commit` like normal.
 
-```bash
+```sh
 	git commit -m 'first commit'
 	# if the files are staged before, we can merge `add` and `commit` steps into one go
 	git commit -am 'commit again' test.txt
@@ -198,13 +206,13 @@ After all files are staged, we can commit the changes to our local repository, y
 
 Especially, if we want to change last commit, this is always happened when finding some changes forgot to give or files forgot to add after commit.
 
-```bash
+```sh
 	git commit --amend
 ```
 
 One thing to be noticed here, if the file has tracked once, it will commit with the newest one in working area instead of staged area, for example.
 
-```bash
+```sh
 	echo 1 > test
 	git add test
 	echo 2 >> test
@@ -214,7 +222,7 @@ One thing to be noticed here, if the file has tracked once, it will commit with 
 
 And after some commits done in local repository, that we want to apply these changes to remote, we use `git push`.
 
-```bash
+```sh
 	git push
 	# push 'HEAD~2' commit to the remote 'origin/foo' branch
 	git push origin HEAD~2:foo
@@ -222,11 +230,12 @@ And after some commits done in local repository, that we want to apply these cha
 
 
 - - -
+<a id="branch"></a>
 ## Branch ##
 
 Branch is just reference points to commit in Git, so it is used more frequently than others, as always said, 'branch early, and branch often'. We create new branches for developing new feature, bug fixing, or some other things.
 
-```bash
+```sh
 	# show all branches
 	git branch -a
 	# create a branch named 'new' on HEAD~2
@@ -241,7 +250,7 @@ Branch is just reference points to commit in Git, so it is used more frequently 
 
 Since we always have some branches in practise, we need to switch between them via `git checkout` command.
 
-```bash
+```sh
 	# switch to the branch and set HEAD and index based on that branch
 	git checkout master
 	# create a new branch and switch to it in one go
@@ -252,7 +261,7 @@ Since we always have some branches in practise, we need to switch between them v
 
 Here are several ways to rearrange the branches if necessary, `merge`, `rebase` or `cherry-pick`, let's see some examples to compare the difference.
 
-```bash
+```sh
 	# C0--C1 <- master*
 	#  \
 	#  C2--C3 <- develop
@@ -280,11 +289,12 @@ Here are several ways to rearrange the branches if necessary, `merge`, `rebase` 
 
 
 - - -
+<a id="tag"></a>
 ## Tag ##
 
 Tag is another type of reference to commit, usually used for milestone mark or something else, which is very similiar as 'Branch'.
 
-```bash
+```sh
 	# show all tags
 	git tag -a
 	# create a tag named 'v1.0' on HEAD~2
@@ -297,11 +307,12 @@ Tag is another type of reference to commit, usually used for milestone mark or s
 
 
 - - -
+<a id="auxiliary_commands"></a>
 ## Auxiliary Commands ##
 
 We already use the `git status` before, and `git log` can give us more detail history info.
 
-```bash
+```sh
 	git log
 	# show detail diff info
 	git log -p
@@ -315,7 +326,7 @@ We already use the `git status` before, and `git log` can give us more detail hi
 
 And we can also get the difference between 2 states by running `git diff`.
 
-```bash
+```sh
 	# compare between index and working area
 	git diff
 	# compare between commit and index
@@ -326,7 +337,7 @@ And we can also get the difference between 2 states by running `git diff`.
 
 `git show` and `git blame` can let us check more detail info if need.
 
-```bash
+```sh
 	git show 4c18
 	# more interesting, this can show commit change info for each line
 	git blame readme.txt
@@ -337,6 +348,7 @@ And we can also get the difference between 2 states by running `git diff`.
 
 
 - - -
+<a id="addition"></a>
 ## Additional info ##
 
 'Commit', is the most important concept in Git, and there are many places we need to specify the detail commit id to be used in commands, Git provides several choices for us. Assume we have such commit tree.
@@ -355,6 +367,7 @@ Git also have the same predefined keyword 'HEAD', different than other VCS like 
 
 
 - - -
+<a id="compare_table"></a>
 ## Compare Table ##
 
 As extra candy for the one who used SVN before, this is the compare table, which lists similiar commands between SVN and Git.

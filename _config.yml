@@ -2,10 +2,15 @@ permalink: /:categories/:title/
 relative_permalinks: false
 
 exclude: [".rvmrc", ".rbenv-version", "Rakefile", "changelog.md"]
+safe: true
 pygments: true
 markdown: redcarpet
 redcarpet:
-  extensions: ["no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "superscript", "footnotes"]
+  extensions: ["hard_wrap", "prettify", "no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "footnotes"]
+kramdown:
+  input: GFM
+  use_coderay: true
+
 
 # Themes are encouraged to use these universal variables
 # so be sure to set them if your theme uses them.
