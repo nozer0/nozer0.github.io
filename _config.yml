@@ -3,9 +3,9 @@ relative_permalinks: false
 
 exclude: [".rvmrc", ".rbenv-version", "Rakefile", "changelog.md"]
 pygments: true
-#markdown: redcarpet
-#redcarpet:
-#  extensions: ["fenced_code_blocks", "tables"]
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "superscript", "footnotes"]
 
 # Themes are encouraged to use these universal variables
 # so be sure to set them if your theme uses them.

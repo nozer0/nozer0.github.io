@@ -50,7 +50,7 @@ Open-closed principle. Open for extension, closed for modification.
 ## Design smells ##
 
 Good design     | Bad design
-----------------|--------------
+--------------- | -------------
 Flexibility     | Rigidity
 Robustness      | Fragility
 Reusability     | Immobility
