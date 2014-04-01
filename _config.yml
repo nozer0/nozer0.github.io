@@ -6,7 +6,7 @@ safe: true
 pygments: true
 markdown: redcarpet
 redcarpet:
-  extensions: ["hard_wrap", "prettify", "no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "footnotes"]
+  extensions: ["hard_wrap", "prettify", "no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "strikethrough", "footnotes"]
 kramdown:
   input: GFM
   use_coderay: true

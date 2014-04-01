@@ -16,6 +16,7 @@ description: 开发设计原则.
 
 ### 单一责任原则(SRP) ###
 Single responsibility principle，一次只做一件事。
+
 一个函数或方法，只实现一个单一的功能。
 
 ### 避免重复原则(DRY) ###
@@ -23,6 +24,7 @@ Don't repeat yourself，人不能两次踏进同一条河流。
 
 ### 接口分离原则(ISP) ###
 Interface segregation principle，所给必是所需。
+
 对于一个接口，如果实现的类并不需要所有方法，说明该接口应该被拆分。
 
 
@@ -31,6 +33,7 @@ Interface segregation principle，所给必是所需。
 
 ### 依赖反转原则(DIP) ###
 Dependency inversion principle，不能被人左右。
+
 上层模块不能依赖于底层；抽象不能依赖于实现。
 
 ### 接口先于实现(Interface over implementation) ###
@@ -40,16 +43,19 @@ Dependency inversion principle，不能被人左右。
 
 ### 替换原则(LSP) ###
 [Liskov] subsitution principle，子承父业。
+
 使用基类的地方，肯定能用具体子类代替。
 
 ### 迪米特法则(LoD) ###
 Law of [Demeter]，你知道的太多了。
+
 对外部对象所知信息越少，耦合越低。
 
 
 - - -
 ## 开闭原则(OCP) ##
 Open-closed principle，你可以控制我的身体，但无法控制我的思想。
+
 对扩展开放，对修改封闭。
 
 
