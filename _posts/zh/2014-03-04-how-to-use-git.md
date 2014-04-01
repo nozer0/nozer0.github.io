@@ -7,7 +7,7 @@ tags: VCS Git 窥径
 
 description: Git使用笔记, 可做简单手册检索
 ---
-{{ site | debug }}
+
 分享本人在使用Git的过程中积累的一些笔记。
 
 简单索引:
