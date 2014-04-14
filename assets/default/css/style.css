@@ -43,6 +43,7 @@ code {
 	padding: 0 5px;
 	background: #F2F8F2;
 	display: inline-block;
+	text-indent: 0;	/* p text indent side effect */
 }
 
 pre code {
