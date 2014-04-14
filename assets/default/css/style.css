@@ -23,11 +23,11 @@ body {
 	margin: 10px auto;
 	width: 960px;
 	background: #BDC4C4;
-	/*color: #434747;*/
+	color: #434747;
 	font: 400 14px/1.8 helvetica, arial, \5b8b\4f53, sans-serif;
 }
 
-h1 { font-size: 2em; }
+h1 { font-size: 2em; line-height: 1.5; margin: 0.5em 0 0; }
 h2 { font-size: 1.5em; }
 
 section { margin: 20px; }
@@ -40,8 +40,9 @@ section:before {
 
 code {
 	font: 400 12px/1.75 Monaco, \5b8b\4f53, sans-serif;
-	padding: 3px 5px;
+	padding: 0 5px;
 	background: #F2F8F2;
+	display: inline-block;
 }
 
 pre code {
@@ -155,6 +156,8 @@ header.navbar {
 
 .posts h2 { margin: 0; }
 
+.content { margin: 20px 10px; }
+
 .content a {
 	color: #366;
 	font-style: italic;
@@ -214,18 +217,19 @@ aside {
 	font-size: 2em;
 	border-top: 5px solid;
 	padding-top: 5px;
+	display: block;
+	text-align: center;
 }
 
 #side_nav a.disabled {
 	color: #677;
 }
 
-#side_nav a:after {
-	content: '';
-	display: block;
+/************ tags_box ************/
+.tags_box {
+	padding: 10px 0;
 }
 
-/************ tags_box ************/
 .tags_box a {
 	padding: 3px 6px;
 	margin: 2px;
@@ -247,4 +251,10 @@ aside {
 /************ tags ************/
 li:target h2, h2:target {
 	color: #966;
+}
+
+
+/************ comment ************/
+#disqus_thread {
+    margin: 20px;
 }

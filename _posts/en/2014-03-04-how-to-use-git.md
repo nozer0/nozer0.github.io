@@ -10,7 +10,7 @@ description: A note about how to use Git, which can be taken as a simple mannual
 
 Here are some notes I'd like to share about using Git, let's start.
 
-The index as cheetsheet:
+Take the index as cheetsheet:
 
 - [`git clone <repository path>` -> First, we need to get data from remote repository.](#launch)
 

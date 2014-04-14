@@ -182,7 +182,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 	svn co ^/branches/feature1 ../feature1
 	cd ../feature1
 
-	# edit
+	# 修改
 	svn up
 	svn ci -m 'logic codes of feature1 is done'
 	# r0..r10 <- trunk

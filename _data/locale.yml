@@ -10,6 +10,7 @@ en:
   next: Next
   prev_post: Previous
   next_post: Next
+  URL: URL
 
   program: program
 
@@ -25,6 +26,7 @@ zh:
   next: 后
   prev_post: 前篇
   next_post: 后篇
+  URL: 网址
 
   program: 编程
   history: 历史

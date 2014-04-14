@@ -70,4 +70,4 @@ Open-closed principle，你可以控制我的身体，但无法控制我的思�
 易维护(Maintainability) | 高粘度(Viscosity)
 简单(Simpleness)        | 不必要的复杂(Needless complexity)
 不重复(DRY)             | 多余的重复(Needless repetition)
-可读性高(Readability)    | 可读性差(Opacity)
+可读性高(Readability)   | 可读性差(Opacity)

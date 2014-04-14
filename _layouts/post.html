@@ -27,15 +27,17 @@ layout: default
 		{% else %}
 			{% assign id = page.id | replace_first: 'zh', 'en' %}
 		{% endif %}
-		{% for p in site.related_posts %}
+		{% for p in site.posts %}
 			{% if p.id == id %}<a href={{ p.url }}>&</a>{% endif %}
 		{% endfor %}
 	</h1>
 
+	<small>{{ locales.URL }}: <a href="{{ site.production_url | append: page.url }}">{{ site.production_url | append: page.url }}</a></small>
 	<div>
 		<span class="date">{{ page.date | date: '%Y-%m-%d' }}</span>
 		by <a href="mailto:{{ site.author.email }}">{{ site.author.name }}</a>
 	</div>
+	<br>
 	<div class="content">{{ content }}</div>
 
 	{% if page.tags != empty %}
@@ -65,3 +67,5 @@ layout: default
 	{% endfor %}
 	</div>
 </article>
+
+{% include disqus_comment %}

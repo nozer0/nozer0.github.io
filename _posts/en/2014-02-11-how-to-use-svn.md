@@ -10,7 +10,7 @@ description: A note about how to use SVN, which can be taken as a simple mannual
 
 Here are some notes for using *SVN*, for more details, `svn help` is a good choice.
 
-The index as cheetsheet:
+Take the index as cheetsheet:
 
 - [`svn checkout <repository path>` -> First, we need to have a working copy.](#launch)
 
