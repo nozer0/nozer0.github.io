@@ -14,7 +14,7 @@ group: navigation
 	{% assign n = tag[1] | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size %}
 	{% if n > 0 %}
 	<li>
-		<h2 id="{{ tag[0] }}">{{ tag[0] }}<small>{{ n }}</small></h2>
+		<h2 id="{{ tag[0] }}">{{ tag[0] }}<sup>{{ n }}</sup></h2>
 		<ul>
 		{% for post in tag[1] %}
 			{% if post.language == lang %}

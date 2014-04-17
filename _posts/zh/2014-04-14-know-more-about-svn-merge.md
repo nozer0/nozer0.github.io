@@ -5,7 +5,7 @@ categories: zh program
 language: zh
 tags: VCS SVN diff merge 探源
 
-description: SVN中各种merge的说明，以及`diff`介绍。
+description: SVN中各种merge的说明，以及`diff`介绍
 ---
 
 在之前的文章中（ [如何使用SVN](/zh/program/How-to-use-svn/) ），我们已经熟悉了一些SVN的命令。在实际协作中，`merge`命令非常重要，但是比起`update`和`commit`等操作稍显复杂。这次，就让我们来更深入的了解一下`merge`命令。

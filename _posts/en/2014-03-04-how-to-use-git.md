@@ -109,12 +109,14 @@ Or, we can also choose to init a local directory as working area first, then set
 
 Since Git is DVCS(Distributed control version system), it has a local repository and one more place to store info of files which are tracked but uncommitted, called 'index' or 'staged' area, correspondingly, the new created or modified files out of version control are named as 'unstaged' files.
 
+```
 	+---------+   add   +-------+  commit  +------------+  push   +------------+
 	| Working | ------> | Index | -------> |   Local    | ------> |   Remote   |
 	|  Area   | <------ | Area  |          | Repository | <------ | Repository |
 	+---------+  reset  +-------+          +------------+  fetch  +------------+
 	     ^                  ^      checkout       |
 	     +------------------+---------------------+
+```
 
 <a id="update"></a>
 ### Update ###
@@ -353,6 +355,7 @@ And we can also get the difference between 2 states by running `git diff`.
 
 'Commit', is the most important concept in Git, and there are many places we need to specify the detail commit id to be used in commands, Git provides several choices for us. Assume we have such commit tree.
 
+```
 	   v1 (tag)
 	      |
 	+-----------+     +-----------+
@@ -362,6 +365,7 @@ And we can also get the difference between 2 states by running `git diff`.
 	+-----------+
 	| 36bc54... |
 	+-----------+
+```
 
 Git also have the same predefined keyword 'HEAD', different than other VCS like SVN, it indicates the current relevant commit working with. For the situation above, 'HEAD' is equivlant to 'master'. So, If we want to assign with 'a9e82f...' commit, we can use one of 'a9e8', 'v1', 'master~' and 'HEAD^', and '36bc..', 'master^2' for '36bc54...' commit. And the difference between '~' and '^' is, '~' shows the step goes backwards, and '^' shows which path goes, we can also combine these two, like, 'HEAD^2~3'.
 

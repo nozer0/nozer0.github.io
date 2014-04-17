@@ -20,7 +20,7 @@
 			<li>
 				<h{{ next }} id="{{ cat }}">
 					<!-- <a href="{{ page.url | replace: 'index.html', cat }}/"></a> -->
-					{{ cat }} <small>{{ _posts | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</small></h{{ next }}>
+					{{ cat }} <sup>{{ _posts | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</sup></h{{ next }}>
 				<ul>
 					{% for post in _posts %}
 						{% if post.language == lang %}

@@ -1,23 +1,23 @@
 <aside>
 	<nav id="side_nav">
-		<a id="top_link" href="#">{{ locales.top }}</a>
+		<a id="top_link" href="#" class="fa fa-arrow-up"></a>
 
 		{% assign posts = site.categories[language] | sort: 'date' %}
 		{% for post in posts %}
 			{% if post.id == page.id %}
 				{% if forloop.first == true %}
-					<a class="prev disabled">{{ locales.prev }}</a>
+					<a class="disabled fa fa-arrow-left"></a>
 				{% else %}
 					{% assign i = forloop.index0 | minus: 1 %}
 					{% assign p = posts[i] %}
-					<a class="prev" href="{{ p.url }}" title="{{ p.title }}">{{ locales.prev }}</a>
+					<a class="fa fa-arrow-left" href="{{ p.url }}" title="{{ p.title }}"></a>
 				{% endif %}
 
 				{% if forloop.last == true %}
-					<a class="next disabled">{{ locales.next }}</a>
+					<a class="disabled fa fa-arrow-right"></a>
 				{% else %}
 					{% assign p = posts[forloop.index] %}
-					<a class="next" href="{{ p.url }}" title="{{ p.title }}">{{ locales.next }}</a>
+					<a class="fa fa-arrow-right" href="{{ p.url }}" title="{{ p.title }}"></a>
 				{% endif %}
 			{% endif %}
 		{% endfor %}

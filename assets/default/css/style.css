@@ -7,10 +7,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 audio, canvas, video { display: inline-block; }
 
-pre { white-space: pre-wrap; }
+pre { white-space: pre-wrap; line-height: 1.5; }
 
 audio:not([controls]) { display: none; height: 0; }
 
+small { font-size: small; }
 
 /************ global ************/
 a { text-decoration: none; color: #666A6A; }
@@ -24,7 +25,7 @@ body {
 	width: 960px;
 	background: #BDC4C4;
 	color: #434747;
-	font: 400 14px/1.8 helvetica, arial, \5b8b\4f53, sans-serif;
+	font: 400 14px/1.8 helvetica, arial, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
 }
 
 h1 { font-size: 2em; line-height: 1.5; margin: 0.5em 0 0; }
@@ -39,7 +40,7 @@ section:before {
 }
 
 code {
-	font: 400 12px/1.75 Monaco, \5b8b\4f53, sans-serif;
+	font: 400 12px/1.75 Monaco, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
 	padding: 0 5px;
 	background: #F2F8F2;
 	display: inline-block;
@@ -80,9 +81,8 @@ nav span {
 	border-bottom: 5px solid;
 }
 
-h2 small, h3 small {
+h2 sup, h3 sup {
 	color: #666A6A;
-	vertical-align: super;
 	font-size: 0.6em;
 }
 
@@ -114,6 +114,9 @@ tbody tr:nth-child(2n+1) {
 	background: #DDD;
 }
 
+.fa:before {
+	padding-right: 3px;
+}
 
 /************ header ************/
 header.navbar {
@@ -140,6 +143,9 @@ header.navbar {
 	padding-left: 1em;
 }
 
+#exchange_link {
+	font-size: small;
+}
 
 /************ main ************/
 #main, article {
@@ -161,14 +167,34 @@ header.navbar {
 
 .content a {
 	color: #366;
-	font-style: italic;
+	cursor: pointer;
 }
 
 .content a:hover { color: #052124; }
 
+.content p a {
+	border-bottom: 1px dotted;
+}
+
 .content>p:lang(zh) {
 	text-indent: 2em;
 }
+
+/*
+.content h2, .content h3, .content h2+p, .content h3+p { display: inline-block; }
+.content h2+p:lang(zh), .content h3+p:lang(zh) { text-indent: 0; }
+.content h2+p a, .content h3+p a {
+	border: 0;
+	font-size: 1.2em;
+	font-family: FontAwesome;
+  	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.content h2+p a:before, .content h3+p a:before {
+  content: "\f0c6";
+}
+*/
 
 body { counter-reset: h2; }
 .content h2 { counter-reset: h3; }
@@ -217,9 +243,8 @@ aside {
 	color: #BDC4C4;
 	font-size: 2em;
 	border-top: 5px solid;
-	padding-top: 5px;
+	margin-top: 0.5em;
 	display: block;
-	text-align: center;
 }
 
 #side_nav a.disabled {
@@ -227,6 +252,11 @@ aside {
 }
 
 /************ tags_box ************/
+.tags {
+	padding: 10px 0;
+	font-size: small;
+}
+
 .tags_box {
 	padding: 10px 0;
 }
@@ -237,11 +267,6 @@ aside {
 	background: #eee;
 	border-radius: 3px;
 	border: 1px dashed #CCC;
-}
-
-.tags_box a small {
-	vertical-align: super;
-	font-size: 0.8em;
 }
 
 .tags_box a:hover {

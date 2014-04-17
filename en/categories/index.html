@@ -17,7 +17,7 @@ group: navigation
 		{% assign categories = categories | append: ' ' | append: c %}
 		<h2 id="{{ c }}">
 			{{ c }}
-			<small>{{ sc[c] | map: 'language' | join: ' ' | remove: exclude_langs | split: ' ' | size }}</small>
+			<sup>{{ sc[c] | map: 'language' | join: ' ' | remove: exclude_langs | split: ' ' | size }}</sup>
 		</h2>
 		{% include categories.html category=c next=3 %}
 	</li>

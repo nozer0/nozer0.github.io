@@ -4,8 +4,9 @@
 	{% assign exclude = 'en' %}
 {% endif %}
 
-<div class="tags_box">
+<div class="{{ include.class }}">
 {% for tag in include.tags %}
-	<a href="/{{ lang }}/tags/#{{ tag }}">{{ tag }} <small>{{ site.tags[tag] | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</small></a>
+	{% assign n = site.tags[tag] | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size %}
+	<a href="/{{ lang }}/tags/#{{ tag }}" class="fa fa-tag{% if n > 1 %}s{% endif %}">{{ tag }} <sup>{{ n }}</sup></a>
 {% endfor %}
 </div>

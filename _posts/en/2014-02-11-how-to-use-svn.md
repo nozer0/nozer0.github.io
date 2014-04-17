@@ -69,12 +69,14 @@ Of course, the first thing we should do is to make a working copy from remote re
 
 This is the simple form for normal working cycle.
 
+```
 	     +----- checkout ------+
 	     v                     |
 	+---------+  commit  +------------+
 	| Working | -------> |   Remote   |
 	|  copy   | <------- | Repository |
 	+---------+  update  +------------+
+```
 
 <a id="update"></a>
 ### Update ###
@@ -167,6 +169,7 @@ What is branch?
 
 On most situations, the project may need to implement several features or bug fixes parallelly, to distiguish the work clearly, we may create different copies for each work line. This is much helpful for work coporation. Here is the normal repository structure.
 
+```
 	|-- branches
 	|     |-- feature1
 	|     |-- ...
@@ -174,6 +177,7 @@ On most situations, the project may need to implement several features or bug fi
 	|     |-- 1.0.1
 	|     |-- ...
 	|-- trunk
+```
 
 Either 'branches' or 'tags' are based on 'trunk', another words, coping from 'trunk', 'branches' indicates different work line, and 'tags' used to tag the different versions of trunk.
 
