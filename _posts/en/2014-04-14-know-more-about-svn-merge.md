@@ -149,6 +149,9 @@ From 1.5, SVN can record merge revision info in the target '.svn' directory, so 
     # a few days past
     cd ./feature1
     svn merge ^/trunk@38
+    svn pg svn:mergeinfo
+    # output:
+    #   r38
     svn ci -m 'sync from trunk with r38'
     # the original point becomes r38
 ```
@@ -205,7 +208,7 @@ Someone may confuse this with the 'sync' merge, what's the difference between th
     # Tada.., conflict comes
 ```
 
-As we can see, without '--reintegrate' option, it just compare the current branch and trunk codes directly so as to lead conflicts. We can understand the 'reintegrate' merge to something like running 'sync' merge on branch copy first, which apply add 'c' change from trunk, and then copy the merge result from that pseudo branch copy into trunk copy.
+As we can see, without '--reintegrate' option, it just compare the current branch and trunk codes directly so as to lead conflicts. Although common description explains this way merge the changes belongs to branch only back to trunk, it is not so clear for me to understand why 'a2' and 'a1' doesn't lead conflict. So I change to understand the 'reintegrate' merge to something like running 'sync' merge on branch copy first, which apply add 'c' change from trunk, and then copy the merge result from that pseudo branch copy into trunk copy.
 
 ### '2-URL' merge ###
 

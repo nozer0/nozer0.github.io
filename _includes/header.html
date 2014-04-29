@@ -10,11 +10,16 @@
 	{% endif %}
 	<nav>
 		{% for p in site.pages %}
-			{% if p.group == 'navigation' and p.language == language %}
-				{% if page.url == p.url %}
-					<span>{{ p.title }}</span>
+			{% if p.group == 'navigation' and (p.language == 'all' or p.language == language) %}
+				{% if p.language == 'all' %}
+					{% assign title = p.title[language] %}
 				{% else %}
-      				<a href="{{ p.url | remove: 'index.html' }}">{{ p.title }}</a>
+					{% assign title = p.title %}
+				{% endif %}
+				{% if page.url == p.url %}
+					<span>{{ title }}</span>
+				{% else %}
+      				<a href="{{ p.url | remove: 'index.html' }}">{{ title }}</a>
       			{% endif %}
       		{% endif %}
 		{% endfor %}

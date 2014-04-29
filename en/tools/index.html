@@ -1,0 +1,14 @@
+---
+layout: page
+title: Tools
+language: en
+group: navigation
+---
+
+<ul class="posts">
+{% for p in site.pages %}
+	{% if p.group == 'tool' %}
+		<li><a href="{{ p.url }}">{{ p.title }}</a></li>
+	{% endif %}
+{% endfor %}
+</ul>

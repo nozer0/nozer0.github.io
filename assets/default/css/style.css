@@ -7,7 +7,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 audio, canvas, video { display: inline-block; }
 
-pre { white-space: pre-wrap; line-height: 1.5; }
+pre { white-space: pre-wrap; line-height: 1.5; background: #EEF0EE; }
 
 audio:not([controls]) { display: none; height: 0; }
 
@@ -25,7 +25,7 @@ body {
 	width: 960px;
 	background: #BDC4C4;
 	color: #434747;
-	font: 400 14px/1.8 helvetica, arial, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
+	font: 400 14px/1.8 "Helvetica Neue", helvetica, arial, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
 }
 
 h1 { font-size: 2em; line-height: 1.5; margin: 0.5em 0 0; }
@@ -57,7 +57,7 @@ pre code {
 }
 
 .highlight pre code {
-	white-space: pre-line;
+	white-space: pre-wrap;
 	font-style: italic;
 }
 
@@ -253,7 +253,7 @@ aside {
 
 /************ tags_box ************/
 .tags {
-	padding: 10px 0;
+	padding: 10px 20px;
 	font-size: small;
 }
 

@@ -8,7 +8,7 @@ keywords: nozer0 program
 
 <script>
 var langs = {'en':'en', 'zh':'zh'}, lang = navigator.language;
-if (lang !== 'en') {
+if (location.pathname === '/' && lang !== 'en') {
 	location.href = lang && langs[lang.substr(0, 2)] || 'en';
 }
 </script>
