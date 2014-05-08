@@ -6,7 +6,7 @@ categories: zh program
 language: zh
 tags: 求道
 
-description: 开发设计原则
+description: 开发设计原则。
 ---
 
 这些原则都是从实践中总结出来的，简单通用，是一个真正的程序员所应该遵循的。

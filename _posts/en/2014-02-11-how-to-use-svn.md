@@ -5,12 +5,12 @@ categories: en program
 language: en
 tags: VCS SVN note
 
-description: A note about how to use SVN, which can be taken as a simple mannual.
+description: A note about how to use SVN, which can be taken as a simple manual.
 ---
 
 Here are some notes for using *SVN*, for more details, `svn help` is a good choice.
 
-Take the index as cheetsheet:
+Take the index as cheat sheet:
 
 - [`svn checkout <repository path>` -> First, we need to have a working copy.](#launch)
 
@@ -107,7 +107,7 @@ Let's see some codes.
 <a id="change"></a>
 ### Change ###
 
-There are several commands can help us to do changes in working copy area, and apply these changes to repsitory when next commit. Furthermore, we can use `svn revert` to revert any changes we do not want.
+There are several commands can help us to do changes in working copy area, and apply these changes to repository when next commit. Furthermore, we can use `svn revert` to revert any changes we do not want.
 
 ```sh
 	svn rm old.txt
@@ -167,7 +167,7 @@ Sometimes, we may want to revert the changes of some commits to repository, and 
 
 What is branch?
 
-On most situations, the project may need to implement several features or bug fixes parallelly, to distiguish the work clearly, we may create different copies for each work line. This is much helpful for work coporation. Here is the normal repository structure.
+On most situations, the project may need to implement several features or bug fixes at the same time, to distinguish the work clearly, we may create different copies for each work line. This is much helpful for work corporation. Here is the normal repository structure.
 
 ```
 	|-- branches
@@ -237,7 +237,7 @@ After several days, all new feature work is done, and want to sync all trunk cha
 	#           r19' + r13:23 <- feature1 working copy
 ```
 
-The last step, merge back to trunk and delete the branch. Please pay notice that 'reintegrate' option is required for this situation, used to indicate merge the change differences back to parent path from branch between the latest synchronise revision and 'HEAD'.
+The last step, merge back to trunk and delete the branch. Please pay notice that 'reintegrate' option is required for this situation, used to indicate merge the change differences back to parent path from branch between the latest synchronous revision and 'HEAD'.
 
 ```sh
 	svn ci -m 'feature1 complete'
@@ -334,7 +334,7 @@ Using `svn log` to show the changed logs we want to know.
 
 As we can see from above, most commands can support '-r' argument, besides the normal way to set revision number like `-r 5`, we can also use more flex ways.
 
-Subversion predefines several keywords working similiarlly as numbers. 'HEAD' indicates the latest revision of repository, and 'BASE' indicates the latest unchanged revision of working area, 'COMMITTED' is equal to the lastest change revision, and 'PREV' means the last changed revision.
+Subversion predefines several keywords working similarly as numbers. 'HEAD' indicates the latest revision of repository, and 'BASE' indicates the latest unchanged revision of working area, 'COMMITTED' is equal to the latest change revision, and 'PREV' means the last changed revision.
 
 We can also give date time if we are not sure the revision number by wrapping with braces.
 
@@ -345,7 +345,7 @@ We can also give date time if we are not sure the revision number by wrapping wi
 	svn log -r {2013-10-01}:{2013-12-31}
 ```
 
-Sometimes, we can see the way assigning revision like this, 'url@rev'. Actually, Subversion has special names for these two, 'peg revision' for '@' synmal way, and 'operative revision' for '-r' option.
+Sometimes, we can see the way assigning revision like this, 'url@rev'. Actually, Subversion has special names for these two, 'peg revision' for '@' symbol way, and 'operative revision' for '-r' option.
 '@' doesn't support the predefined keywords showing above. And more important, if we renamed one file, for example, 'what.js' in revision 1 to 'where.js' in revision 5.
 
 ```sh

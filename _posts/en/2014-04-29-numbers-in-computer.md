@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Number
+title: Numbers in computer
 categories: en system
 language: en
 tags: notation code byte-order study
@@ -87,7 +87,7 @@ Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 00000
 </pre>
 
 
-'Shift Code', or 'Bias Code', used in IEEE.754, which comes next, is add bias value 2^(bit-1) to make no negetive forms.
+'Shift Code', or 'Bias Code', used in IEEE.754, which comes next, is add bias value 2^(bit-1) to make no negative forms.
 
 |            | Positive(38) | Negative(-38) | Definition       | Pros&Cons
 |------------|--------------|---------------|------------------|-----------
@@ -107,7 +107,7 @@ Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 00000
 <a id="byte_order"></a>
 ## Byte Order ##
 
-We already know different representation ways, but when input into bytes, it still have 2 formats based on the byte order. If put the most siginificant byte into the lowest address, this is called 'big-endian', on the contrary, 'little-endian', these names are from the book "Gulliver's Travels".
+We already know different representation ways, but when input into bytes, it still have 2 formats based on the byte order. If put the most significant byte into the lowest address, this is called 'big-endian', on the contrary, 'little-endian', these names are from the book "Gulliver's Travels".
 For example, the number '0xabcd', stores from 'a' to 'd' if 'big-endian', instead, 'd' to 'a'. Almost of CPUs, Intel, AMD are use 'little-endian' way.
 
 
@@ -120,7 +120,7 @@ The fixed-point representation is simple but smaller range than integer with sam
 
 ### Normalize ###
 
-One number can have infinite notation representations, for example, 100110 can be represeted as `110.11 * 2^3`, or `1.1011 * 2^5`, the represent convertion for a number which keeps 1 only in the integer part, is called as 'Normalization'.
+One number can have infinite notation representations, for example, 100110 can be represented as `110.11 * 2^3`, or `1.1011 * 2^5`, the represent conversion for a number which keeps 1 only in the integer part, is called as 'Normalization'.
 
 Opposite to 'Normalization', 'Denormalization' makes no exponent part.
 
@@ -141,14 +141,14 @@ To make more significand and precision, it applies both 'Normalization' and 'Den
 
 With 'Normalization', it uses as most significant fraction bits, besides, all normalize numbers take 1 as integer part so as to ignore that unique bit in fraction part. We can get the formula `float = -1^S * 1.F * 2^(E - (2^(e-1) - 1))`.
 
-Take 32 bits as example, if we use normalized notation only, the minimum absolute number value larger than 0 is 1.0..00 * 2^-127, the 2nd minimum is 1.0..01 * 2^-127, the 'gap' between minumum and 0 is much larger than the difference between it and the 2nd minimum which is 2^-(127+23) = 2^-150. Take the diagram for more intuition.
+Take 32 bits as example, if we use normalized notation only, the minimum absolute number value larger than 0 is 1.0..00 * 2^-127, the 2nd minimum is 1.0..01 * 2^-127, the 'gap' between minimum and 0 is much larger than the difference between it and the 2nd minimum which is 2^-(127+23) = 2^-150. Take the diagram for more intuition.
 
 ```
            ┌─── 2^-149 ───┐ ┌ 2^-150 ┐                         ┌ 2^-150 ┐ ┌──────────── 2^-127 ────────────┐
     1.0..1*2^-126, 1.0..0*2^-126, 1.1..1*2^-127, ..., 1.0..1*2^-127, 1.0..0*2^-127,                        0
 ```
 
-This is called 'abrupt underflow', so for the number absolute value less than 2^(e-1) - 2, IEEE uses denormalize notation represetation, and add 1 to the exponent bias, so as to make 'gradual underflow'.
+This is called 'abrupt underflow', so for the number absolute value less than 2^(e-1) - 2, IEEE uses denormalize notation representation, and add 1 to the exponent bias, so as to make 'gradual underflow'.
 
 ```
            ┌─── 2^-148 ───┐                     ┌ 2^-149 ┐     ┌ 2^-149 ┐                       ┌ 2^-149 ┐
@@ -175,7 +175,7 @@ Now, let us see back what happened in the beginning example.
 
 As we can know, the integer bytes of 1 is '00000000 00000000 00000000 00000001', and the float value represented by same bytes is 2^-149.
 
-The bytes result of 0.2 + 0.4 is '00111111 00011001 10011001 10011010', it's the same with 0.6 counterpart. So, how is going? The problem is precision, actually, the binary of 0.6 is an infinity repeating number, '0.100[1100]*', it can be only approximately represented on computer, the calculate result of '00111111 00011001 10011001 10011010' can't be 0.6, it may 0.6000000000000001 or 0.60000000000000008 based on the presions, so as 0.2 and 0.4.
+The bytes result of 0.2 + 0.4 is '00111111 00011001 10011001 10011010', it's the same with 0.6 counterpart. So, how is going? The problem is precision, actually, the binary of 0.6 is an infinity repeating number, '0.100[1100]*', it can be only approximately represented on computer, the calculate result of '00111111 00011001 10011001 10011010' can't be 0.6, it may 0.6000000000000001 or 0.60000000000000008 based on the precision, so as 0.2 and 0.4.
 
 - - -
 As a present, [here](/articles/number-convertor.html) is a little tool to convert between different notation systems.

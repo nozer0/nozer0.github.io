@@ -5,7 +5,7 @@ categories: zh program
 language: zh
 tags: VCS Git 窥径
 
-description: Git使用笔记, 可做简单手册检索
+description: Git使用笔记, 可做简单手册检索。
 ---
 
 分享本人在使用Git的过程中积累的一些笔记。

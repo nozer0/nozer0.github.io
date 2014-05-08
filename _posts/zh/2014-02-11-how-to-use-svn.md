@@ -5,7 +5,7 @@ categories: zh program
 language: zh
 tags: VCS SVN 窥径
 
-description: SVN使用笔记, 可做简单手册检索
+description: SVN使用笔记, 可做简单手册检索。
 ---
 
 这是在学习使用*SVN*的过程中，做的一些记录。如果需要查看更加详细的信息，请参考`svn help`。

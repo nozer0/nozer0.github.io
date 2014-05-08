@@ -5,12 +5,12 @@ categories: en program
 language: en
 tags: VCS Git note
 
-description: A note about how to use Git, which can be taken as a simple mannual.
+description: A note about how to use Git, which can be taken as a simple manual.
 ---
 
 Here are some notes I'd like to share about using Git, let's start.
 
-Take the index as cheetsheet:
+Take the index as cheat sheet:
 
 - [`git clone <repository path>` -> First, we need to get data from remote repository.](#launch)
 
@@ -20,7 +20,7 @@ Take the index as cheetsheet:
 	3. [`git add <new files>` -> Add files to version control.](#change)
 	4. [`git reset` -> Revert the changes uncommitted.](#revert)
 	5. [`git commit` -> Commit the change to local repository.](#commit)
-	6. [`git push` -> Synchronise the commits from local repository to remote.](#commit)
+	6. [`git push` -> Synchronize the commits from local repository to remote.](#commit)
 
 - [Branch](#branch)
 	1. `git branch <name> <commit>` -> Create branches.
@@ -94,7 +94,7 @@ Usually we need to get codes from existing remote repository first. This operati
 	git clone -b branch1 https://github.com/nozer0/one-piece.git
 ```
 
-Or, we can also choose to init a local directory as working area first, then set remote url to be connected.
+Or, we can also choose to initialize a local directory as working area first, then set remote URL to be connected.
 
 ```sh
 	# create '.git' directory contains all repository info needed.
@@ -179,7 +179,7 @@ OK, now we start to do some changes in working area to index by using `git add` 
 <a id="revert"></a>
 ### Revert ###
 
-Sometimes, we may mistake to commit something, or we want to revert the recent changes, here are some commands satisify the purpose.
+Sometimes, we may mistake to commit something, or we want to revert the recent changes, here are some commands satisfy the purpose.
 
 ```sh
 	# revert change on index only, and keep in working directory
@@ -250,7 +250,7 @@ Branch is just reference points to commit in Git, so it is used more frequently 
 	git branch -d branch1
 ```
 
-Since we always have some branches in practise, we need to switch between them via `git checkout` command.
+Since we always have some branches in practice, we need to switch between them via `git checkout` command.
 
 ```sh
 	# switch to the branch and set HEAD and index based on that branch
@@ -281,7 +281,7 @@ Here are several ways to rearrange the branches if necessary, `merge`, `rebase` 
 	# C0--C1 <- master
 	#  \
 	#  C2--C3
-	# we can also implement this on interative mode with `-i` option
+	# we can also implement this on interactive mode with `-i` option
 
 	git cherry-pick C2 C3
 	# C0--C1--C2'--C3' <- master*
@@ -294,7 +294,7 @@ Here are several ways to rearrange the branches if necessary, `merge`, `rebase` 
 <a id="tag"></a>
 ## Tag ##
 
-Tag is another type of reference to commit, usually used for milestone mark or something else, which is very similiar as 'Branch'.
+Tag is another type of reference to commit, usually used for milestone mark or something else, which is very similar as 'Branch'.
 
 ```sh
 	# show all tags
@@ -367,14 +367,14 @@ And we can also get the difference between 2 states by running `git diff`.
 	+-----------+
 ```
 
-Git also have the same predefined keyword 'HEAD', different than other VCS like SVN, it indicates the current relevant commit working with. For the situation above, 'HEAD' is equivlant to 'master'. So, If we want to assign with 'a9e82f...' commit, we can use one of 'a9e8', 'v1', 'master~' and 'HEAD^', and '36bc..', 'master^2' for '36bc54...' commit. And the difference between '~' and '^' is, '~' shows the step goes backwards, and '^' shows which path goes, we can also combine these two, like, 'HEAD^2~3'.
+Git also have the same predefined keyword 'HEAD', different than other VCS like SVN, it indicates the current relevant commit working with. For the situation above, 'HEAD' is equivalent to 'master'. So, If we want to assign with 'a9e82f...' commit, we can use one of 'a9e8', 'v1', 'master~' and 'HEAD^', and '36bc..', 'master^2' for '36bc54...' commit. And the difference between '~' and '^' is, '~' shows the step goes backwards, and '^' shows which path goes, we can also combine these two, like, 'HEAD^2~3'.
 
 
 - - -
 <a id="compare_table"></a>
 ## Compare Table ##
 
-As extra candy for the one who used SVN before, this is the compare table, which lists similiar commands between SVN and Git.
+As extra candy for the one who used SVN before, this is the compare table, which lists similar commands between SVN and Git.
 
 |               SVN              |                    Git                   |
 | ------------------------------:| ---------------------------------------- |

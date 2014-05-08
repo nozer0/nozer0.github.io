@@ -69,7 +69,7 @@ It's simple but not enough info, it only gives out the changed content, sometime
     #   + g
 ```
 
-This way gives out the context around the differences to help understanding, but the same context is repeatly output for both sides, keep going.
+This way gives out the context around the differences to help understanding, but the same context is repeat output for both sides, keep going.
 
 ```
     diff -u t1.txt t2.txt
@@ -134,7 +134,7 @@ Subversion provides 4 types of merge way.
 
 ### 'sync' merge ###
 
-This is the most often used merge way, which is always used to synchronise the latest changes from trunk to branch local copy. 
+This is the most often used merge way, which is always used to synchronize the latest changes from trunk to branch local copy. 
 
 Because branch is copied from trunk, the revision in that copy time is used as original data for 3-way comparation. After `svn merge SOURCE[@REV] [TARGET_WCPATH]` command running, SVN will get the changes between 'SOURCE[@REV]' and original copy revision, then try to apply these changes into 'TARGET_WCPAT', or current directory if not set.
 
@@ -158,7 +158,7 @@ From 1.5, SVN can record merge revision info in the target '.svn' directory, so 
 
 ### 'cherry-pick' merge ###
 
-This is similiar with 'sync' merge, but users can pick the changes to be merged by themselves. Sometimes, we do not want to synchronise all changes from trunk when branch is still under developing, only part of them is required, such as the bug fixes, using `svn merge [-c M[,N...] | -r N:M ...] SOURCE[@REV] [TARGET_WCPATH]` can satisfy us.
+This is similar with 'sync' merge, but users can pick the changes to be merged by themselves. Sometimes, we do not want to synchronize all changes from trunk when branch is still under developing, only part of them is required, such as the bug fixes, using `svn merge [-c M[,N...] | -r N:M ...] SOURCE[@REV] [TARGET_WCPATH]` can satisfy us.
 
 I would like to introduce some other usages here. If we want to revert the change of r35, we can use `svn merge -c-35` command, and if we want to discard some changes before merging, we can make it by running `svn merge -c35 --record-only`, giving '--record-only' option means record the merge info only, but not touch the file data.
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 数字
+title: 计算机中的数字
 categories: zh system
 language: zh
 tags: 进制 代码 字节序 探源
