@@ -39,6 +39,7 @@ Binary   | Octal | Decimal  | Hexadecimal
 0.100111 | 0.47  | 0.609375 | 0.9C
 
 How to convert numbers between different systems? See the examples.
+
 <pre>
     Q:
         26(D) = ?(B)
@@ -66,6 +67,7 @@ Natively, computers use binary system to represent numbers, another way of sayin
 The most understandable way is to use the binary value directly, and add one more bit to indicate the sign, 0 as positive, and 1 as negative, this is called 'Original Code'. But it needs to do addition or subtraction based on the sign bits, and also 2 formats for 0, '0 0..0' and '1 0..0'.
 
 For easy calculation, another representation called 'Anti-Code' or 'Ones Complement Code' is defined, if the value is negative, invert all bits except the sign bit of the regarding original value to get the result, otherwise, the same as original code. It can do calculation directly with sign bit, and can do addition calculation only instead of subtraction, for example.
+
 <pre>
       1 1110111 (-8)             0 0001000 (+8)
     + 0 0001101 (+13)          + 0 0001101 (+13)
@@ -79,6 +81,7 @@ For easy calculation, another representation called 'Anti-Code' or 'Ones Complem
 Unfortunately, it still has 2 'zer0' values problem, '0 0..0' for '+0', and '1 1..1' for '-0'. The 'Two Complement Code', or simply 'Complement Code', which is the current standard representation for integer wins out at last. The only difference is add 1 if negative, '1 1..1' becomes -1 instead of '-0', one more number '-2^(bit-1)' can be represented and no need carry back addition step. 
 
 Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 000001000 = 8 are congruent modulo 256, that is why subtraction can be calculated even by adder and complementer only.
+
 <pre>
       1 1111000 (-8)             0 0001000 (+8)
     + 0 0001101 (+13)          + 0 0001101 (+13)

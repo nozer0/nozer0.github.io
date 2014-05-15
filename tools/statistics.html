@@ -1,0 +1,83 @@
+---
+layout : default
+title: statistics
+zh_title: 统计
+language: zh
+group: tool
+---
+
+<div id="container" style="height: 400px;"></div>
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script>
+var data = {
+	'control': [2,3,4,5,1,2,1,0,-1],
+	'willpower':[2,3,4,5,1,2,1,0,-1],
+	'endurance':[2,2,2,2,2,2,2,2,2]
+}, p, d, l, df, nd, x, series = [];
+for (p in data) {
+	for (d = data[p], l = d.length - 1, df = Math.ceil(l >= 7 ? (d[l] - d[l - 7]) / 7 : (d[l] - d[0]) / l) || 1, nd = [], x = d[l], l = 7; l; l -= 1) {
+		nd.push(x = x + df);
+	}
+	series.push({
+		name: p,
+		data: d
+	}, {
+		dashStyle: 'dash',
+		name: p + '(plan)',
+		data: d.concat(nd)
+	});
+}
+series.push({
+	name: 'induction',
+	data: [
+		{x: new Date(2014,1,11).getTime(), y: 2},
+		{x: new Date(2014,2,4).getTime(), y: 4},
+		{x: new Date(2014,2,18).getTime(), y: 9},
+		{x: new Date(2014,2,31).getTime(), y: 11},
+		{x: new Date(2014,3,14).getTime(), y: 13},
+		{x: new Date(2014,3,29).getTime(), y: 16},
+		{x: new Date(2014,4,14).getTime(), y: 19}
+	]
+}, {
+	name: 'deduction',
+	data: [
+		{x: new Date(2014,1,11).getTime(), y: 2},
+		{x: new Date(2014,2,4).getTime(), y: 4},
+		{x: new Date(2014,2,18).getTime(), y: 7},
+		{x: new Date(2014,2,31).getTime(), y: 8},
+		{x: new Date(2014,3,14).getTime(), y: 12},
+		{x: new Date(2014,3,29).getTime(), y: 15},
+		{x: new Date(2014,4,14).getTime(), y: 17}
+	]
+});
+$(function () {
+	$('#container').highcharts({
+		chart: {
+			zoomType: 'x'
+		},
+		title: {
+			text: 'nozer0'
+		},
+		xAxis: {
+			type: 'datetime',
+			minRange: 14 * 24 * 3600000 // fourteen days
+		},
+		plotOptions: {
+			line: {
+				lineWidth: 1,
+				states: {
+					hover: {
+						lineWidth: 1
+					}
+				},
+				pointInterval: 24 * 3600 * 1000,
+				pointStart: new Date(2014, 4, 6).getTime(),
+				threshold: null
+			}
+		},
+		series: series
+	});
+});
+</script>
