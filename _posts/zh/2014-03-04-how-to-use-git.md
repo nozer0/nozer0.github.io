@@ -5,6 +5,7 @@ categories: zh program
 language: zh
 tags: VCS Git 窥径
 
+keywords: VCS, Git, clone, fetch, commit, push, branch
 description: Git使用笔记, 可做简单手册检索。
 ---
 
@@ -132,7 +133,7 @@ description: Git使用笔记, 可做简单手册检索。
 	git fetch origin master~2:foo
 ```
 
-然后，我们可以选择合并(merge)还是衍合(rebase)远程数据，或者直接检出远程数据覆盖工作目录。可以在下一节[分支](#branch_)看到更详细的说明。
+然后，我们可以选择合并（merge）还是衍合（rebase）远程数据，或者直接检出远程数据覆盖工作目录。可以在下一节[分支](#branch_)看到更详细的说明。
 
 ```sh
 	# 保留本地修改时使用合并
@@ -282,7 +283,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 	# C0--C1 <- master
 	#  \
 	#  C2--C3
-	# 使用'-i'选项后，可开启衍合(rebase)的交互模式
+	# 使用'-i'选项后，可开启衍合（rebase）的交互模式
 
 	git cherry-pick C2 C3
 	# C0--C1--C2'--C3' <- master*
@@ -354,7 +355,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 <a id="addition"></a>
 ## 附带内容 ##
 
-提交(Commit)，是Git中最重要的概念，我们会在许多命令中需要指定相关的commit，有多种不同的方式来表示一个commit。假设，我们目前的提交如下。
+提交（Commit），是Git中最重要的概念，我们会在许多命令中需要指定相关的commit，有多种不同的方式来表示一个commit。假设，我们目前的提交如下。
 
 ```
 	   v1 (tag)
@@ -378,7 +379,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 下面列举了SVN和Git相似的命令，以便于之前使用过SVN的同学理解。
 
 |               SVN              |                    Git                   |
-| ------------------------------:| ---------------------------------------- |
+|-------------------------------:|------------------------------------------|
 | `svn checkout`                 | `git clone`                              |
 |                                |                                          |
 | `svn update`                   | `git pull`, `git fetch` + `git checkout` |

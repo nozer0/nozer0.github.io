@@ -1,10 +1,12 @@
 ---
-layout : default
+layout : page
 title: Number Convertor
 zh_title: 进制转换器
 language: en
 group: tool
 ---
+
+You can read more from <a href="/en/system/numbers-in-computer/" title="Numbers in computer">Numbers in computer</a>.
 
 <div>
 	<table>
@@ -94,8 +96,8 @@ group: tool
 	on(bit_sel, 'change', changeBit);
 
 	function showByte(n, seperator) {
-		var l = n.length;
-		return (l % 8 ? Number.gap(n, Math.ceil(l / 8) * 8) : n).match(/\d{8}/g).join(seperator || ' ');
+		var l = n.length, x = l % 8;
+		return (x ? new Array(9 - x).join(0) + n : n).match(/\d{8}/g).join(seperator || ' ');
 	}
 
 	function handler(e) {

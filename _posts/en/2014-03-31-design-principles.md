@@ -81,14 +81,14 @@ Acyclic dependencies principle, package principles. No cycle dependency exists.
 - - -
 ## Design smells ##
 
-Good design     | Bad design
---------------- | -------------
-Correctness     | Incorrectness
-Consistency     | Polytropism
-Simplicity      | Needless complexity
-DRY             | Needless repetition
-Reusability     | Immobility
-Flexibility     | Rigidity
-Robustness      | Fragility
-Maintainability | Viscosity
-Readability     | Opacity
+|   Good design   |  Bad design
+|-----------------|--------------
+| Correctness     | Incorrectness
+| Consistency     | Polytropism
+| Simplicity      | Needless complexity
+| DRY             | Needless repetition
+| Reusability     | Immobility
+| Flexibility     | Rigidity
+| Robustness      | Fragility
+| Maintainability | Viscosity
+| Readability     | Opacity

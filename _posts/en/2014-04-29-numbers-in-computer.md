@@ -3,7 +3,7 @@ layout: post
 title: Numbers in computer
 categories: en system
 language: en
-tags: notation code byte-order study
+tags: notation code number study
 
 keywords: notation, byte order, binary, decimal, float, normalize, IEEE 754
 description: Look at how numbers stored in computers.
@@ -17,11 +17,11 @@ Before we start, let us see the simple program first.
 #include <stdio.h>
 
 int main(int argc, char* argv[]) {
-    int i = 1;
-    float *p2 = (float *)&i;
-    printf("%.20g\n", *p2);
-    printf("%d\n", 0.4 + 0.2 == 0.6);
-    return 0;
+	int i = 1;
+	float *p2 = (float *)&i;
+	printf("%.20g\n", *p2);
+	printf("%d\n", 0.4 + 0.2 == 0.6);
+	return 0;
 }
 ```
 
@@ -33,29 +33,29 @@ Something surprise?
 
 I think no need more explanation about notation system, just refers normally used ones in Computer.
 
-Binary   | Octal | Decimal  | Hexadecimal
----------|-------|----------|-------------
-10011101 | 235   | 157      | 9D
-0.100111 | 0.47  | 0.609375 | 0.9C
+| Binary   | Octal | Decimal  | Hexadecimal
+|----------|-------|----------|-------------
+| 10011101 | 235   | 157      | 9D
+| 0.100111 | 0.47  | 0.609375 | 0.9C
 
 How to convert numbers between different systems? See the examples.
 
 <pre>
-    Q:
-        26(D) = ?(B)
-    A:
-                26 | 13 | 6 | 3 | 1
-            /   2
-    remainder    0 |  1 | 0 | 1 | 1
-        26(D) = 11010(B)
-    ~~~~~~
-    Q:
-        0.8125(D) = ?(B)
-    A:
-    fractional  0.8125 | 0.625 | 0.25 | 0.5 | 0
-             *  2
-    integer              1     | 1    | 0   | 1
-        0.8125(D) = 0.1101(B)
+	Q:
+		26(D) = ?(B)
+	A:
+	            26 | 13 | 6 | 3 | 1
+	        /   2
+	remainder    0 |  1 | 0 | 1 | 1
+		26(D) = 11010(B)
+	~~~~~~
+	Q:
+		0.8125(D) = ?(B)
+	A:
+	fractional  0.8125 | 0.625 | 0.25 | 0.5 | 0
+	         *  2
+	integer              1     | 1    | 0   | 1
+		0.8125(D) = 0.1101(B)
 </pre>
 
 
@@ -69,13 +69,13 @@ The most understandable way is to use the binary value directly, and add one mor
 For easy calculation, another representation called 'Anti-Code' or 'Ones Complement Code' is defined, if the value is negative, invert all bits except the sign bit of the regarding original value to get the result, otherwise, the same as original code. It can do calculation directly with sign bit, and can do addition calculation only instead of subtraction, for example.
 
 <pre>
-      1 1110111 (-8)             0 0001000 (+8)
-    + 0 0001101 (+13)          + 0 0001101 (+13)
-    ------------------          ------------------
-    1 0 0000100                0 0 0010101
-    +         1 (carry)        +         0 (carry)
-    ------------------          ------------------
-      0 0000101 (+5)             0 0010101 (+21)
+	  1 1110111 (-8)             0 0001000 (+8)
+	+ 0 0001101 (+13)          + 0 0001101 (+13)
+	------------------          ------------------
+	1 0 0000100                0 0 0010101
+	+         1 (carry)        +         0 (carry)
+	------------------          ------------------
+	  0 0000101 (+5)             0 0010101 (+21)
 </pre>
 
 Unfortunately, it still has 2 'zer0' values problem, '0 0..0' for '+0', and '1 1..1' for '-0'. The 'Two Complement Code', or simply 'Complement Code', which is the current standard representation for integer wins out at last. The only difference is add 1 if negative, '1 1..1' becomes -1 instead of '-0', one more number '-2^(bit-1)' can be represented and no need carry back addition step. 
@@ -83,10 +83,10 @@ Unfortunately, it still has 2 'zer0' values problem, '0 0..0' for '+0', and '1 1
 Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 000001000 = 8 are congruent modulo 256, that is why subtraction can be calculated even by adder and complementer only.
 
 <pre>
-      1 1111000 (-8)             0 0001000 (+8)
-    + 0 0001101 (+13)          + 0 0001101 (+13)
-    ------------------          ------------------
-    1 0 0000101 (+5)           0 0 0010101 (+21)
+	  1 1111000 (-8)             0 0001000 (+8)
+	+ 0 0001101 (+13)          + 0 0001101 (+13)
+	------------------          ------------------
+	1 0 0000101 (+5)           0 0 0010101 (+21)
 </pre>
 
 
@@ -147,27 +147,27 @@ With 'Normalization', it uses as most significant fraction bits, besides, all no
 Take 32 bits as example, if we use normalized notation only, the minimum absolute number value larger than 0 is 1.0..00 * 2^-127, the 2nd minimum is 1.0..01 * 2^-127, the 'gap' between minimum and 0 is much larger than the difference between it and the 2nd minimum which is 2^-(127+23) = 2^-150. Take the diagram for more intuition.
 
 ```
-           ┌─── 2^-149 ───┐ ┌ 2^-150 ┐                         ┌ 2^-150 ┐ ┌──────────── 2^-127 ────────────┐
-    1.0..1*2^-126, 1.0..0*2^-126, 1.1..1*2^-127, ..., 1.0..1*2^-127, 1.0..0*2^-127,                        0
+	       ┌─── 2^-149 ───┐ ┌ 2^-150 ┐                         ┌ 2^-150 ┐ ┌──────────── 2^-127 ────────────┐
+	1.0..1*2^-126, 1.0..0*2^-126, 1.1..1*2^-127, ..., 1.0..1*2^-127, 1.0..0*2^-127,                        0
 ```
 
 This is called 'abrupt underflow', so for the number absolute value less than 2^(e-1) - 2, IEEE uses denormalize notation representation, and add 1 to the exponent bias, so as to make 'gradual underflow'.
 
 ```
-           ┌─── 2^-148 ───┐                     ┌ 2^-149 ┐     ┌ 2^-149 ┐                       ┌ 2^-149 ┐
-    1.0..1*2^-125, 1.0..0*2^-125, ..., 1.0..1*2^-126, 1.0..0*2^-126, 0.1..1*2^-126, ..., 0.0..1*2^-126,  0
+	       ┌─── 2^-148 ───┐                     ┌ 2^-149 ┐     ┌ 2^-149 ┐                       ┌ 2^-149 ┐
+	1.0..1*2^-125, 1.0..0*2^-125, ..., 1.0..1*2^-126, 1.0..0*2^-126, 0.1..1*2^-126, ..., 0.0..1*2^-126,  0
 ```
 
 This is the structure table for IEEE.754 float notation.
 
 |                    | exponent |        E        | fraction  | 32 bits
-|:-------------------|:---------|:----------------|-----------|:--------
+|--------------------|----------|-----------------|-----------|---------
 | 0                  | 00..0    | 2 - 2^(e-1)     | [0.]00..0 | 0
 | Min Denormalized N | 00..0    | 2 - 2^(e-1)     | [0.]00..1 | 2^-149
-| Denormalized N     | 00..0    | 2 - 2^(e-1)     | [0.]**..* | 0.F * 2^-126
+| Denormalized N     | 00..0    | 2 - 2^(e-1)     | [0.]xx..x | 0.F * 2^-126
 | Max Denormalized N | 00..0    | 2 - 2^(e-1)     | [0.]11..1 | 1 - 2^-149
 | Min Normalized N   | 00..1    | 2 - 2^(e-1)     | [1.]00..0 | 2^-126
-| Normalized N       | **..*    | E + 1 - 2^(e-1) | [1.]**..* | 1.F * 2^(E - 127)
+| Normalized N       | xx..x    | E + 1 - 2^(e-1) | [1.]xx..x | 1.F * 2^(E - 127)
 | Max Normalized N   | 11..0    | 2^(e-1) - 1     | [1.]11..1 | 2^128-2^104
 | Infinity           | 11..1    | 1 - 2^(e-1)     | [1.]00..0 | 
 | NaN                | 11..1    | 1 - 2^(e-1)     |           |
@@ -181,4 +181,4 @@ As we can know, the integer bytes of 1 is '00000000 00000000 00000000 00000001',
 The bytes result of 0.2 + 0.4 is '00111111 00011001 10011001 10011010', it's the same with 0.6 counterpart. So, how is going? The problem is precision, actually, the binary of 0.6 is an infinity repeating number, '0.100[1100]*', it can be only approximately represented on computer, the calculate result of '00111111 00011001 10011001 10011010' can't be 0.6, it may 0.6000000000000001 or 0.60000000000000008 based on the precision, so as 0.2 and 0.4.
 
 - - -
-As a present, [here](/articles/number-convertor.html) is a little tool to convert between different notation systems.
+As a present, [here](/tools/number-convertor.html) is a small tool to convert between different notation systems.

@@ -3,8 +3,9 @@ layout: post
 title: Know more about svn merge
 categories: en program
 language: en
-tags: VCS SVN diff merge study
+tags: VCS SVN study
 
+keywords: VCS, SVN, diff, merge, trunk, branch
 description: Introduce for the different types of merge used in SVN, and also the `diff` as basis.
 ---
 
@@ -13,31 +14,32 @@ In the early post ( [How to use SVN](/en/program/How-to-use-svn/) ), we have som
 - - -
 <a id="diff"></a>
 ## diff ##
+
 Before start, let us have a look at the historical Unix command, `diff`. It's the base of all merge operations.
 
 For example, we have 't1.txt' file with simple test content 'a b c d e f', and we copy 't2.txt' and do some changes.
 
 ```
-    # t2.txt:
-    #   a
-    #   b2
-    #       b22
-    #   c
-    #   f
-    #   g
+	# t2.txt:
+	#   a
+	#   b2
+	#       b22
+	#   c
+	#   f
+	#   g
 
-    diff t1.txt t2.txt
-    # output:
-    #   2c2,3
-    #   < b
-    #   ---
-    #   > b2
-    #   >     b22
-    #   4,5d4
-    #   < d
-    #   < e
-    #   6a6
-    #   > g
+	diff t1.txt t2.txt
+	# output:
+	#   2c2,3
+	#   < b
+	#   ---
+	#   > b2
+	#   >     b22
+	#   4,5d4
+	#   < d
+	#   < e
+	#   6a6
+	#   > g
 ```
 
 As we can see, `diff` compare 't1' and 't2' files and output result with fixed format, here are 3 differences.
@@ -48,44 +50,44 @@ The first '2' indicates the line number of left file, and 'c' shows the operatio
 It's simple but not enough info, it only gives out the changed content, sometimes, it is hard for human to read and understand without context text. So, another version comes up.
 
 ```
-    diff -c t1.txt t2.txt
-    # output:
-    #   *** t1.txt Thu Apr 10 16:49:47 2014
-    #   --- t2.txt Thu Apr 10 16:53:35 2014
-    #   ***************
-    #   *** 1,6 ****
-    #     a
-    #   ! b
-    #     c
-    #   - d
-    #   - e
-    #     f
-    #   --- 1,6 ----
-    #     a
-    #   ! b2
-    #   !   b22
-    #     c
-    #     f
-    #   + g
+	diff -c t1.txt t2.txt
+	# output:
+	#   *** t1.txt Thu Apr 10 16:49:47 2014
+	#   --- t2.txt Thu Apr 10 16:53:35 2014
+	#   ***************
+	#   *** 1,6 ****
+	#     a
+	#   ! b
+	#     c
+	#   - d
+	#   - e
+	#     f
+	#   --- 1,6 ----
+	#     a
+	#   ! b2
+	#   !   b22
+	#     c
+	#     f
+	#   + g
 ```
 
 This way gives out the context around the differences to help understanding, but the same context is repeat output for both sides, keep going.
 
 ```
-    diff -u t1.txt t2.txt
-    # output:
-    #   --- t1.txt 2014-04-10 16:49:47.000000000 +0800
-    #   +++ t2.txt 2014-04-10 16:53:35.000000000 +0800
-    #   @@ -1,6 +1,6 @@
-    #    a
-    #   -b
-    #   +b2
-    #   +   b22
-    #    c
-    #   -d
-    #   -e
-    #    f
-    #   +g
+	diff -u t1.txt t2.txt
+	# output:
+	#   --- t1.txt 2014-04-10 16:49:47.000000000 +0800
+	#   +++ t2.txt 2014-04-10 16:53:35.000000000 +0800
+	#   @@ -1,6 +1,6 @@
+	#    a
+	#   -b
+	#   +b2
+	#   +   b22
+	#    c
+	#   -d
+	#   -e
+	#    f
+	#   +g
 ```
 
 Everything seems good, but, please think of this, if someone changed the target file before run `diff`, when we see '+' part, can we know this should be the newly added part by us or deleted part changed by others? The answer is 'No', because it has no history info here.
@@ -93,35 +95,35 @@ Everything seems good, but, please think of this, if someone changed the target 
 To do this, we need 3 files, source should compare with the original file first, then we can know what changes should be applied for target file. Let's check.
 
 ```
-    # old:      t1:         t2:
-    # a         a           a
-    # b         b2          b
-    # c             b22     c
-    # d         c           f
-    # e         d           g
-    # f         e
-    #           f
+	# old:      t1:         t2:
+	# a         a           a
+	# b         b2          b
+	# c             b22     c
+	# d         c           f
+	# e         d           g
+	# f         e
+	#           f
 
-    diff3 t1 old t2
-    # output:
-    #   ====1
-    #   1:2,3c
-    #     b2
-    #       b22
-    #   2:2c
-    #   3:2c
-    #     b
-    #   ====3
-    #   1:5,6c
-    #   2:4,5c
-    #     d
-    #     e
-    #   3:3a
-    #   ====3
-    #   1:7a
-    #   2:6a
-    #   3:5c
-    #     g
+	diff3 t1 old t2
+	# output:
+	#   ====1
+	#   1:2,3c
+	#     b2
+	#       b22
+	#   2:2c
+	#   3:2c
+	#     b
+	#   ====3
+	#   1:5,6c
+	#   2:4,5c
+	#     d
+	#     e
+	#   3:3a
+	#   ====3
+	#   1:7a
+	#   2:6a
+	#   3:5c
+	#     g
 ```
 
 '====1' shows the first file difference, '1:2,3c' tells the line 2 and 3 are changed in file 1. We can also append '-3' option to output simple format, or '-m' option to get merge result directly.
@@ -141,19 +143,19 @@ Because branch is copied from trunk, the revision in that copy time is used as o
 From 1.5, SVN can record merge revision info in the target '.svn' directory, so it will use that revision as original point when merge next time to avoid repeat work. For example.
 
 ```sh
-    svn info
-    # Revision: 33
-    svn cp ^/trunk ^/branches/feature1
-    # the original point is r33
+	svn info
+	# Revision: 33
+	svn cp ^/trunk ^/branches/feature1
+	# the original point is r33
 
-    # a few days past
-    cd ./feature1
-    svn merge ^/trunk@38
-    svn pg svn:mergeinfo
-    # output:
-    #   r38
-    svn ci -m 'sync from trunk with r38'
-    # the original point becomes r38
+	# a few days past
+	cd ./feature1
+	svn merge ^/trunk@38
+	svn pg svn:mergeinfo
+	# output:
+	#   r38
+	svn ci -m 'sync from trunk with r38'
+	# the original point becomes r38
 ```
 
 ### 'cherry-pick' merge ###
@@ -169,43 +171,43 @@ When branch development finish, we run `svn merge --reintegrate SOURCE[@REV] [TA
 Someone may confuse this with the 'sync' merge, what's the difference between these 2, obviously, it's not only use '--reintegrate' option or not when input commands. Let's see an example.
 
 ```sh
-    # test.txt:
-    #   a
-    #   b
+	# test.txt:
+	#   a
+	#   b
 
-    # trunk copy
-    svn cp ^/trunk ^/branches/feature1
-    # edit 'a' to 'a1'
-    svn ci -m 'change test.txt'
-    svn co ^/branches/feature1 ../feature1
-    echo 'c' >> test.txt
-    svn ci -m 'add something to test.txt'
+	# trunk copy
+	svn cp ^/trunk ^/branches/feature1
+	# edit 'a' to 'a1'
+	svn ci -m 'change test.txt'
+	svn co ^/branches/feature1 ../feature1
+	echo 'c' >> test.txt
+	svn ci -m 'add something to test.txt'
 
-    # branch copy
-    cd ../feature1
-    # edit 'a' to 'a2'
-    svn ci -m 'change test.txt'
-    svn up
-    # sync from trunk
-    svn merge ^/trunk
-    # conflict comes, choose to use branch version
-    svn ci -m 'sync from trunk'
+	# branch copy
+	cd ../feature1
+	# edit 'a' to 'a2'
+	svn ci -m 'change test.txt'
+	svn up
+	# sync from trunk
+	svn merge ^/trunk
+	# conflict comes, choose to use branch version
+	svn ci -m 'sync from trunk'
 
-    # back to trunk copy
-    cd ../trunk
-    svn up
-    # merge successfully if we use '--reintegrate'
-    svn merge ^/branches/feature1 --reintegrate
-    cat test.txt
-    # output:
-    #   a2
-    #   b
-    #   c
+	# back to trunk copy
+	cd ../trunk
+	svn up
+	# merge successfully if we use '--reintegrate'
+	svn merge ^/branches/feature1 --reintegrate
+	cat test.txt
+	# output:
+	#   a2
+	#   b
+	#   c
 
-    # now try the 'sync' merge
-    svn revert . -R
-    svn merge ^/branches/feature1
-    # Tada.., conflict comes
+	# now try the 'sync' merge
+	svn revert . -R
+	svn merge ^/branches/feature1
+	# Tada.., conflict comes
 ```
 
 As we can see, without '--reintegrate' option, it just compare the current branch and trunk codes directly so as to lead conflicts. Although common description explains this way merge the changes belongs to branch only back to trunk, it is not so clear for me to understand why 'a2' and 'a1' doesn't lead conflict. So I change to understand the 'reintegrate' merge to something like running 'sync' merge on branch copy first, which apply add 'c' change from trunk, and then copy the merge result from that pseudo branch copy into trunk copy.

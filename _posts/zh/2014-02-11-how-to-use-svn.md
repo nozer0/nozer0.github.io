@@ -5,6 +5,7 @@ categories: zh program
 language: zh
 tags: VCS SVN 窥径
 
+keywords: VCS, SVN, checkout, update, commit, branch
 description: SVN使用笔记, 可做简单手册检索。
 ---
 
@@ -36,15 +37,15 @@ description: SVN使用笔记, 可做简单手册检索。
 <a id="concepts"></a>
 ## 概念 ##
 
-- 仓库(Repository)
+- 仓库（Repository）
 
 	仓库，顾名思义，是用来存放所有历史数据的地方，用户可以从仓库读写各自想要的数据。
 
-- 工作副本(Working copy)
+- 工作副本（Working copy）
 
 	仓库对应的本地副本，包含一部分历史数据和版本管理信息。
 
-- 版本(Revision)
+- 版本（Revision）
 
 	一旦仓库有改动发生，版本数字就会自动增长。
 
@@ -82,7 +83,7 @@ description: SVN使用笔记, 可做简单手册检索。
 
 使用`svn update`在开始工作时和提交之前先做一次更新是一个良好的习惯。
 
-假如在我们修改工作目录的同时，有人也更新了同样的文件并已经提交到远程仓库，那我们在更新时有可能就会遇到冲突(conflict)。可以设定'accept'参数，指定'working', 'base', 'mine-conflict(mc)', 'theirs-conflict(tc)', 'mine-full(mf)', 'theirs-full(tf)', 'edit(e)'中的一个作为冲突解决的策略；或者我们也可以选择'postpone(p)'，之后用`svn resolve`标识已解决冲突的文件。
+假如在我们修改工作目录的同时，有人也更新了同样的文件并已经提交到远程仓库，那我们在更新时有可能就会遇到冲突（conflict）。可以设定'accept'参数，指定'working', 'base', 'mine-conflict(mc)', 'theirs-conflict(tc)', 'mine-full(mf)', 'theirs-full(tf)', 'edit(e)'中的一个作为冲突解决的策略；或者我们也可以选择'postpone(p)'，之后用`svn resolve`标识已解决冲突的文件。
 
 让我们看一些示例代码。
 
@@ -160,7 +161,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 - - -
 <a id="branch"></a>
-## 分支(Branch) ##
+## 分支 ##
 
 何为分支？
 
@@ -196,7 +197,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 	#      r11' <- feature1 working copy
 ```
 
-同时，其余的同学也会在主干上做些修改，我需要合并其中的一部分到新分支上，通常这被称为选择合并(cherry-pick merge)。
+同时，其余的同学也会在主干上做些修改，我需要合并其中的一部分到新分支上，通常这被称为选择合并（cherry-pick merge）。
 
 ```sh
 	svn up

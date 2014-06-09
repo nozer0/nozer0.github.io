@@ -1,6 +1,6 @@
 ---
-layout : default
-title: statistics
+layout : page
+title: Statistics
 zh_title: 统计
 language: zh
 group: tool
@@ -8,17 +8,20 @@ group: tool
 
 <div id="container" style="height: 400px;"></div>
 
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+<!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
+<script src="/assets/js/jquery-1.9.1.min.js"></script>
+<script src="/assets/js/highcharts.js"></script>
 <script>
 var data = {
-	'control': [2,3,4,5,1,2,1,0,-1],
-	'willpower':[2,3,4,5,1,2,1,0,-1],
-	'endurance':[2,2,2,2,2,2,2,2,2]
-}, p, d, l, df, nd, x, series = [];
+	'control': [2,3,4,5, 1,2, 1,-1,-4, -8,-7,-7,-6,-5, -8,-7, -8,-7,-7,-6,-5,-4,-3,-2, 0,0,2, 0, -2,-1,0,1,1,2,3],
+	'willpower':[2,3,4,5, 1,2, 1,-1,-4, -8,-7,-7,-6,-5, -8,-7, -8,-7,-7,-6,-5,-4,-3,-2, 0,0,2, 0, -2,-1,0,1,1,2,3],
+	'endurance':[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+}, p, d, l, df, nd, x, series = [], t;
 for (p in data) {
-	for (d = data[p], l = d.length - 1, df = Math.ceil(l >= 7 ? (d[l] - d[l - 7]) / 7 : (d[l] - d[0]) / l) || 1, nd = [], x = d[l], l = 7; l; l -= 1) {
-		nd.push(x = x + df);
+	for (d = data[p], l = d.length - 1, df = Math.ceil(l >= 7 ? (d[l] - d[l - 7]) / 7 : (d[l] - d[0]) / l) || 1, x = d[l], l = 7,
+		t = new Date(), t = new Date(t.getFullYear(), t.getMonth(), t.getDate()).getTime(), nd = [{x: t, y: x}]; l; l -= 1) {
+		nd.push({x: t += 86400000, y: x += df});
 	}
 	series.push({
 		name: p,
@@ -26,7 +29,7 @@ for (p in data) {
 	}, {
 		dashStyle: 'dash',
 		name: p + '(plan)',
-		data: d.concat(nd)
+		data: nd
 	});
 }
 series.push({
@@ -52,7 +55,14 @@ series.push({
 		{x: new Date(2014,4,14).getTime(), y: 17}
 	]
 });
+
 $(function () {
+	Highcharts.setOptions({
+		global: {
+			useUTC: false
+		}
+	});
+
 	$('#container').highcharts({
 		chart: {
 			zoomType: 'x'

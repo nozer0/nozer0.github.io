@@ -5,6 +5,7 @@ categories: en program
 language: en
 tags: VCS SVN note
 
+keywords: VCS, SVN, checkout, update, commit, branch
 description: A note about how to use SVN, which can be taken as a simple manual.
 ---
 

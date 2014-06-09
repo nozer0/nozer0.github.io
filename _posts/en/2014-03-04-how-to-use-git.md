@@ -5,6 +5,7 @@ categories: en program
 language: en
 tags: VCS Git note
 
+keywords: VCS, Git, clone, fetch, commit, push, branch
 description: A note about how to use Git, which can be taken as a simple manual.
 ---
 
@@ -377,7 +378,7 @@ Git also have the same predefined keyword 'HEAD', different than other VCS like 
 As extra candy for the one who used SVN before, this is the compare table, which lists similar commands between SVN and Git.
 
 |               SVN              |                    Git                   |
-| ------------------------------:| ---------------------------------------- |
+|-------------------------------:|------------------------------------------|
 | `svn checkout`                 | `git clone`                              |
 |                                |                                          |
 | `svn update`                   | `git pull`, `git fetch` + `git checkout` |
