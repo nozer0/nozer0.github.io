@@ -1,0 +1,156 @@
+---
+layout : page
+title: Encoding Convertor
+zh_title: 编码转换器
+language: en
+group: tool
+---
+<style>
+table {
+	width: 80%;
+}
+textarea {
+	width: 98%;
+	resize: vertical;
+}
+</style>
+
+You can read more from <a href="/en/system/character-encoding/" title="Character Encoding">Character Encoding</a>.
+
+<div>
+	<table>
+		<tbody>
+			<tr>
+				<td colspan="2">Encodings:</td>
+			</tr>
+			<tr>
+				<td class="label" width="90">Character</td>
+				<td><textarea id="text"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">Unicode</td>
+				<td><textarea id="unicode"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">UTF-8</td>
+				<td><textarea id="utf8"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">UTF-16</td>
+				<td><textarea id="utf16"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">GB2312</td>
+				<td><textarea id="gb2312"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">ISO 2022-CN</td>
+				<td><textarea id="iso2022"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">EUC-CN</td>
+				<td><textarea id="euc"></textarea></td>
+			</tr>
+		</tbody>
+		<tbody>
+			<tr>
+				<td colspan="2">Base64:</td>
+			</tr>
+			<tr>
+				<td class="label">Bytes</td>
+				<td><textarea id="bytes"></textarea></td>
+			</tr>
+			<tr>
+				<td class="label">base64</td>
+				<td><textarea id="base64"></textarea></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript" src="./encoding.js"></script>
+<script type="text/javascript" src="./float.js"></script>
+<script type="text/javascript">
+	function $(id) {
+		return document.getElementById(id);
+	}
+
+	var on = document.addEventListener ? function(node, name, listener) {
+		node.addEventListener(name, listener);
+	} : function(node, name, listener) {
+		node.attachEvent('on' + name, listener);
+	};
+
+	var text = $('text'), unicode = $('unicode'), utf8 = $('utf8'), utf16 = $('utf16'), gb2312 = $('gb2312'), iso2022 = $('iso2022'), euc = $('euc'),
+	bytes = $('bytes'), base64 = $('base64');
+
+	on(text, 'keyup', function() {
+		var v = this.value, u = String.text2ucs(v), gb = String.ucs2gb(u);
+		unicode.value = u;
+		utf8.value = String.ucs2utf8(u);
+		utf16.value = String.ucs2utf16(u);
+		gb2312.value = gb;
+		iso2022.value = String.gb2iso(gb);
+		euc.value = String.gb2euc(gb);
+	});
+	on(unicode, 'keyup', function() {
+		var u = this.value.trim(), gb = String.ucs2gb(u);
+		text.value = String.ucs2text(u);
+		utf8.value = String.ucs2utf8(u);
+		utf16.value = String.ucs2utf16(u);
+		gb2312.value = gb;
+		iso2022.value = String.gb2iso(gb);
+		euc.value = String.gb2euc(gb);
+	});
+	on(utf8, 'keyup', function() {
+		var u = String.utf82ucs(this.value.trim()), gb = String.ucs2gb(u);
+		text.value = String.ucs2text(u);
+		unicode.value = u;
+		utf16.value = String.ucs2utf16(u);
+		gb2312.value = gb;
+		iso2022.value = String.gb2iso(gb);
+		euc.value = String.gb2euc(gb);
+	});
+	on(utf16, 'keyup', function() {
+		var u = String.utf162ucs(this.value.trim()), gb = String.ucs2gb(u);
+		text.value = String.ucs2text(u);
+		unicode.value = u;
+		utf8.value = String.ucs2utf8(u);
+		gb2312.value = gb;
+		iso2022.value = String.gb2iso(gb);
+		euc.value = String.gb2euc(gb);
+	});
+	on(gb2312, 'keyup', function() {
+		var gb = this.value.trim(), u = String.gb2ucs(gb);
+		text.value = String.ucs2text(u);
+		unicode.value = u;
+		utf8.value = String.ucs2utf8(u);
+		utf16.value = String.ucs2utf16(u);
+		iso2022.value = String.gb2iso(gb);
+		euc.value = String.gb2euc(gb);
+	});
+	on(iso2022, 'keyup', function() {
+		var gb = String.iso2gb(this.value.trim()), u = String.gb2ucs(gb);
+		text.value = String.ucs2text(u);
+		unicode.value = u;
+		utf8.value = String.ucs2utf8(u);
+		utf16.value = String.ucs2utf16(u);
+		gb2312.value = gb;
+		euc.value = String.gb2euc(gb);
+	});
+	on(euc, 'keyup', function() {
+		var gb = String.euc2gb(this.value.trim()), u = String.gb2ucs(gb);
+		text.value = String.ucs2text(u);
+		unicode.value = u;
+		utf8.value = String.ucs2utf8(u);
+		utf16.value = String.ucs2utf16(u);
+		gb2312.value = gb;
+		iso2022.value = String.gb2iso(gb);
+	});
+
+	on(bytes, 'keyup', function() {
+		base64.value = Base64.fromHex(this.value.trim());
+	});
+	on(base64, 'keyup', function() {
+		bytes.value = Base64.toHex(this.value.trim());
+	});
+</script>
