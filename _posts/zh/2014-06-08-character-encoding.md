@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Character encoding
+title: 字符编码
 categories: zh system
 language: zh
 tags: 字符集 编码 探源

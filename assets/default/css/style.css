@@ -22,7 +22,7 @@ html { background: #44555E; height: 100%; }
 
 body {
 	margin: 10px auto;
-	width: 960px;
+	width: 800px;
 	background: #BDC4C4;
 	color: #434747;
 	font: 400 14px/1.8 "Helvetica Neue", helvetica, arial, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
@@ -30,6 +30,8 @@ body {
 
 h1 { font-size: 2em; line-height: 1.5; margin: 0.5em 0 0; }
 h2 { font-size: 1.5em; }
+
+em, strong { color: #852; }
 
 section { margin: 20px; }
 
@@ -61,9 +63,10 @@ pre code {
 	font-style: italic;
 }
 
-.highlight pre code.text {
+.highlight pre .language-text {
 	white-space: inherit;
 	font-style: inherit;
+	line-height: 1.2em;
 }
 
 table code {
@@ -96,7 +99,7 @@ blockquote {
 
 table {
 	background: #EEE;
-	margin: 1em 2em;
+	margin: 1em auto;
 	border-spacing: 0;
 	/* border-collapse: collapse; */
 	border-top: 1px solid;

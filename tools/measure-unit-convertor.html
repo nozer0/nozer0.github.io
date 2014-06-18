@@ -1,0 +1,1086 @@
+---
+layout : page
+title: Measure Unit Convertor
+zh_title: 度量衡单位转换器
+language: zh
+group: tool
+---
+
+<p>度量衡系列：<a href="/zh/other/length/">长度单位简介</a>，<a href="/zh/other/capacity/">容积单位简介</a>，<a href="/zh/other/weight/">重量单位简介</a>。</p>
+
+
+<div>
+	<table>
+		<tbody>
+			<tr>
+				<th colspan="2">长度换算</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input id="len_num">
+					<select id="len_unit">
+						<optgroup label="公制">
+							<option value="cm">cm</option>
+							<option value="m">m</option>
+							<option value="km">km</option>
+						</optgroup>
+						<optgroup label="市制">
+							<option value="chi">尺</option>
+							<option value="bu">步</option>
+							<option value="li">里</option>
+						</optgroup>
+						<optgroup label="英制">
+							<option value="in">inch</option>
+							<option value="ft">foot</option>
+							<option value="yd">yard</option>
+							<option value="rd">perch</option>
+							<option value="ch">chain</option>
+							<option value="fur">furlong</option>
+							<option value="mile">mile</option>
+							<option value="fth">fathom</option>
+						</optgroup>
+						<optgroup label="古代（尺）">
+							<option value="lv">律尺</option>
+							<option value="shang">商</option>
+							<option value="zhou">周</option>
+							<option value="han">汉</option>
+							<option value="jin">魏晋</option>
+							<option value="tang">隋唐</option>
+							<option value="song">宋</option>
+							<option value="ming1">明营造尺</option>
+							<option value="ming2">明量地尺</option>
+							<option value="ming3">明裁衣尺</option>
+							<option value="qing1">清营造尺</option>
+							<option value="qing2">清量地尺</option>
+							<option value="qing3">清裁衣尺</option>
+						</optgroup>
+						<optgroup label="航海">
+							<option value="cbl">cable</option>
+							<option value="nm">nautical mile</option>
+						</optgroup>
+					</select>
+					<button id="convert_len_btn">转换</button>
+				</td>
+			</tr>
+			<tr>
+				<td class="label">公制： </td>
+				<td><span id="si_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">市制： </td>
+				<td><span id="cn_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">英制： </td>
+				<td><span id="en_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="label">律尺： </td>
+				<td><span id="lv_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">商： </td>
+				<td><span id="shang_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">周： </td>
+				<td><span id="zhou_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">秦汉： </td>
+				<td><span id="han_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">魏晋： </td>
+				<td><span id="jin_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">隋唐： </td>
+				<td><span id="tang_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">宋： </td>
+				<td><span id="song_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">明： </td>
+				<td><span id="ming_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label">清： </td>
+				<td><span id="qing_len"></span></td>
+			</tr>
+			<tr>
+				<td class="label"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="label">航海： </td>
+				<td><span id="voyage_len"></span></td>
+			</tr>
+		</tbody>
+		<tbody>
+			<tr>
+				<th colspan="2">面积换算</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input id="area_num">
+					<select id="area_unit">
+						<optgroup label="公制">
+							<option value="m2">m²</option>
+						</optgroup>
+						<optgroup label="市制">
+							<option value="mu">亩</option>
+						</optgroup>
+						<optgroup label="英制">
+							<option value="acre">acre</option>
+						</optgroup>
+						<optgroup label="古代（亩）">
+							<option value="zhou">周</option>
+							<option value="han">汉</option>
+							<option value="jin">魏晋</option>
+							<option value="tang">隋唐</option>
+							<option value="song">宋</option>
+							<option value="ming">明</option>
+							<option value="qing">清</option>
+						</optgroup>
+					</select>
+					<button id="convert_area_btn">转换</button>
+				</td>
+			</tr>
+			<tr>
+				<td class="label">公制： </td>
+				<td><span id="si_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">市制： </td>
+				<td><span id="cn_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">英制： </td>
+				<td><span id="en_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="label">周： </td>
+				<td><span id="zhou_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">秦汉： </td>
+				<td><span id="han_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">魏晋： </td>
+				<td><span id="jin_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">隋唐： </td>
+				<td><span id="tang_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">宋： </td>
+				<td><span id="song_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">明： </td>
+				<td><span id="ming_area"></span></td>
+			</tr>
+			<tr>
+				<td class="label">清： </td>
+				<td><span id="qing_area"></span></td>
+			</tr>
+		</tbody>
+		<tbody>
+			<tr>
+				<th colspan="2">体积换算</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input id="vol_num">
+					<select id="vol_unit">
+						<optgroup label="公制">
+							<option value="l">l</option>
+							<option value="m3">m³</option>
+						</optgroup>
+						<optgroup label="市制">
+							<option value="sheng">升</option>
+							<option value="dou">斗</option>
+							<option value="shi">石</option>
+						</optgroup>
+						<optgroup label="英制">
+							<option value="gal">gallon</option>
+							<option value="qt">quart</option>
+							<option value="pt">pint</option>
+							<option value="gi">gill</option>
+							<option value="oz">ounce</option>
+						</optgroup>
+						<optgroup label="美制（液量）">
+							<option value="usgal1">gallon</option>
+							<option value="usqt1">quart</option>
+							<option value="uspt1">pint</option>
+							<option value="usgi1">gill</option>
+							<option value="usoz1">ounce</option>
+						</optgroup>
+						<optgroup label="美制（固量）">
+							<option value="usgal2">gallon</option>
+							<option value="usqt2">quart</option>
+							<option value="uspt2">pint</option>
+						</optgroup>
+						<optgroup label="古代（升）">
+							<option value="zhou">周</option>
+							<option value="han">秦汉</option>
+							<option value="tang">隋唐</option>
+							<option value="song">宋</option>
+							<option value="ming">明</option>
+							<option value="qing">清</option>
+						</optgroup>
+					</select>
+					<button id="convert_vol_btn">转换</button>
+				</td>
+			</tr>
+			<tr>
+				<td class="label">公制： </td>
+				<td><span id="si_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">市制： </td>
+				<td><span id="cn_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">英制： </td>
+				<td><span id="uk_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">美制： </td>
+				<td><span id="us_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">美制（液量）： </td>
+				<td><span id="us_vol1"></span></td>
+			</tr>
+			<tr>
+				<td class="label">美制（固量）： </td>
+				<td><span id="us_vol2"></span></td>
+			</tr>
+			<tr>
+				<td class="label"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="label">周： </td>
+				<td><span id="zhou_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">秦汉： </td>
+				<td><span id="han_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">隋唐： </td>
+				<td><span id="tang_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">宋元： </td>
+				<td><span id="song_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">明： </td>
+				<td><span id="ming_vol"></span></td>
+			</tr>
+			<tr>
+				<td class="label">清： </td>
+				<td><span id="qing_vol"></span></td>
+			</tr>
+		</tbody>
+		<tbody>
+			<tr>
+				<th colspan="2">重量换算</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input id="wt_num">
+					<select id="wt_unit">
+						<optgroup label="公制">
+							<option value="g">g</option>
+							<option value="kg">kg</option>
+							<option value="t">t</option>
+						</optgroup>
+						<optgroup label="市制">
+							<option value="liang">两</option>
+							<option value="jin">斤</option>
+							<option value="dan">石</option>
+						</optgroup>
+						<optgroup label="英制（常衡）">
+							<option value="oz">ounce</option>
+							<option value="lb">pound</option>
+							<option value="st">stone</option>
+							<option value="qr">quarter</option>
+							<option value="t">ton</option>
+						</optgroup>
+						<optgroup label="美制（常衡）">
+							<option value="usoz">ounce</option>
+							<option value="uslb">pound</option>
+							<option value="usqr">quarter</option>
+							<option value="ust">ton</option>
+						</optgroup>
+						<optgroup label="英制（金衡）">
+							<option value="ozt">ounce</option>
+							<option value="lbt">pound</option>
+						</optgroup>
+						<optgroup label="古代（斤）">
+							<option value="qin">秦</option>
+							<option value="han">新汉</option>
+							<option value="jin">魏晋</option>
+							<option value="tang">隋唐</option>
+							<option value="song">宋</option>
+							<option value="ming">明</option>
+							<option value="qing">清</option>
+						</optgroup>
+					</select>
+					<button id="convert_wt_btn">转换</button>
+				</td>
+			</tr>
+			<tr>
+				<td class="label">公制： </td>
+				<td><span id="si_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">市制： </td>
+				<td><span id="cn_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">英制（常衡）： </td>
+				<td><span id="uk_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">美制（常衡）： </td>
+				<td><span id="us_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">英制（金衡）： </td>
+				<td><span id="troy_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="label">秦汉： </td>
+				<td><span id="han_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">新汉： </td>
+				<td><span id="xin_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">魏晋： </td>
+				<td><span id="jin_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">隋唐： </td>
+				<td><span id="tang_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">宋： </td>
+				<td><span id="song_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">明： </td>
+				<td><span id="ming_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">清： </td>
+				<td><span id="qing_wt"></span></td>
+			</tr>
+			<tr>
+				<td class="label">民国： </td>
+				<td><span id="min_wt"></span></td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+<script type="text/javascript">
+function $(id) {
+	return document.getElementById(id);
+}
+
+var on = document.addEventListener ? function(node, name, listener) {
+	node.addEventListener(name, listener);
+} : function(node, name, listener) {
+	node.attachEvent('on' + name, listener);
+};
+
+var len_num = $('len_num'), len_unit = $('len_unit'), si_len = $('si_len'), cn_len = $('cn_len'), en_len = $('en_len'), lv_len = $('lv_len'), shang_len = $('shang_len'), zhou_len = $('zhou_len'), han_len = $('han_len'), jin_len = $('jin_len'), tang_len = $('tang_len'), song_len = $('song_len'), ming_len = $('ming_len'), qing_len = $('qing_len'), voyage_len = $('voyage_len');
+
+on($('convert_len_btn'), 'click', function() {
+	var v = +len_num.value, si, ts, es, t;
+	if (isNaN(v)) { return; }
+	switch (len_unit.value) {
+		case 'cm':
+		si = v / 100;
+		break;
+		case 'm':
+		si = v;
+		break;
+		case 'km':
+		si = v * 1000;
+		break;
+
+		case 'chi':
+		ts = v;
+		si = ts / 3;
+		break;
+		case 'bu':
+		ts = v * 5;
+		si = ts / 3;
+		break;
+		case 'li':
+		ts = v * 1500;
+		si = ts / 3;
+		break;
+
+		case 'lv':
+		si = v * .246;
+		break;
+		case 'shang':
+		si = v * .158;
+		break;
+		case 'zhou':
+		si = v * .197;
+		break;
+		case 'han':
+		si = v * .231;
+		break;
+		case 'jin':
+		si = v * .242;
+		break;
+		case 'tang':
+		si = v * .296;
+		break;
+		case 'song':
+		si = v * .312;
+		break;
+		case 'ming1':
+		si = v * .319;
+		break;
+		case 'ming2':
+		si = v * .327;
+		break;
+		case 'ming3':
+		si = v * .341;
+		break;
+		case 'qing1':
+		si = v * .32;
+		break;
+		case 'qing2':
+		si = v * .345;
+		break;
+		case 'qing3':
+		si = v * .355;
+		break;
+
+		case 'in':
+		es = v / 12;
+		break;
+		case 'ft':
+		es = v;
+		break;
+		case 'yd':
+		es = v * 3;
+		break;
+		case 'rd':
+		es = v * 16.5;
+		break;
+		case 'ch':
+		es = v * 66;
+		break;
+		case 'fur':
+		es = v * 660;
+		break;
+		case 'mile':
+		es = v * 5280;
+		break;
+		case 'fth':
+		es = v * 6;
+		break;
+
+		case 'cbl':
+		si = v * 185.2;
+		break;
+		case 'nm':
+		si = v * 1852;
+		break;
+	}
+	si_len.innerHTML = (si = si || es * .3048) + ' m';
+	cn_len.innerHTML = (ts = ts || si * 3) + ' 尺 （ '  + showChi(ts) + ' ）';
+	en_len.innerHTML = (es || si / .3048) + ' ft ( ' + showFeet(es) + ' )';
+
+	lv_len.innerHTML = (t = ts / .738) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	shang_len.innerHTML = (t = ts / .482) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	zhou_len.innerHTML = (t = ts / .591) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	han_len.innerHTML = (t = ts / .693) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	jin_len.innerHTML = (t = ts / .726) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	tang_len.innerHTML = (t = ts / .888) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	song_len.innerHTML = (t = ts / .936) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	ming_len.innerHTML = (t = ts / .957) + ' 尺 （ '  + showChi(t, true) + ' ）';
+	qing_len.innerHTML = (t = ts / .96) + ' 尺 （ '  + showChi(t, true) + ' ）';
+
+	voyage_len.innerHTML = si / 1852 + ' nm';
+});
+
+function showChi(v, old) {
+	var us = '寸分厘毫丝忽微', t = String(v).split('.'), s = '', i = +t[0], f = t[1], x = old ? 1800 : 1500;
+	if (i) {
+		if (i >= x) {
+			s += Math.floor(i / x) + '里';
+			i %= x;
+		}
+		if (old && i >= 100) {
+			s += Math.floor(i / 100) + '引';
+			i %= 100;
+		}
+		if (i >= 10) {
+			s += Math.floor(i / 10) + '丈';
+			i %= 10;
+		}
+		if (i) {
+			s += i + '尺';
+		}
+	}
+	if (f) {
+		for (i = 0; i < 7; i += 1) {
+			if (f[i] > 0) {
+				s += f[i] + us[i];
+			}
+		}
+	}
+	return s;
+}
+
+function showFeet(v) {
+	var s = '', i = Math.floor(v), f = v - i, t = '';
+	if (i >= 5280) {
+		s += Math.floor(i / 5280) + ' mi';
+		t = ' ';
+		i %= 5280;
+	}
+	if (i >= 3) {
+		s += t + Math.floor(i / 3) + ' yd';
+		t = ' ';
+		i %= 3;
+	}
+	if (i) {
+		s += t + i + ' ft';
+		t = ' ';
+	}
+	if (f) {
+		f = Math.round(f * 12);
+		if (f) {
+			s += t + f + ' in';
+		}
+	}
+	return s;
+}
+
+
+var area_num = $('area_num'), area_unit = $('area_unit'), si_area = $('si_area'), cn_area = $('cn_area'), en_area = $('en_area'), zhou_area = $('zhou_area'), han_area = $('han_area'), jin_area = $('jin_area'), tang_area = $('tang_area'), song_area = $('song_area'), ming_area = $('ming_area'), qing_area = $('qing_area');
+
+on($('convert_area_btn'), 'click', function() {
+	var v = +area_num.value, si, ts, es, t;
+	if (isNaN(v)) { return; }
+	switch (area_unit.value) {
+		case 'm2':
+		si = v;
+		break;
+		case 'mu':
+		ts = v;
+		si = v * 2000 / 3;
+		break;
+		case 'acre':
+		es = v;
+		si = v * 4046.8564224;
+		break;
+
+		case 'zhou':
+		si = v * 248.3776;
+		break;
+		case 'han':
+		si = v * 461.039;
+		break;
+		case 'jin':
+		si = v * 505.99296;
+		break;
+		case 'tang':
+		si = v * 525.696;
+		break;
+		case 'song':
+		si = v * 584.064;
+		break;
+		case 'ming':
+		si = v * 610.566;
+		break;
+		case 'qing':
+		si = v * 614.4;
+		break;
+	}
+	si_area.innerHTML = si + ' m²';
+	cn_area.innerHTML = (ts || si * 0.0015) + ' 亩';
+	en_area.innerHTML = (es || si / 4046.8564224) + ' ar';
+
+	zhou_area.innerHTML = si / 248.3776 + ' 亩';
+	han_area.innerHTML = si / 461.039 + ' 亩';
+	jin_area.innerHTML = si / 505.99296 + ' 亩';
+	tang_area.innerHTML = si / 525.696 + ' 亩';
+	song_area.innerHTML = si / 584.0646 + ' 亩';
+	ming_area.innerHTML = si / 610.566 + ' 亩';
+	qing_area.innerHTML = si / 614.4 + ' 亩';
+});
+
+
+var vol_num = $('vol_num'), vol_unit = $('vol_unit'), si_vol = $('si_vol'), cn_vol = $('cn_vol'), uk_vol = $('uk_vol'), us_vol = $('us_vol'), us_vol1 = $('us_vol1'), us_vol2 = $('us_vol2'), zhou_vol = $('zhou_vol'), han_vol = $('han_vol'), tang_vol = $('tang_vol'), song_vol = $('song_vol'), ming_vol = $('ming_vol'), qing_vol = $('qing_vol');
+
+on($('convert_vol_btn'), 'click', function() {
+	var v = +vol_num.value, si, ts, es, us, ls, ds, t;
+	if (isNaN(v)) { return; }
+	switch (vol_unit.value) {
+		case 'l':
+		case 'sheng':
+		ts = v;
+		break;
+		case 'm3':
+		si = v;
+		ts = v * 1000;
+		break;
+
+		case 'dou':
+		ts = v * 10;
+		break;
+		case 'shi':
+		ts = v * 100;
+		break;
+
+		case 'gal':
+		es = v;
+		break;
+		case 'qt':
+		es = v / 4;
+		break;
+		case 'pt':
+		es = v / 8;
+		break;
+		case 'gi':
+		es = v / 32;
+		break;
+		case 'oz':
+		es = v / 160;
+		break;
+
+		case 'in':
+		us = v / 1728;
+		ts = v * .016387064;
+		break;
+		case 'ft':
+		us = v;
+		ts = v * 28.31685;
+		break;
+		case 'yd':
+		us = v * 27;
+		ts = v * 764.554857984;
+		break;
+
+		case 'usgal1':
+		ls = v;
+		break;
+		case 'usqt1':
+		ls = v / 4;
+		break;
+		case 'uspt1':
+		ls = v / 8;
+		break;
+		case 'usgi1':
+		ls = v / 32;
+		break;
+		case 'usoz1':
+		ls = v / 128;
+		break;
+
+		case 'usgal2':
+		ds = v;
+		break;
+		case 'usqt2':
+		ds = v / 4;
+		break;
+		case 'uspt2':
+		ds = v / 8;
+		break;
+
+		case 'zhou':
+		ts = v * .1935;
+		break;
+		case 'han':
+		ts = v * .2006;
+		break;
+		case 'tang':
+		ts = v * .6;
+		break;
+		case 'song':
+		ts = v * .66;
+		break;
+		case 'ming':
+		ts = v * 1.0225;
+		break;
+		case 'qing':
+		ts = v * 1.0355;
+		break;
+	}
+	cn_vol.innerHTML = (ts || (ts = es ? es * 4.54609 : (ls ? ls * 3.785411784 : ds * 4.40488377086))) + ' 升 （ '  + showSheng(ts, true) + ' ）';
+	si_vol.innerHTML = (si || ts / 1000) + ' m³';
+
+	uk_vol.innerHTML = (es = es || ts / 4.54609) + ' gal ( ' + showGallon(es) + ' )';
+	us_vol.innerHTML = (us = us || ts / 28.31685) + ' ft³ ( ' + showCuFt(us) + ' )';
+	us_vol1.innerHTML = (ls = ls || ts / 3.785411784) + ' gal ( ' + showGallon(ls, 1) + ' )';
+	us_vol2.innerHTML = (ds = ds || ts / 4.40488377086) + ' gal ( ' + showGallon(ds, 2) + ' )';
+
+	zhou_vol.innerHTML = (t = ts / .1935) + ' 升 （ '  + showFu(t) + ' ）';
+	han_vol.innerHTML = (t = ts / .2006) + ' 升 （ '  + showSheng(t, true) + ' ）';
+	tang_vol.innerHTML = (t = ts / .6) + ' 升 （ '  + showSheng(t, true) + ' ）';
+	song_vol.innerHTML = (t = ts / .66) + ' 升 （ '  + showSheng(t, true) + ' ）';
+	ming_vol.innerHTML = (t = ts / 1.0225) + ' 升 （ '  + showSheng(t) + ' ）';
+	qing_vol.innerHTML = (t = ts / 1.0355) + ' 升 （ '  + showSheng(t) + ' ）';
+});
+
+function showFu(v) {
+	var s = '', i = Math.floor(v), f = v - i;
+	if (i) {
+		if (i >= 64) {
+			s += Math.floor(i / 64) + '釜';
+			i %= 64;
+		}
+		if (i >= 16) {
+			s += Math.floor(i / 16) + '区';
+			i %= 16;
+		}
+		if (i >= 4) {
+			s += Math.floor(i / 4) + '豆';
+			i %= 4;
+		}
+		if (i) {
+			s += i + '升';
+		}
+	}
+	return v - i >= 0.5 ? s + '1溢' : s;
+}
+
+function showSheng(v, old) {
+	var us = '合勺抄撮圭', t = String(v).split('.'), s = '', i = +t[0], f = t[1];
+	if (i) {
+		if (i >= 100) {
+			s += Math.floor(i / 100) + '石';
+			i %= 100;
+		}
+		if (!old && i >= 50) {
+			s += Math.floor(i / 50) + '斛';
+			i %= 50;
+		}
+		if (i >= 10) {
+			s += Math.floor(i / 10) + '斗';
+			i %= 10;
+		}
+		if (i) {
+			s += i + '升';
+		}
+	}
+	if (f) {
+		for (i = 0; i < 5; i += 1) {
+			if (f[i] > 0) {
+				s += f[i] + us[i];
+			}
+		}
+	}
+	return s;
+}
+
+function showCuFt(v) {
+	var s = '', i = Math.floor(v), f = v - i, t = '';
+	if (i >= 27) {
+		s += Math.floor(i / 27) + ' yd³';
+		i %= 27;
+		t = ' ';
+	}
+	if (i) {
+		s += i + ' ft³';
+		t = ' ';
+	}
+	if (f) {
+		i = Math.round(f * 1728);
+		if (i) {
+			s += t + i + ' in³';
+		}
+	}
+	return s;
+}
+
+function showGallon(v, type) {
+	var s = '', i = Math.floor(v), f = v - i, t = '';
+	if (type === 2) {
+		if (i >= 8) {
+			s += Math.floor(i / 8) + ' bu';
+			i %= 8;
+			t = ' ';
+		}
+		if (i >= 2) {
+			s += Math.floor(i / 2) + ' pk';
+			i %= 2;
+			t = ' ';
+		}
+	}
+	if (i) {
+		s += i + ' gal';
+		t = ' ';
+	}
+	if (f) {
+		i = Math.floor(f *= 4);
+		if (i) {
+			s += t + i + ' qt';
+			t = ' ';
+		}
+		f = (f - i) * 2;
+		if (type === 2) {	// US dry
+			i = Math.round(f);
+			return i ? s + t + i + ' pt' : s;
+		}
+		i = Math.floor(f);
+		if (i) {
+			s += t + i + ' pt';
+			t = ' ';
+		}
+		i = Math.floor(f = (f - i) * 4);
+		if (i) {
+			s += t + i + ' gi';
+			t = ' ';
+		}
+		i = Math.floor(f = (f - i) * (type ? 4 : 5));
+		if (i) {
+			s += t + i + ' oz';
+			t = ' ';
+		}
+		i = Math.floor(f = (f - i) * 2);
+		if (i) {
+			s += t + i + ' Tbsp';
+			t = ' ';
+		}
+		i = Math.round(f = (f - i) * 4);
+		if (i) {
+			s += t + i + ' dr';
+			t = ' ';
+		}
+		i = Math.round((f - i) * 60);
+		if (i) {
+			s += t + i + ' min';
+		}
+	}
+	return s;
+}
+
+var wt_num = $('wt_num'), wt_unit = $('wt_unit'), si_wt = $('si_wt'), cn_wt = $('cn_wt'), uk_wt = $('uk_wt'), us_wt = $('us_wt'), troy_wt = $('troy_wt'), han_wt = $('han_wt'), xin_wt = $('xin_wt'), jin_wt = $('jin_wt'), tang_wt = $('tang_wt'), song_wt = $('song_wt'), ming_wt = $('ming_wt'), qing_wt = $('qing_wt'), min_wt = $('min_wt');
+
+on($('convert_wt_btn'), 'click', function() {
+	var v = +wt_num.value, si, ts, es, ets, t;
+	if (isNaN(v)) { return; }
+	switch (wt_unit.value) {
+		case 'g':
+		si = v / 1000;
+		break;
+		case 'kg':
+		si = v;
+		break;
+		case 't':
+		si = v * 1000;
+		break;
+
+		case 'liang':
+		ts = v / 10;
+		si = ts * 2;
+		break;
+		case 'jin':
+		ts = v;
+		si = ts * 2;
+		break;
+		case 'dan':
+		ts = v * 120;
+		si = ts * 2;
+		break;
+
+		case 'oz':
+		case 'usoz':
+		es = v / 16;
+		break;
+		case 'lb':
+		case 'uslb':
+		es = v;
+		break;
+		case 'st':
+		es = v * 14;
+		break;
+		case 'qr':
+		es = v * 28;
+		break;
+		case 'usqr':
+		es = v * 25;
+		break;
+		case 't':
+		es = v * 2240;
+		break;
+		case 'ust':
+		es = v * 2000;
+		break;
+
+		case 'ozt':
+		ets = v / 12;
+		si = ets * .3732417216;
+		break;
+		case 'lbt':
+		ets = v;
+		si = v * .3732417216;
+		break;
+
+		case 'qin':
+		si = v * .25;
+		break;
+		case 'xin':
+		si = v * .2267;
+		break;
+		case 'jin':
+		si = v * .22;
+		break;
+		case 'tang':
+		si = v * .66;
+		break;
+		case 'song':
+		si = v * .64;
+		break;
+		case 'ming':
+		si = v * .6;
+		break;
+		case 'qing':
+		si = v * .5966;
+		break;
+	}
+	si_wt.innerHTML = (si = si || es * .45359237) + ' kg';
+	cn_wt.innerHTML = (ts = ts || si * 2) + ' 斤 （ '  + showJin(ts) + ' ）';
+
+	uk_wt.innerHTML = (es = es || si / .45359237) + ' lb ( ' + showPound(es, 1) + ' )';
+	us_wt.innerHTML = es + ' lb ( ' + showPound(es, 2) + ' )';
+	troy_wt.innerHTML = (ets = ets || si / .3732417216) + ' lb ( ' + showPound(ets) + ' )';
+
+	han_wt.innerHTML = (t = si / .25) + ' 斤 （ '  + showJin(t, 1) + ' ）';
+	xin_wt.innerHTML = (t = si / .2267) + ' 斤 （ '  + showJin(t, 1) + ' ）';
+	jin_wt.innerHTML = (t = si / .22) + ' 斤 （ '  + showJin(t, 1) + ' ）';
+	tang_wt.innerHTML = (t = si / .66) + ' 斤 （ '  + showJin(t, 2) + ' ）';
+	song_wt.innerHTML = (t = si / .64) + ' 斤 （ '  + showJin(t, 2) + ' ）';
+	ming_wt.innerHTML = (t = si / .6) + ' 斤 （ '  + showJin(t, 2) + ' ）';
+	qing_wt.innerHTML = (t = si / .5966) + ' 斤 （ '  + showJin(t, 2) + ' ）';
+	min_wt.innerHTML = (t = si / .5) + ' 斤 （ '  + showJin(t, 2) + ' ）';
+});
+
+function showPound(v, type) {
+	var s = '', i = Math.floor(v), f = v - i, t = '', x = type === 1 ? 2240 : 2000;
+	if (type && i) {
+		if (i >= x) {
+			s += Math.floor(i / x) + ' t';
+			i %= x;
+			x /= 20;
+			t = ' ';
+		}
+		if (i >= x) {
+			s += t + Math.floor(i / x) + ' cwt';
+			i %= x;
+			x /= 4;
+			t = ' ';
+		}
+		if (i >= x) {
+			s += t + Math.floor(i / x) + ' qr';
+			i %= x;
+			t = ' ';
+		}
+		if (type === 1 && i >= 14) {
+			s += t + Math.floor(i / 14) + ' st';
+			i %= 14;
+			t = ' ';
+		}
+	}
+	if (i) {
+		s += t + i + ' lb';
+		t = ' ';
+	}
+	if (f) {
+		i = Math.floor(f *= type ? 16 : 12);
+		if (i) {
+			s += t + i + ' oz';
+			t = ' ';
+		}
+		i = Math.floor(f = (f - i) * (type ? 16 : 20));
+		if (i) {
+			s += t + i + (type ? ' dr' : ' dwt');
+			t = ' ';
+		}
+		i = Math.round((f - i) * (type ? 27.34375 : 24));
+		if (i) {
+			s += t + i + ' gr';
+		}
+	}
+	return s;
+}
+
+function showJin(v, type) {
+	var s = '', i = Math.floor(v), f = v - i;
+	if (i) {
+		if (i >= 120) {
+			s += Math.floor(i / 120) + '石';
+			i %= 100;
+		}
+		if (type && i >= 30) {
+			s += Math.floor(i / 30) + '钧';
+			i %= 30;
+		}
+		if (i) {
+			s += i + '斤';
+		}
+	}
+	if (f) {
+		i = Math.floor(f *= type ? 16 : 10);
+		if (i) {
+			s += i + '两';
+		}
+		if (type === 1) {
+			i = Math.floor(f = (f - i) * 24);
+			if (i) {
+				s += i + '铢';
+			}
+			i = Math.round((f - i) * 10);
+			return i ? s + i + '累' : s;
+		}
+		i = Math.floor(f = (f - i) * 10);
+		if (i) {
+			s += i + '钱';
+		}
+		i = Math.floor(f = (f - i) * 10);
+		if (i) {
+			s += i + '厘';
+		}
+		i = Math.round((f - i) * 10);
+		if (i) {
+			s += i + '分';
+		}
+	}
+	return s;
+}
+</script>

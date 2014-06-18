@@ -6,7 +6,7 @@ language: en
 tags: VCS SVN study
 
 keywords: VCS, SVN, diff, merge, trunk, branch
-description: Introduce for the different types of merge used in SVN, and also the `diff` as basis.
+description: Introduction for the different types of merge used in SVN, and also the `diff` as basis.
 ---
 
 In the early post ( [How to use SVN](/en/program/How-to-use-svn/) ), we have some practices with basic SVN commands. Today, we will go a little deeper for merge operation. `merge` is an important command for co-work, but a little complex to understand than normal ones like `update` and `commit`.
