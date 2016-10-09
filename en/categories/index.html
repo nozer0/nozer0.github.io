@@ -11,16 +11,18 @@ group: navigation
 
 <ul>
 {% for post in sc[lang] %}
-	{% assign c = post.categories[1] %}
-	{% unless categories contains c %}
-	<li>
-		{% assign categories = categories | append: ' ' | append: c %}
-		<h2 id="{{ c }}">
-			{{ c }}
-			<sup>{{ sc[c] | map: 'language' | join: ' ' | remove: exclude_langs | split: ' ' | size }}</sup>
-		</h2>
-		{% include categories.html category=c next=3 %}
-	</li>
-	{% endunless %}
+	{% if post.language == lang %}
+		{% assign c = post.categories[1] %}
+		{% unless categories contains c %}
+		<li>
+			{% assign categories = categories | append: ' ' | append: c %}
+			<h2 id="{{ c }}">
+				{{ c }}
+				<sup>{{ sc[c] | map: 'language' | join: ' ' | remove: exclude_langs | split: ' ' | size }}</sup>
+			</h2>
+			{% include categories.html category=c level=3 %}
+		</li>
+		{% endunless %}
+	{% endif %}
 {% endfor %}
 </ul>

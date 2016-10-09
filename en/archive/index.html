@@ -13,17 +13,16 @@ group: navigation
 	{% if post.language == lang %}
 		{% assign ny = post.date | date: '%Y' %}
 		{% assign nm = post.date | date: '%m' %}
-		{% if ny != y %}
-			{% if y %}
-			</ul></li>
-			{% endif %}
-			{% assign y = ny %}
-			<li><h2>{{ y }}</h2><ul>
-		{% endif %}
-
 		{% if nm != m %}
 			{% if m %}
 			</ul></li>
+			{% endif %}
+			{% if ny != y %}
+				{% if y %}
+				</ul></li>
+				{% endif %}
+				{% assign y = ny %}
+				<li><h2>{{ y }}</h2><ul>
 			{% endif %}
 			{% assign m = nm %}
 			<li><h3>{{ m }}</h3><ul>
