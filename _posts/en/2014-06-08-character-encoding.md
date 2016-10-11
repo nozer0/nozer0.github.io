@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Character encoding
-categories: en system
+categories: en technology system
 language: en
 tags: charset encoding study
 
@@ -9,40 +9,39 @@ keywords: charset, encoding, SBCS, ASCII, MBCS, GB2312, Big5, JIS X, UCS, Unicod
 description: Look at how different characters defined and stored in computers.
 ---
 
-- [Introduce](#introduce)
-- [SBCS](#SBCS)
-	- [ASCII](#ASCII)
-	- [ISO/IEC 8859](#ISO/IEC-8859)
-	- [JIS X 0201](#JIS-X-0201)
-- [MBCS](#MBCS)
-	- [ISO/IEC 2022](#ISO/IEC 2022)
-	- [GB2312](#GB2312)
-		- [ISO 2022-CN](#ISO-2022-CN)
-		- [EUC-CN](#EUC-CN)
-		- [cp936](#cp936)
-	- [GBK](#GBK)
-	- [CNS 11643](#CNS-11643)
-	- [Big5](#Big5)
-	- [JIS X](#JIS-X)
-		- [ISO 2022-JP](#ISO-2022-JP)
-		- [EUC-JP](#EUC-JP)
-		- [Shift-JIS](#Shift-JIS)
-	- [UCS](#UCS)
-		- [UTF-8](#UTF-8)
-		- [UCS-2](#UCS-2)
-		- [UTF-16](#UTF-16)
-		- [BOM](#BOM)
-- [Others](#others)
-	- [ANSI](#ANSI)
-	- [Base64](#Base64)
-	- [Quoted-printable](#quoted-printable)
-- [Review](#review)
-
 Last time, we talk about [numbers in computer](/en/system/numbers-in-computer/), and we will take a look how characters stored in computer this time.
 
+- [Introduce]({{ page.url }}#introduce)
+- [SBCS]({{ page.url }}#SBCS)
+	- [ASCII]({{ page.url }}#ASCII)
+	- [ISO/IEC 8859]({{ page.url }}#ISO/IEC-8859)
+	- [JIS X 0201]({{ page.url }}#JIS-X-0201)
+- [MBCS]({{ page.url }}#MBCS)
+	- [ISO/IEC 2022]({{ page.url }}#ISO/IEC 2022)
+	- [GB2312]({{ page.url }}#GB2312)
+		- [ISO 2022-CN]({{ page.url }}#ISO-2022-CN)
+		- [EUC-CN]({{ page.url }}#EUC-CN)
+		- [cp936]({{ page.url }}#cp936)
+	- [GBK]({{ page.url }}#GBK)
+	- [CNS 11643]({{ page.url }}#CNS-11643)
+	- [Big5]({{ page.url }}#Big5)
+	- [JIS X]({{ page.url }}#JIS-X)
+		- [ISO 2022-JP]({{ page.url }}#ISO-2022-JP)
+		- [EUC-JP]({{ page.url }}#EUC-JP)
+		- [Shift-JIS]({{ page.url }}#Shift-JIS)
+	- [UCS]({{ page.url }}#UCS)
+		- [UTF-8]({{ page.url }}#UTF-8)
+		- [UCS-2]({{ page.url }}#UCS-2)
+		- [UTF-16]({{ page.url }}#UTF-16)
+		- [BOM]({{ page.url }}#BOM)
+- [Others]({{ page.url }}#others)
+	- [ANSI]({{ page.url }}#ANSI)
+	- [Base64]({{ page.url }}#Base64)
+	- [Quoted-printable]({{ page.url }}#quoted-printable)
+- [Review]({{ page.url }}#review)
 
-<a id="introduce"></a>
-## Introduce ##
+
+## Introduce<a id="introduce"></a>
 
 Here are some terminologies in this article, such as 'character set', 'character encoding system', 'QuWei code' and 'code point', we can have an overall concept from the diagram below first, and simple explanations for each will be referred next.
 
@@ -52,7 +51,7 @@ Here are some terminologies in this article, such as 'character set', 'character
 	              | a, b, ... |   encode    +-----------------+
 	              | |  |   |  | ----------> | 0x61, 0x62, ... |
 	code point -->| 97 98 ... |             +-----------------+
-	              +-----------+  
+	              +-----------+
 ```
 
 First, let us check the concepts of Character set and Encoding. Always, people talk these two interchangeably, but sometimes, they have their own meanings for each other.
@@ -64,17 +63,15 @@ First, let us check the concepts of Character set and Encoding. Always, people t
 For most situations in Computer Science, these 2 things are same, like 'ASCII', 'ISO8859'; sometimes are not, for example, 'EUC-CN' is an encoding way of character set 'GB2312'.
 
 
-<a id="SBCS"></a>
-## SBCS ##
+## SBCS<a id="SBCS"></a>
 
 Single-byte character system, we can know from name that these character system only need 7 or 8 bits to represent characters, in other words, maximum 128 or 256 characters in these systems.
 
 We will introduce the three of them, 'ASCII' and 'ISO 8859', both are most popular worldwide, and the last special one 'JIS X 0201' for Japanese.
 
-<a id="ASCII"></a>
-### ASCII ###
+### ASCII<a id="ASCII"></a>
 
-'American Standard Code for Information Interchange' system, also AKA **'ISO646-US'** or **'cp367'** from IBM. For most people, it should be the earliest encoding bring in. 
+'American Standard Code for Information Interchange' system, also AKA **'ISO646-US'** or **'cp367'** from IBM. For most people, it should be the earliest encoding bring in.
 
 ASCII bases on the English alphabet, includes 96 printable characters(26 characters, 0-9 numbers, some basic punctuation symbols and blank space), 32 control codes, 128 characters totally, which can be represented by 7 bits. Only 1 byte is enough to represent almost everything for English people, and here is one more bit left which can be used for parity check, simple and small, isn't it?
 
@@ -99,26 +96,22 @@ Full ASCII table.
 |  E  | SO  (Shift Out)             | RS  (Record Separator)          | .  | > | N | ^ | n | ~   |
 |  F  | SI  (Shift In)              | US  (Unit Separator)            | /  | ? | O | _ | o | DEL |
 
-<a id="ISO/IEC-8859"></a>
-### ISO/IEC 8859 ###
+### ISO/IEC 8859<a id="ISO/IEC-8859"></a>
 
 ASCII is good enough for US, however, for other Latin language countries, they need more additional symbols to be represented, so the extended encoding system using one more bit than ASCII was defined. And it has several parts for different locales, such as **'ISO-8859-1'** for Western European, **'ISO-8859-2'** for Central European, etc.
 
 All 'ISO-8859' variable parts are use 8 bits, and the beginning 128 characters are the same as ASCII, this is called ASCII compliant character set. Actually, 'ISO 8859' only defines the bytes range '0xA0~0xFF', and **'ISO 6429'** defines  the C0 and C1 control characters(0x00~0x1F, 0x80~0x9F), more accurately, ISO-8859 = ASCII + ISO 6429 + ISO 8859, be aware of the dash symbol '-'.
 
-<a id="JIS-X-0201"></a>
-### JIS X 0201 ###
+### JIS X 0201<a id="JIS-X-0201"></a>
 
 This is the single byte character set early used in Japan, different than normal ASCII, it replaces '\' to '¥' on '0x5C', that's why we always see such path 'C:¥windows¥system' in Japanese Environment, and also '~' to '‾' on '0x7E'. And the bytes of '0xA1~0xDF' is used for half-width katakana.
 
 
-<a id="MBCS"></a>
-## MBCS ##
+## MBCS<a id="MBCS"></a>
 
 Multi-byte character system, contrast to SBCS, which is mainly used for Latin language family countries, MBCS is defined for the other countries who have much more characters to be represented, like China or Japan. Obviously, only 1 byte is not enough.
 
-<a id="ISO/IEC 2022"></a>
-### ISO/IEC 2022 ###
+### ISO/IEC 2022<a id="ISO/IEC 2022"></a>
 
 ISO 2022 is neither a character set nor encoding system, it's a standard or code extension technique to use single encoding system to represent multiple character sets. It specifies that 1 byte (accurately 7 bits) to represent 94 printable characters, to be consistent with ASCII, using '0x21~0x7E'; 2 bytes, 94 rows x 94 columns = 8836 characters, for most language, this is enough; specially, 3 bytes, 94 planes x 8836 = 830584 characters.
 
@@ -176,8 +169,7 @@ Moreover, ISO 2022 can use 'Escape sequences' to indicate which working set shou
 
 So that we can know byte '0x0F21' represents the first character in G0 of regarding character set, correspondingly, '0x0E21' represents the first character in G1. For instance, the bytes of '啊' are '0x1B 0x24 0x29 0x41 0x0E 0x30 0x21', the first 4 bytes 'ESC $ ) A' indicates to use 'GB2312', and 'S0' denotes G1, the last 2 bytes '0x3021' points to '16-01' + 0x20(G1), which is the code point of '啊' in GB2312.
 
-<a id="GB2312"></a>
-### GB2312 ###
+### GB2312<a id="GB2312"></a>
 
 'GB2312', and the later extend character sets, **'GBK'**, and **'GB18030'**, are all the official character sets of China. 'GB' abbreviates 'GuoBiao(国家标准)', which means national standard.
 
@@ -193,11 +185,11 @@ GB2312 includes totally 7445 characters, and groups them into 3 levels.
 
 Let us see several regarding encoding systems.
 
-- 	<a id="ISO-2022-CN"></a>**ISO 2022-CN**
+- 	**ISO 2022-CN**<a id="ISO-2022-CN"></a>
 
 	According to the ISO 2022 specification, the encoding system can use 1 byte to represent ASCII, and 2 bytes for others. We can get the related ISO 2022 codes by adding 32 to the QuWei code, i.e, '啊' is '0x3021', of course, we already know it has prefix escape sequence codes, the full bytes are '0x1B 0x24 0x29 0x41 0x0E 0x30 0x21'.
 
-- 	<a id="EUC-CN"></a>**EUC-CN**
+- 	**EUC-CN**<a id="EUC-CN"></a>
 
 	As we mentioned above, 'EUC-CN', 'Extend Unix code for CN', is the most popular encoding system of 'GB2312', also referred to as **'cp1383'**. It is also variable-width encoding system, GL plane is the same as ASCII, and 2 bytes for others.
 
@@ -209,17 +201,16 @@ Let us see several regarding encoding systems.
 	|:-----:|-----------|-----------
 	|   1   | 0x21~0x7E |
 	|   2   | 0xA1~0xF7 | 0xA1~0xFE
-	
-- 	<a id="cp936"></a>**cp936**
+
+- 	**cp936**<a id="cp936"></a>
 
 	In early time, Windows implements code page 936 for GB2312, and GBK later. So 'cp936' is also the encoding of GB2312 and GBK, it is the same implementation as 'EUC-CN'. FYI, here the code pages are the ones defined by Microsoft, not the 'cp367' for ASCII, which is defined by IBM.
 
-<a id="GBK"></a>
-### GBK ###
+### GBK<a id="GBK"></a>
 
 GBK is the extension of GB2312, 21886 characters totally, in addition to the ones included in GB2312, traditional Chinese characters and other unrepresentable Chinese characters are also included. It has 5 levels, the level 1 and 2 is the same as GB2312, and level 3~5 take the byte range unused in GB2312. Check the table for details.
 
-| Level |  Byte 1   |  Byte 2 
+| Level |  Byte 1   |  Byte 2
 |-------|-----------|----------
 | GBK/1 | 0xA1~0xA9 | 0xA1~0xFE
 | GBK/2 | 0xB0~0xF7 | 0xA1~0xFE
@@ -227,8 +218,7 @@ GBK is the extension of GB2312, 21886 characters totally, in addition to the one
 | GBK/4 | 0xAA~0xFE | 0x40~0xA0 except 0x7F
 | GBK/5 | 0xA8~0xA9 | 0x40~0xA0 except 0x7F
 
-<a id="CNS-11643"></a>
-### CNS 11643 ###
+### CNS 11643<a id="CNS-11643"></a>
 
 CNS 11643, Chinese National Standard 11643, it is the official standard of Republic of China. Please pay attention, it's Republic of China(中华民国), not PRC(People's Republic of China), so it's used in Taiwan, in fact, Big5 is more commonly used.
 
@@ -240,8 +230,7 @@ It contains 16 planes, from plane 12 to 15 are designated for user-defined chara
 |   2   | 0xA1~0xFE | 0xA1~0xFE |           |           |
 |   4   | 0x8E      | 0xA1~0xB0 | 0xA1~0xFE | 0xA1~0xFE |
 
-<a id="Big5"></a>
-### Big5 ###
+### Big5<a id="Big5"></a>
 
 Big5 is both a traditional Chinese character set and the relevant encoding system, which is popular used in Taiwan, HongKong and Macau, also referred as **'cp950'** in Windows.
 
@@ -261,8 +250,7 @@ Strictly speaking, it is a fixed DBCS, double bytes character system, it needs t
 
 And because the byte range of second byte is overlapped with SBCS '0x20~0x7F', it may lead problem sometimes, for example, '功(0xA55C)', the second byte is the same value of '\\(0x5C)', which is always used as escape character. This problem only occurs in Big5 and Shift-JIS, and won't happen in ISO 2022 and EUC compliant encodings.
 
-<a id="JIS-X"></a>
-### JIS X ###
+### JIS X<a id="JIS-X"></a>
 
 **'JIS X 0208'**, Japanese Industrial Standards, it's very similar like GB2312, groups all characters into 94 row x 94 positions called 'Kuten(区点)' code, the same thing called 'QuWei(区位)' code in GB. Just like '啊' in GB2312, the code point 16-01 in JIS X points to '亜'. Actually, the same structure is employed by Korean with **'KS X'**. As well as GB2312, JIS X 0208 has new extend character sets, **'JIS X 0212'** and **'JIS X 0213'**.
 
@@ -276,11 +264,11 @@ JIS X 0208 includes 6879 graph characters totally, among it 6355 kanji and 524 h
 
 Here are some regarding encoding systems.
 
-- 	<a id="ISO-2022-JP"></a>**ISO 2022-JP**
+- 	**ISO 2022-JP**<a id="ISO-2022-JP"></a>
 
 	As introduced above, to compliant with ASCII, ISO 2022 should add '0x20' on each byte of multiple bytes character, and 'ESC $ B' is the escape codes of JIS X 0208, so the bytes for '亜(16-01)' are '0x1B 0x24 0x42 0x30 0x21'.
 
-- 	<a id="EUC-JP"></a>**EUC-JP**
+- 	**EUC-JP**<a id="EUC-JP"></a>
 
  	'Extend Unix code for JP', it is most often used encoding system on Unix-like system in Japan, just like Shift-JIS in Windows. It has some differences with 'EUC-CN', for the half-width kana, with the lead byte '0x8E' and latter byte '0xA1~0xDF', for example, '0x8EA7' represents 'ｧ'.
 
@@ -295,7 +283,7 @@ Here are some regarding encoding systems.
 	|   2   | 0xA1~0xF4 | 0xA1~0xFE |           |
 	|   3   | 0x8F      | 0xA1~0xFE | 0xA1~0xFE |
 
-- 	<a id="Shift-JIS"></a>**Shift-JIS**
+- 	**Shift-JIS**<a id="Shift-JIS"></a>
 
 	Shift Japanese Industrial Standards, or **'cp932'** in Windows. This encoding is also variable-width, for single byte, it is compatible with JIS X 0201, takes the '0x00~0x7F, 0xAE~0xDF' as byte range; And for 2 bytes, it is not compatible with ISO 2022, instead it uses the formula below.
 
@@ -316,8 +304,7 @@ Here are some regarding encoding systems.
 
 **'JIS X 0212'** is the extended set of JIS X 0208 for supplementary plane, including 6067 characters totally, effectively dead. And the later one, **'JIS X 0213'**, 11233 characters totally, divided into 2 planes, plane 1 as the superset of 'JIS X 0208', and plane 2 as the revised 'JIS X 0212'.
 
-<a id="UCS"></a>
-### UCS ###
+### UCS<a id="UCS"></a>
 
 There are so many different languages in the world so as to define so many different characters sets, it is difficult to transfer data between different systems. Finally, someone stands up to do the unique work that groups all characters into one super big set, the universal character set, abbreviates 'UCS'.
 
@@ -334,14 +321,15 @@ It has 16 planes, the first one, which is called as 'BMP' with the first 256 cha
 |       | U+FDD0~U+FDEF                                                      | Noncharacters, never to be used
 |   1   | U+10000~U+13FFF, U+16000~U+16FFF, U+1B000~U+1BFFF, U+1D000~U+1FFFF | SMP, Supplementary Multilingual Plane
 |   2   | U+20000~U+2BFFF, U+2F000~U+2FFFF                                   | SIP, Supplementary Ideographic Plane
-|  3~13 | U+30000~U+DFFFF                                                    | 
+|  3~13 | U+30000~U+DFFFF                                                    |
 |   14  | U+E0000~U+EFFFF                                                    | SSP, Supplementary Special-purpose Plane
 | 15~16 | U+F0000~U+10FFFF                                                   | S PUA, Supplementary Private Use Area
+
 <small>\* All codes ending with 'FFFE/FFFF' are noncharacters, such as 'U+FFFE' and 'U+10FFFF'.</small>
 
 Several corresponding encoding systems.
 
-- <a id="UTF-8"></a>**UTF-8**
+- **UTF-8**<a id="UTF-8"></a>
 
 	'UTF', Unicode Transformation Format, is the encoding system defined by Unicode.
 
@@ -358,47 +346,43 @@ Several corresponding encoding systems.
 	| U+10000~U+10FFFF | 11110xxx  | 10xxxxxx  | 10xxxxxx  | 10xxxxxx  | Supplementary Planes
 	|                  | 0xF0~0xF4 | 0x80~0xBF | 0x80~0xBF | 0x80~0xBF |
 
-- <a id="UCS-2"></a>**UCS-2**
+- **UCS-2**<a id="UCS-2"></a>
 
 	UCS-2 is an encoding using fixed 2 bytes with same code points in BMP to represent characters, substituted by its super system 'UTF-16'.
 
-- <a id="UTF-16"></a>**UTF-16**
+- **UTF-16**<a id="UTF-16"></a>
 
 	UTF-16 is also a variable-width encoding for Unicode. Like its former encoding 'UCS-2', for BMP, it's the same byte values as the code points, for instance, '啊(U+554A)' is represented as '0x554A'; And for other supplementary planes, which needs 20 bits to represent the code points, it adds '0xD800' to first 10 bits(0x0000~0x03FF) to get the lead surrogate byte, and '0xDC00' to next ten bits to get trail surrogate byte.
 
-	<pre>
-		lead surrogate = x >> 10 & 0x3FF + 0xD800
-		trail surrogate = x & 0x3FF + 0xDC00
-	</pre>
+<pre>
+	lead surrogate = x >> 10 & 0x3FF + 0xD800
+	trail surrogate = x & 0x3FF + 0xDC00
+</pre>
 
-<a id="BOM"></a>
-#### BOM ####
+#### BOM<a id="BOM"></a>
 
 Byte Order Mark, a Unicode character preceded the first actual characters, which used to detect the [byte order](/en/system/numbers-in-computer/#byte_order), and also indicates the encoding system sometimes.
 
 UTF-16 uses '0xFEFF' as BOM, if the opposite order byte '0xFFFE' is detected at the first of Unicode text, we can know that the byte order is little-endian, this is also why 'U+FFFE' is defined as noncharacter in Unicode.
 
-UTF-8 uses '0xEF 0xBB 0xBF' as BOM instead, which is the corresponding representation of 'U+FEFF' in UTF-8, because UTF-8 doesn't care the byte order, it always use to denote UTF-8 encoding if appears in the beginning of text. 
+UTF-8 uses '0xEF 0xBB 0xBF' as BOM instead, which is the corresponding representation of 'U+FEFF' in UTF-8, because UTF-8 doesn't care the byte order, it always use to denote UTF-8 encoding if appears in the beginning of text.
 
 
-<a id="others"></a>
-## Others ##
+## Others<a id="others"></a>
 
 Here are some other encoding ways used for data transmission or other areas.
 
-<a id="ANSI"></a>
-### ANSI ###
+### ANSI<a id="ANSI"></a>
 
 ANSI, American National Standards Institute. The first code page 'cp1252' defined by Microsoft, is based on a ANSI draft of 'ISO-8859-1', so as to the Windows code pages are also known as ANSI code pages.
 
 If we choose save file with 'ANSI', that means we choose the default encoding based on system language, for examples, 'ASCII' for EN, 'GB2312 / GBK' for CN, 'JIS' for JP.
 
-<a id="Base64"></a>
-### Base64 ###
+### Base64<a id="Base64"></a>
 
 This is an encoding way to represent binary data with 64 ASCII characters, which uses 'A-Za-z0-9' fixed 62 characters, and other 2 printable characters which may be different in each variations. We can always see this encoding in email or images representation.
 
-Since it has 64 characters totally, so that 3 bytes are encoded into 4 Base64 characters, if string bytes number is not divisible by 3, append 0 in bits at the end, and use pad symbol to indicate how many significant byte in last 3 bytes group. 
+Since it has 64 characters totally, so that 3 bytes are encoded into 4 Base64 characters, if string bytes number is not divisible by 3, append 0 in bits at the end, and use pad symbol to indicate how many significant byte in last 3 bytes group.
 
 Let us take an example based on RFC 1421, it uses '+/' as last 2 characters, and '=' as pad symbol.
 
@@ -424,10 +408,9 @@ Let us take an example based on RFC 1421, it uses '+/' as last 2 characters, and
 	|    a    |   G    |    k    |
 </pre>
 
-**'UTF-7'** is a variant of Base64, it encodes the UTF-16 encoding bytes via the way of Base64, and it can use '+/v8 | +/v9 | +/v+ | +/v/' as BOM, so that sometimes UTF-7 encoding strings can jump over the normal ways to check script tags like `htmlentities`.
+**'UTF-7'** is a variant of Base64, it encodes the UTF-16 encoding bytes via the way of Base64, and it can use '+/v8 \| +/v9 \| +/v+ \| +/v/' as BOM, so that sometimes UTF-7 encoding strings can jump over the normal ways to check script tags like `htmlentities`.
 
-<a id="quoted-printable"></a>
-### Quoted-printable ###
+### Quoted-printable<a id="quoted-printable"></a>
 
 This is an encoding to change all bytes except printable ASCII characters to 2 hexadecimal characters with '=' as prefix, for instance, the bytes of '啊' in GB2312 are '0xB0A1', changes to the QP encoding way is '=B0=A1'. The '=' character itself is represented by '=3D'.
 
@@ -440,11 +423,10 @@ Content-Type: TEXT/PLAIN; charset=utf-8
 =E4=BD=A0=E5=A5=BD=EF=BC=8C=E4=B8=96=E7=95=8C
 ```
 
-Similar **'Percent-encoding'** is used for URL. 
+Similar **'Percent-encoding'** is used for URL.
 
 
-<a id="review"></a>
-## Review ##
+## Review<a id="review"></a>
 
 This is the table as summary including all encodings byte ranges and BOM mentioned above. Basically, character encoding detect tool will check BOM or escape sequence first, this is the most significant and simple way to know the encoding; and then excludes the encodings if out of byte range; if still no result gets, it checks the bytes based on word frequency to infer the most closed encoding.
 

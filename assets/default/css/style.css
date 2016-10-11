@@ -24,8 +24,8 @@ html { background: #44555E; height: 100%; }
 
 body {
 	margin: 0 auto;
-	min-width: 900px;
-	width: 90%;
+	min-width2: 900px;
+	width: 80%;
 	background: #f8f8f8; /*BDC4C4;*/
 	color: #434747;
 	font: 400 14px/1.8 "Helvetica Neue", helvetica, arial, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
@@ -46,7 +46,8 @@ section:before {
 
 code {
 	font: 400 12px/1.75 Monaco, "Microsoft YaHei", "微软雅黑", "Hiragino Sans GB", SimSun, \5b8b\4f53, sans-serif;
-	padding: 0 5px;
+	padding: 0 2px;
+	margin: 0 2px;
 	background: #F2F8F2;
 	background: #D9E5E5;
 	display: inline-block;
@@ -61,7 +62,7 @@ pre code {
 	background: #3C4040;
 	display: block;
 	padding: 10px;
-	margin: 0 20px;
+	margin2: 0 20px;
 	border: 0;
 }
 
@@ -235,8 +236,8 @@ body { counter-reset: h2; }
 /************ footer ************/
 footer {
 	p2osition: fixed;
-	min-width: 900px;
-	w2idth: 90%;
+	min-width2: 900px;
+	w2idth: 80%;
 	bottom: 0;
 	padding: 20px 0;
 	background: #404547;
@@ -253,8 +254,8 @@ footer a:hover { color: #FFF; }
 aside {
 	top: 70%;
 	position: fixed;
-	min-width: 900px;
-	width: 90%;
+	min-width2: 900px;
+	width: 80%;
 	height: 0;
 }
 

@@ -1,4 +1,5 @@
 {% assign lang = page.language %}
+{% assign locales = site.data.locale[lang] %}
 {% if lang == 'en' %}
 	{% assign exclude = 'zh' %}
 {% else %}
@@ -6,32 +7,66 @@
 {% endif %}
 {% assign category = include.category %}
 {% assign posts = site.categories[category] %}
-{% assign next = include.next %}
+{% assign level = include.level %}
+{% assign index = level | minus: 1 %}
+{% assign subcategories = '' %}
 
-{% if next %}
-	{% assign subs = posts | map: 'categories' | join: ' ' | remove: 'en' | remove: 'zh' | remove: category | split: ' ' %}
+{% if level %}
+	{% assign subs = posts | map: 'categories' | join: ' ' | remove: category | split: ' ' %}
 {% endif %}
 
+
 <ul class="posts">
+	{% for post in posts %}
+		{% if post.language == lang and post.categories.last != category %}
+			{% assign cat = post.categories[index] %}
+			{% unless subcategories contains cat %}
+				{% assign subcategories = subcategories | append: ' ' | append: cat %}
+				{% assign _posts = site.categories[cat] %}
+				<li>
+					<h{{ level }} id="{{ cat }}">
+						<!-- <a href="{{ page.url | replace: 'index.html', cat }}/"></a> -->
+					{% if locales[cat] %}{{ locales[cat] }}{% else %}{{ cat }}{% endif %}
+					<sup>{{ _posts | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</sup></h{{ level }}>
+					<ul>
+						{% for post in _posts %}
+							{% if post.language == lang and post.categories[1] == category %}
+							<li>
+								<a href="{{ post.url }}">{{ post.title }}</a>
+							</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</li>
+			{% endunless %}
+		{% endif %}
+	{% endfor %}
+</ul>
+<!--
+<ul class="posts">
+
 	{% if subs %}
 		{% for cat in subs %}
-			{% assign _posts = site.categories[cat] %}
-			{% if _posts %}
-			<li>
-				<h{{ next }} id="{{ cat }}">
-					<!-- <a href="{{ page.url | replace: 'index.html', cat }}/"></a> -->
-					{{ cat }} <sup>{{ _posts | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</sup></h{{ next }}>
-				<ul>
-					{% for post in _posts %}
-						{% if post.language == lang %}
-						<li>
-							<a href="{{ post.url }}">{{ post.title }}</a>
-						</li>
-						{% endif %}
-					{% endfor %}
-				</ul>
-			</li>
-			{% endif %}
+			{% unless subcategories contains cat %}
+				{% assign subcategories = subcategories | append: ' ' | append: cat %}
+				{% assign _posts = site.categories[cat] %}
+				{% if _posts %}
+				<li>
+					<h{{ level }} id="{{ cat }}">
+						<!-- <a href="{{ page.url | replace: 'index.html', cat }}/"></a>
+						{{ cat }} <sup>{{ _posts | map: 'language' | join: ' ' | remove: exclude | split: ' ' | size }}</sup></h{{ level }}>
+					<ul>
+						{% for post in _posts %}
+							{% if post.language == lang %}
+							<li>
+								<a href="{{ post.url }}">{{ post.title }}</a>
+							</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</li>
+				{% endif %}
+			{% endunless %}
 		{% endfor %}
 	{% endif %}
 
@@ -42,4 +77,4 @@
 		</li>
 		{% endif %}
 	{% endfor %}
-</ul>
+</ul> -->

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Know more about svn merge
-categories: en program
+categories: en technology program
 language: en
 tags: VCS SVN study
 
@@ -12,14 +12,13 @@ description: Introduction for the different types of merge used in SVN, and also
 In the early post ( [How to use SVN](/en/program/How-to-use-svn/) ), we have some practices with basic SVN commands. Today, we will go a little deeper for merge operation. `merge` is an important command for co-work, but a little complex to understand than normal ones like `update` and `commit`.
 
 - - -
-<a id="diff"></a>
-## diff ##
+## diff<a id="diff"></a>
 
 Before start, let us have a look at the historical Unix command, `diff`. It's the base of all merge operations.
 
 For example, we have 't1.txt' file with simple test content 'a b c d e f', and we copy 't2.txt' and do some changes.
 
-```
+```sh
 	# t2.txt:
 	#   a
 	#   b2
@@ -49,7 +48,7 @@ The first '2' indicates the line number of left file, and 'c' shows the operatio
 
 It's simple but not enough info, it only gives out the changed content, sometimes, it is hard for human to read and understand without context text. So, another version comes up.
 
-```
+```sh
 	diff -c t1.txt t2.txt
 	# output:
 	#   *** t1.txt Thu Apr 10 16:49:47 2014
@@ -73,7 +72,7 @@ It's simple but not enough info, it only gives out the changed content, sometime
 
 This way gives out the context around the differences to help understanding, but the same context is repeat output for both sides, keep going.
 
-```
+```sh
 	diff -u t1.txt t2.txt
 	# output:
 	#   --- t1.txt 2014-04-10 16:49:47.000000000 +0800
@@ -94,7 +93,7 @@ Everything seems good, but, please think of this, if someone changed the target 
 
 To do this, we need 3 files, source should compare with the original file first, then we can know what changes should be applied for target file. Let's check.
 
-```
+```sh
 	# old:      t1:         t2:
 	# a         a           a
 	# b         b2          b
@@ -129,18 +128,17 @@ To do this, we need 3 files, source should compare with the original file first,
 '====1' shows the first file difference, '1:2,3c' tells the line 2 and 3 are changed in file 1. We can also append '-3' option to output simple format, or '-m' option to get merge result directly.
 
 - - -
-<a id="merge"></a>
-## Merge ##
+## Merge<a id="merge"></a>
 
-Subversion provides 4 types of merge way.
+We can simply understand the 'merge' operation as 'patch diff', it is the main actual thing SVN done. Subversion provides 4 types of merge way, and I will give the pseudo formulas based on 'diff' to help understanding.
 
 ### 'sync' merge ###
 
-This is the most often used merge way, which is always used to synchronize the latest changes from trunk to branch local copy. 
+This is the most often used merge way, which is always used to synchronize the latest changes from trunk to branch local copy.
 
 Because branch is copied from trunk, the revision in that copy time is used as original data for 3-way comparation. After `svn merge SOURCE[@REV] [TARGET_WCPATH]` command running, SVN will get the changes between 'SOURCE[@REV]' and original copy revision, then try to apply these changes into 'TARGET_WCPAT', or current directory if not set.
 
-From 1.5, SVN can record merge revision info in the target '.svn' directory, so it will use that revision as original point when merge next time to avoid repeat work. For example.
+From 1.5, SVN can record merge revision info in the target '.svn' directory, so it will use that revision as original point when merge next time to avoid repeat work. We can get the formula, `workspace + diff(set revision - last recorded merge revision)`. Let us take an example.
 
 ```sh
 	svn info
@@ -160,7 +158,7 @@ From 1.5, SVN can record merge revision info in the target '.svn' directory, so 
 
 ### 'cherry-pick' merge ###
 
-This is similar with 'sync' merge, but users can pick the changes to be merged by themselves. Sometimes, we do not want to synchronize all changes from trunk when branch is still under developing, only part of them is required, such as the bug fixes, using `svn merge [-c M[,N...] | -r N:M ...] SOURCE[@REV] [TARGET_WCPATH]` can satisfy us.
+This is similar with 'sync' merge, but users can pick the changes to be merged by themselves. Sometimes, we do not want to synchronize all changes from trunk when branch is still under developing, only part of them is required, such as the bug fixes, using `svn merge [-c M[,N...] | -r N:M ...] SOURCE[@REV] [TARGET_WCPATH]` can satisfy us. The formula is similar like above, `workspace + diff(M - N)`.
 
 I would like to introduce some other usages here. If we want to revert the change of r35, we can use `svn merge -c-35` command, and if we want to discard some changes before merging, we can make it by running `svn merge -c35 --record-only`, giving '--record-only' option means record the merge info only, but not touch the file data.
 
@@ -210,7 +208,7 @@ Someone may confuse this with the 'sync' merge, what's the difference between th
 	# Tada.., conflict comes
 ```
 
-As we can see, without '--reintegrate' option, it just compare the current branch and trunk codes directly so as to lead conflicts. Although common description explains this way merge the changes belongs to branch only back to trunk, it is not so clear for me to understand why 'a2' and 'a1' doesn't lead conflict. So I change to understand the 'reintegrate' merge to something like running 'sync' merge on branch copy first, which apply add 'c' change from trunk, and then copy the merge result from that pseudo branch copy into trunk copy.
+As we can see, without '--reintegrate' option, it just compare the current branch and trunk codes directly so as to lead conflicts. Although common description explains this way merge the changes belongs to branch only back to trunk, it is not so clear for me to understand why 'a2' and 'a1' doesn't lead conflict. So I change to understand the 'reintegrate' merge to something like running 'sync' merge on branch copy first, which apply add 'c' change from trunk, and then copy the merge result from that pseudo branch copy into trunk copy. So the formula becomes `workspace = branch + diff(trunk HEAD - last recorded merge revision)`.
 
 ### '2-URL' merge ###
 

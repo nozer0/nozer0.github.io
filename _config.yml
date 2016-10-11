@@ -2,9 +2,11 @@ permalink: /:categories/:title/
 relative_permalinks: false
 
 exclude: [".rvmrc", ".rbenv-version", "Rakefile", "changelog.md"]
+incremental: false
 safe: true
-pygments: true
-markdown: redcarpet
+highlighter: rouge
+lsi: false
+markdown: kramdown
 redcarpet:
   extensions: [
   "hard_wrap",
@@ -14,13 +16,31 @@ redcarpet:
   "fenced_code_blocks",
   "disable_indented_code_blocks",
   "autolink",
+  #"with_toc_data",
   #"superscript",
   "strikethrough",
-  "footnotes",
-  "with-toc-data"]
+  "footnotes"]
 kramdown:
+  auto_ids: true
+  footnote_nr: 1
+  hard_wrap: false
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
   input: GFM
-  use_coderay: true
+  syntax_highlighter: rouge
+  math_engine: mathjax
+  # coderay doesn't work
+  enable_coderay: false
+
+  syntax_highlighter_opts:
+    #wrap: div
+    #line_numbers: nil
+    #tab_width: 4
+    #bold_every: 10
+    #css: class
+    span:
+      disable: true
 
 
 # Themes are encouraged to use these universal variables

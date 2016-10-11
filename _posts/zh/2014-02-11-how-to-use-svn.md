@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何使用SVN
-categories: zh program
+categories: zh technology program
 language: zh
 tags: VCS SVN 窥径
 
@@ -13,29 +13,28 @@ description: SVN使用笔记, 可做简单手册检索。
 
 简单索引:
 
-- [`svn checkout <仓库地址>` -> 首先，我们要有一个工作副本。 ](#launch)
+- [`svn checkout <仓库地址>` -> 首先，我们要有一个工作副本。 ]({{ page.url }}#launch)
 
-- [如何更改数据。](#working_cycle)
-	1. [`svn update` -> 从仓库拿到最新的代码。](#update)
-	2. [`svn add <新文件>` -> 新增文件加入版本控制。](#change)
-	3. [`svn revert` -> 撤销未提交的改动。](#change)
-	4. [`svn commit` -> 提交修改到仓库。](#commit)
+- [如何更改数据。]({{ page.url }}#working_cycle)
+	1. [`svn update` -> 从仓库拿到最新的代码。]({{ page.url }}#update)
+	2. [`svn add <新文件>` -> 新增文件加入版本控制。]({{ page.url }}#change)
+	3. [`svn revert` -> 撤销未提交的改动。]({{ page.url }}#change)
+	4. [`svn commit` -> 提交修改到仓库。]({{ page.url }}#commit)
 
-- [分支](#branch)
+- [分支]({{ page.url }}#branch)
 	1. `svn copy <源路径> <目的路径>` -> 创建分支。
 	2. `svn merge <路径>` -> 从主干合并代码。
 	3. `svn merge <分支路径> --reintegrate` -> 合并回主干。
 	4. `svn remove <分支路径>` -> 删除废弃分支。
 	5. `svn switch <分支路径>` -> 切换到另一分支。
 
-- [`svn status`, `svn diff`, ... -> 一些帮助检查版本信息之类的辅助命令。](#auxiliary_commands)
+- [`svn status`, `svn diff`, ... -> 一些帮助检查版本信息之类的辅助命令。]({{ page.url }}#auxiliary_commands)
 
-- [附带内容](#addition)
+- [附带内容]({{ page.url }}#addition)
 
 
 - - -
-<a id="concepts"></a>
-## 概念 ##
+## 概念<a id="concepts"></a>
 
 - 仓库（Repository）
 
@@ -51,8 +50,7 @@ description: SVN使用笔记, 可做简单手册检索。
 
 
 - - -
-<a id="launch"></a>
-## 开始 ##
+## 开始<a id="launch"></a>
 
 首先，我们使用`svn checkout`将文件从远程仓库拷贝到本地的工作目录。
 
@@ -64,8 +62,7 @@ description: SVN使用笔记, 可做简单手册检索。
 ```
 
 - - -
-<a id="working_cycle"></a>
-## 工作循环 ##
+## 工作循环<a id="working_cycle"></a>
 
 简单的工作循环如下图。
 
@@ -78,8 +75,7 @@ description: SVN使用笔记, 可做简单手册检索。
 	+---------+  update  +------------+
 ```
 
-<a id="update"></a>
-### 更新 ###
+### 更新<a id="update"></a>
 
 使用`svn update`在开始工作时和提交之前先做一次更新是一个良好的习惯。
 
@@ -102,8 +98,7 @@ description: SVN使用笔记, 可做简单手册检索。
 	svn resolve conf.txt --accept working
 ```
 
-<a id="change"></a>
-### 更改 ###
+### 更改<a id="change"></a>
 
 Subversion提供了多个命令供我们修改工作目录结构，并且可以使用`svn revert`来回滚之前的更改。
 
@@ -132,8 +127,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 	svn rm http://www.nozer0.com/svn/branches/b2
 ```
 
-<a id="commit"></a>
-### 提交 ###
+### 提交<a id="commit"></a>
 
 使用`svn commit`将所做更改提交到远程仓库，在提交之前记得先做更新操作。当然，能在提交前用`svn diff`进行比较操作则更是一个好习惯。
 
@@ -143,8 +137,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 	svn ci -m 'what changes you have done'
 ```
 
-<a id="revert"></a>
-### 回复已提交更改 ###
+### 回复已提交更改<a id="revert"></a>
 
 有时候，我们想要回复已经提交的更改，这时候就可以使用`svn merge`。事实上，就像常规理解的那样，该命令更多的是用在接下来我们要介绍的分支相关操作中，我们可以使用'-r M:N'或'-c N'来选择合并特定的一些更改。然而，我们同样可以使用'-r N:M'或'-c -N'的选项，做反向的合并操作来实现撤销已提交更改的效果。
 
@@ -160,8 +153,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 
 - - -
-<a id="branch"></a>
-## 分支 ##
+## 分支<a id="branch"></a>
 
 何为分支？
 
@@ -260,8 +252,7 @@ Subversion提供了多个命令供我们修改工作目录结构，并且可以�
 
 
 - - -
-<a id="auxiliary_commands"></a>
-## 辅助命令 ##
+## 辅助命令<a id="auxiliary_commands"></a>
 
 Subversion同样提供了一些辅助命令来帮助我们查询当前状态或历史信息。
 
@@ -327,8 +318,7 @@ Subversion同样提供了一些辅助命令来帮助我们查询当前状态或�
 
 
 - - -
-<a id="addition"></a>
-## 附带内容 ##
+## 附带内容<a id="addition"></a>
 
 我们可以看到之前的很多命令都带了'-r'这个参数，除了指定具体版本数字之外，我们还可以使用一些预定义的字符串来指定。
 

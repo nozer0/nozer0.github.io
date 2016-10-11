@@ -2,7 +2,7 @@
 layout: post
 title: 设计守则
 tagline: 程序员需知
-categories: zh program
+categories: zh technology program
 language: zh
 tags: 求道
 

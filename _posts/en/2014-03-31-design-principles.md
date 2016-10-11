@@ -2,7 +2,7 @@
 layout: post
 title: Design Principles
 tagline: Each Programmer should know
-categories: en program
+categories: en technology program
 language: en
 tags: principle
 

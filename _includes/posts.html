@@ -1,6 +1,6 @@
 
 {% for post in site.posts %}
-	{% if post.layout != 'list' and post.categories[0] == page.language %}
+	{% if post.layout != 'list' and post.language == page.language %}
 	<section>
 		<hgroup>
 			<h2><a href="{{ post.url }}">{{ post.title }}</a></h2>

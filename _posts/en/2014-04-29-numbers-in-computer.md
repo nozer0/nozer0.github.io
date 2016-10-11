@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Numbers in computer
-categories: en system
+categories: en technology system
 language: en
 tags: notation code number study
 
@@ -28,12 +28,11 @@ int main(int argc, char* argv[]) {
 Something surprise?
 
 
-<a id="notation-system"></a>
-## Notation System ##
+## Notation System<a id="notation-system"></a>
 
 I think no need more explanation about notation system, just refers normally used ones in Computer.
 
-| Binary   | Octal | Decimal  | Hexadecimal
+|  Binary  | Octal | Decimal  | Hexadecimal
 |----------|-------|----------|-------------
 | 10011101 | 235   | 157      | 9D
 | 0.100111 | 0.47  | 0.609375 | 0.9C
@@ -48,7 +47,7 @@ How to convert numbers between different systems? See the examples.
 	        /   2
 	remainder    0 |  1 | 0 | 1 | 1
 		26(D) = 11010(B)
-	~~~~~~
+	``````
 	Q:
 		0.8125(D) = ?(B)
 	A:
@@ -59,8 +58,7 @@ How to convert numbers between different systems? See the examples.
 </pre>
 
 
-<a id="representation"></a>
-## Representation ##
+## Representation<a id="representation"></a>
 
 Natively, computers use binary system to represent numbers, another way of saying, use sequence of bits to represent numbers, usually, 32 bits for integer.
 
@@ -78,7 +76,7 @@ For easy calculation, another representation called 'Anti-Code' or 'Ones Complem
 	  0 0000101 (+5)             0 0010101 (+21)
 </pre>
 
-Unfortunately, it still has 2 'zer0' values problem, '0 0..0' for '+0', and '1 1..1' for '-0'. The 'Two Complement Code', or simply 'Complement Code', which is the current standard representation for integer wins out at last. The only difference is add 1 if negative, '1 1..1' becomes -1 instead of '-0', one more number '-2^(bit-1)' can be represented and no need carry back addition step. 
+Unfortunately, it still has 2 'zer0' values problem, '0 0..0' for '+0', and '1 1..1' for '-0'. The 'Two Complement Code', or simply 'Complement Code', which is the current standard representation for integer wins out at last. The only difference is add 1 if negative, '1 1..1' becomes -1 instead of '-0', one more number '-2^(bit-1)' can be represented and no need carry back addition step.
 
 Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 000001000 = 8 are congruent modulo 256, that is why subtraction can be calculated even by adder and complementer only.
 
@@ -92,7 +90,7 @@ Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 00000
 
 'Shift Code', or 'Bias Code', used in IEEE.754, which comes next, is add bias value 2^(bit-1) to make no negative forms.
 
-|            | Positive(38) | Negative(-38) | Definition       | Pros&Cons
+|            | Positive(38) | Negative(-38) |    Definition    | Pros&Cons
 |------------|--------------|---------------|------------------|-----------
 | Original   | 0 0100110    | 1 0100110     | sign + binary    | Understandable, Sign bit can't join calculation
 | Anti       | 0 0100110    | 1 1011001     | X > 0 ? : ~b     | Calculate with sign bit, 2 zero representations
@@ -107,17 +105,15 @@ Actually, the complement code of -8 = 111111000 = 248, and the one of +8 = 00000
 | Shift      |            |  -2^31 ~ 2^31-1 |                        |
 
 
-<a id="byte_order"></a>
-## Byte Order ##
+## Byte Order<a id="byte_order"></a>
 
 We already know different representation ways, but when input into bytes, it still have 2 formats based on the byte order. If put the most significant byte into the lowest address, this is called 'big-endian', on the contrary, 'little-endian', these names are from the book "Gulliver's Travels".
 For example, the number '0xabcd', stores from 'a' to 'd' if 'big-endian', instead, 'd' to 'a'. Almost of CPUs, Intel, AMD are use 'little-endian' way.
 
 
-<a id="float"></a>
-## Float ##
+## Float<a id="float"></a>
 
-We already know computers store the integer numbers by complement codes, how about fractional numbers? The most simple way is to give fixed place of radix point, this is called 'fixed-point', for example, if we define bits 0~2 to represent fractional part, 0 0010 110 = 2.75. 
+We already know computers store the integer numbers by complement codes, how about fractional numbers? The most simple way is to give fixed place of radix point, this is called 'fixed-point', for example, if we define bits 0~2 to represent fractional part, 0 0010 110 = 2.75.
 
 The fixed-point representation is simple but smaller range than integer with same bits, to represent more numbers and much larger range, the common use way is called 'float-point', that means, the radix point is float.
 
@@ -131,7 +127,7 @@ Opposite to 'Normalization', 'Denormalization' makes no exponent part.
 
 All modern computers store the float numbers based on the IEEE 754 Standard. Simple formats are shown below.
 
-| type   | bits | sign | exponent | fraction |
+|  Type  | bits | sign | exponent | fraction |
 |--------|------|------|----------|----------|
 | float  |  32  |  1   |     8    |    23    |
 | double |  64  |  1   |    11    |    52    |
@@ -147,15 +143,15 @@ With 'Normalization', it uses as most significant fraction bits, besides, all no
 Take 32 bits as example, if we use normalized notation only, the minimum absolute number value larger than 0 is 1.0..00 * 2^-127, the 2nd minimum is 1.0..01 * 2^-127, the 'gap' between minimum and 0 is much larger than the difference between it and the 2nd minimum which is 2^-(127+23) = 2^-150. Take the diagram for more intuition.
 
 ```
-	       ┌─── 2^-149 ───┐ ┌ 2^-150 ┐                         ┌ 2^-150 ┐ ┌──────────── 2^-127 ────────────┐
-	1.0..1*2^-126, 1.0..0*2^-126, 1.1..1*2^-127, ..., 1.0..1*2^-127, 1.0..0*2^-127,                        0
+       ┌─── 2^-149 ───┐ ┌ 2^-150 ┐                         ┌ 2^-150 ┐ ┌──────────── 2^-127 ────────────┐
+1.0..1*2^-126, 1.0..0*2^-126, 1.1..1*2^-127, ..., 1.0..1*2^-127, 1.0..0*2^-127,                        0
 ```
 
 This is called 'abrupt underflow', so for the number absolute value less than 2^(e-1) - 2, IEEE uses denormalize notation representation, and add 1 to the exponent bias, so as to make 'gradual underflow'.
 
 ```
-	       ┌─── 2^-148 ───┐                     ┌ 2^-149 ┐     ┌ 2^-149 ┐                       ┌ 2^-149 ┐
-	1.0..1*2^-125, 1.0..0*2^-125, ..., 1.0..1*2^-126, 1.0..0*2^-126, 0.1..1*2^-126, ..., 0.0..1*2^-126,  0
+       ┌─── 2^-148 ───┐                     ┌ 2^-149 ┐     ┌ 2^-149 ┐                       ┌ 2^-149 ┐
+1.0..1*2^-125, 1.0..0*2^-125, ..., 1.0..1*2^-126, 1.0..0*2^-126, 0.1..1*2^-126, ..., 0.0..1*2^-126,  0
 ```
 
 This is the structure table for IEEE.754 float notation.
@@ -169,7 +165,7 @@ This is the structure table for IEEE.754 float notation.
 | Min Normalized N   | 00..1    | 2 - 2^(e-1)     | [1.]00..0 | 2^-126
 | Normalized N       | xx..x    | E + 1 - 2^(e-1) | [1.]xx..x | 1.F * 2^(E - 127)
 | Max Normalized N   | 11..0    | 2^(e-1) - 1     | [1.]11..1 | 2^128-2^104
-| Infinity           | 11..1    | 1 - 2^(e-1)     | [1.]00..0 | 
+| Infinity           | 11..1    | 1 - 2^(e-1)     | [1.]00..0 |
 | NaN                | 11..1    | 1 - 2^(e-1)     |           |
 
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: SVN merge 进阶
-categories: zh program
+categories: zh technology program
 language: zh
 tags: VCS SVN 探源
 
@@ -12,14 +12,13 @@ description: SVN中各种merge的说明，以及`diff`介绍。
 在之前的文章中（ [如何使用SVN](/zh/program/How-to-use-svn/) ），我们已经熟悉了一些SVN的命令。在实际协作中，`merge`命令非常重要，但是比起`update`和`commit`等操作稍显复杂。这次，就让我们来更深入的了解一下`merge`命令。
 
 - - -
-<a id="diff"></a>
-## Diff ##
+## Diff<a id="diff"></a>
 
 在开始介绍merge之前，让我们先来看一个历史悠久的Unix命令，`diff`，这是所有merge操作的基础。
 
 假设我们有一个't1.txt'文件，包含'a b c d e f'字符串，然后我们拷贝到't2.txt'，并且做一些改动。
 
-```
+```sh
 	# t2.txt:
 	# 	a
 	#   b2
@@ -49,7 +48,7 @@ description: SVN中各种merge的说明，以及`diff`介绍。
 
 输出格式简单，但相关信息不够，只给出了差异部分，没有相关的上下文有时候很难让人读懂。因此，另一个版本出现了。
 
-```
+```sh
 	diff -c t1.txt t2.txt
 	# 输出:
 	#   *** t1.txt Thu Apr 10 20:49:47 2014
@@ -73,7 +72,7 @@ description: SVN中各种merge的说明，以及`diff`介绍。
 
 这个格式给出了差异以及相关上下文来帮助理解，但两边同样的上下文会重复输出，继续。
 
-```
+```sh
 	diff -u t1.txt t2.txt
 	# 输出:
 	#   --- t1.txt 2014-04-10 20:49:47.000000000 +0800
@@ -94,7 +93,7 @@ description: SVN中各种merge的说明，以及`diff`介绍。
 
 实际上我们需要3个文件，源文件要先和原始文件比较，然后把得出的差异应用到目标文件上。看个例子。
 
-```
+```sh
 	# old:      t1:         t2:
 	# a         a           a
 	# b         b2          b
@@ -130,10 +129,9 @@ description: SVN中各种merge的说明，以及`diff`介绍。
 
 
 - - -
-<a id="merge"></a>
-## 合并 ##
+## 合并<a id="merge"></a>
 
-Subversion提供了四种不同的合并方式。
+我们可以将‘合并’操作简单理解为打补丁（patch），事实上也如此。Subversion提供了四种不同的合并方式，我会给出一些基于‘diff’的伪公式来帮助理解。
 
 ### 'sync' merge ###
 
@@ -141,7 +139,7 @@ Subversion提供了四种不同的合并方式。
 
 分支是从主干复制的，因此复制时的版本就作为3路比较时的原始数据。运行`svn merge SOURCE[@REV] [TARGET_WCPATH]`命令后，SVN会首先得出'SOURCE[@REV]'和复制时原始数据的差异，然后试着将这些差异应用到'TARGET_WCPAT'或者当前目录。
 
-从1.5开始，SVN将合并信息保存在目标的'.svn'目录下，因此下次再次进行合并时就会将记录的合并版本作为比较的原始数据，以避免重复的工作。例如。
+从1.5开始，SVN将合并信息保存在目标的'.svn'目录下，因此下次再次进行合并时就会将记录的合并版本作为比较的原始数据，以避免重复的工作。可以得出伪公式是`workspace + diff(set revision - last recorded merge revision)`。举个例子。
 
 ```sh
 	svn info
@@ -161,7 +159,7 @@ Subversion提供了四种不同的合并方式。
 
 ### 'cherry-pick' merge ###
 
-这个合并和'sync'合并类似，不同的是用户可以选择性的指定合并哪些版本。有时候，我们并不希望将主干的改动全部同步过来，而是只是其中的一部分，例如bug修复等需要合并，我们可以使用`svn merge [-c M[,N...] | -r N:M ...] SOURCE[@REV] [TARGET_WCPATH]`来达到目的。
+这个合并和'sync'合并类似，不同的是用户可以选择性的指定合并哪些版本。有时候，我们并不希望将主干的改动全部同步过来，而是只是其中的一部分，例如bug修复等需要合并，我们可以使用`svn merge [-c M[,N...] | -r N:M ...] SOURCE[@REV] [TARGET_WCPATH]`来达到目的。公式和上一个很像，`workspace + diff(M - N)`。
 
 还有几种别的用途。如果我们需要回滚版本35的改动，可以使用`svn merge -c-35`这样的命令；而如果说我们希望在合并时永远忽略一些改动，则可以使用`svn merge -c35 --record-only`命令，'record-only'选项表示只记录合并信息而不更改实际文件。
 
@@ -211,7 +209,7 @@ Subversion提供了四种不同的合并方式。
 	# 哦哦，出现冲突
 ```
 
-我们可以看出，如果没有使用'--reintegrate'选项，那就只是直接比较当前分支和主干代码的不同，因此冲突产生。虽然通常说法是将分支独有的改动合并回主干，但对我来说还是有些不好理解为什么'a2'和'a1'并没有冲突。所以我把'reintegrate'合并理解为先是在一个假想的分支副本中运行'sync'合并，将主干的更改合并到分支副本，然后将分支副本的合并结果拷贝到主干副本。
+我们可以看出，如果没有使用'--reintegrate'选项，那就只是直接比较当前分支和主干代码的不同，因此冲突产生。虽然通常说法是将分支独有的改动合并回主干，但对我来说还是有些不好理解为什么'a2'和'a1'并没有冲突。所以我把'reintegrate'合并理解为先是在一个假想的分支副本中运行'sync'合并，将主干的更改合并到分支副本，然后将分支副本的合并结果拷贝到主干副本。因此可以给出公式`workspace = branch + diff(trunk HEAD - last recorded merge revision)`。
 
 ### '2-URL' merge ###
 

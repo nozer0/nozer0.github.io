@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to use SVN
-categories: en program
+categories: en technology program
 language: en
 tags: VCS SVN note
 
@@ -13,29 +13,28 @@ Here are some notes for using *SVN*, for more details, `svn help` is a good choi
 
 Take the index as cheat sheet:
 
-- [`svn checkout <repository path>` -> First, we need to have a working copy.](#launch)
+- [`svn checkout <repository path>` -> First, we need to have a working copy.]({{ page.url }}#launch)
 
-- [How to do changes with the repository.](#working_cycle)
-	1. [`svn update` -> Get latest codes from repository.](#update)
-	2. [`svn add <new files>` -> Add files to version control.](#change)
-	3. [`svn revert` -> Revert the changes uncommitted.](#change)
-	4. [`svn commit` -> Commit the change to repository.](#commit)
+- [How to do changes with the repository.]({{ page.url }}#working_cycle)
+	1. [`svn update` -> Get latest codes from repository.]({{ page.url }}#update)
+	2. [`svn add <new files>` -> Add files to version control.]({{ page.url }}#change)
+	3. [`svn revert` -> Revert the changes uncommitted.]({{ page.url }}#change)
+	4. [`svn commit` -> Commit the change to repository.]({{ page.url }}#commit)
 
-- [Branch](#branch)
+- [Branch]({{ page.url }}#branch)
 	1. `svn copy <src> <dest>` -> Create branches.
 	2. `svn merge <path>` -> Merge changes from trunk.
 	3. `svn merge <branch_path> --reintegrate` -> Merge back to trunk.
 	4. `svn remove <branch_path>` -> Remove unused branch.
 	5. `svn switch <new_path>` -> Switch to another branch.
 
-- [`svn status`, `svn diff`, ... -> Auxiliary Commands to help us check version info.](#auxiliary_commands)
+- [`svn status`, `svn diff`, ... -> Auxiliary Commands to help us check version info.]({{ page.url }}#auxiliary_commands)
 
-- [Additional info](#addition)
+- [Additional info]({{ page.url }}#addition)
 
 
 - - -
-<a id="concepts"></a>
-## Concepts ##
+## Concepts<a id="concepts"></a>
 
 - Repository
 
@@ -51,8 +50,7 @@ Take the index as cheat sheet:
 
 
 - - -
-<a id="launch"></a>
-## Launch ##
+## Launch<a id="launch"></a>
 
 Of course, the first thing we should do is to make a working copy from remote repository by using `svn checkout`
 
@@ -65,8 +63,7 @@ Of course, the first thing we should do is to make a working copy from remote re
 
 
 - - -
-<a id="working_cycle"></a>
-## Working Cycle ##
+## Working Cycle<a id="working_cycle"></a>
 
 This is the simple form for normal working cycle.
 
@@ -79,8 +76,7 @@ This is the simple form for normal working cycle.
 	+---------+  update  +------------+
 ```
 
-<a id="update"></a>
-### Update ###
+### Update<a id="update"></a>
 
 We'd like to suggest to update first every time before starting works, use `svn update` to reach the objective, and also do update operation again before commit.
 
@@ -105,8 +101,7 @@ Let's see some codes.
 	svn resolve conf.txt --accept working
 ```
 
-<a id="change"></a>
-### Change ###
+### Change<a id="change"></a>
 
 There are several commands can help us to do changes in working copy area, and apply these changes to repository when next commit. Furthermore, we can use `svn revert` to revert any changes we do not want.
 
@@ -135,8 +130,7 @@ And we can also change on remote repository directly even without regarding work
 	svn rm http://www.nozer0.com/svn/branches/b2
 ```
 
-<a id="commit"></a>
-### Commit ###
+### Commit<a id="commit"></a>
 
 If we want to upload the changes to remote repository, we use `svn commit`, remember that we'd better to update again before commit. And also, use `svn diff` to check what changes you did between working copy and repository is a good habit you should have.
 
@@ -146,8 +140,7 @@ If we want to upload the changes to remote repository, we use `svn commit`, reme
 	svn ci -m 'what changes you have done'
 ```
 
-<a id="revert"></a>
-### Revert commit ###
+### Revert commit<a id="revert"></a>
 
 Sometimes, we may want to revert the changes of some commits to repository, and the new command we will meet is called `svn merge`. Actually, in contrast to the normal usage to merge specified changes from remote path to current working copy by appending '-r M:N' or '-c N' options, which is more often used in branch operations we introduce next, however, it can also be used to do reverse merge by giving '-r N:M' or '-c -N' options.
 
@@ -163,8 +156,7 @@ Sometimes, we may want to revert the changes of some commits to repository, and 
 
 
 - - -
-<a id="branch"></a>
-## Branch ##
+## Branch<a id="branch"></a>
 
 What is branch?
 
@@ -263,8 +255,7 @@ Sometimes, we may need to switch from one branch to another, `svn switch` is wha
 
 
 - - -
-<a id="auxiliary_commands"></a>
-## Auxiliary Commands ##
+## Auxiliary Commands<a id="auxiliary_commands"></a>
 
 Some commands used to help us to check the svn status and history info.
 
@@ -330,8 +321,7 @@ Using `svn log` to show the changed logs we want to know.
 
 
 - - -
-<a id="addition"></a>
-## Additional info ##
+## Additional info<a id="addition"></a>
 
 As we can see from above, most commands can support '-r' argument, besides the normal way to set revision number like `-r 5`, we can also use more flex ways.
 

@@ -71,5 +71,6 @@ layout: default
 	{% endfor %}
 	</div>
 </article>
-
-{% include disqus_comment %}
+{% if site.host != '127.0.0.1' %}
+	{% include disqus_comment %}
+{% endif %}

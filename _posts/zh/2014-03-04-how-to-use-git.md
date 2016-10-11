@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何使用Git
-categories: zh program
+categories: zh technology program
 language: zh
 tags: VCS Git 窥径
 
@@ -13,17 +13,17 @@ description: Git使用笔记, 可做简单手册检索。
 
 简单索引:
 
-- [`git clone <仓库地址>` -> 首先，我们要从远程仓库取得数据。](#launch)
+- [`git clone <仓库地址>` -> 首先，我们要从远程仓库取得数据。]({{ page.url }}#launch)
 
-- [如何更改数据。](#working_cycle)
-	1. [`git fetch` -> 从远程仓库更新数据到本地仓库。](#update)
-	2. [`git checkout` -> 从本地仓库检出到工作目录。](#update)
-	3. [`git add <new files>` -> 新增文件加入版本控制。](#change)
-	4. [`git reset` -> 撤销未提交的改动。](#revert)
-	5. [`git commit` -> 提交修改到本地仓库。](#commit)
-	6. [`git push` -> 同步本地仓库更改到远程。](#commit)
+- [如何更改数据。]({{ page.url }}#working_cycle)
+	1. [`git fetch` -> 从远程仓库更新数据到本地仓库。]({{ page.url }}#update)
+	2. [`git checkout` -> 从本地仓库检出到工作目录。]({{ page.url }}#update)
+	3. [`git add <new files>` -> 新增文件加入版本控制。]({{ page.url }}#change)
+	4. [`git reset` -> 撤销未提交的改动。]({{ page.url }}#revert)
+	5. [`git commit` -> 提交修改到本地仓库。]({{ page.url }}#commit)
+	6. [`git push` -> 同步本地仓库更改到远程。]({{ page.url }}#commit)
 
-- [分支](#branch)
+- [分支]({{ page.url }}#branch)
 	1. `git branch <name> <commit>` -> 创建分支。
 	2. `git merge <name>` -> 合并由'name'指定分支的更改。
 	3. `git cherry-pick <commit>` -> 选择复制指定的提交。
@@ -31,18 +31,17 @@ description: Git使用笔记, 可做简单手册检索。
 	5. `git branch -d <name>` -> 删除废弃分支。
 	6. `git checkout <name>` -> 切换到另一分支。
 
-- [标签](#tag)
+- [标签]({{ page.url }}#tag)
 
-- [`git status`, `git diff`, ... -> 一些帮助检查版本信息之类的辅助命令。](#auxiliary_commands)
+- [`git status`, `git diff`, ... -> 一些帮助检查版本信息之类的辅助命令。]({{ page.url }}#auxiliary_commands)
 
-- [附带内容](#addition)
+- [附带内容]({{ page.url }}#addition)
 
-- [SVN对比表](#compare_table)
+- [SVN对比表]({{ page.url }}#compare_table)
 
 
 - - -
-<a id="install"></a>
-## 安装 ##
+## 安装<a id="install"></a>
 
 安装Git最简单的方法就是从[官网](http://git-scm.com/downloads)下载安装程序。
 
@@ -63,8 +62,7 @@ description: Git使用笔记, 可做简单手册检索。
 
 
 - - -
-<a id="setup"></a>
-## 配置 ##
+## 配置<a id="setup"></a>
 
 在开始使用Git之前，我们需要先设置一些相关信息。
 
@@ -82,8 +80,7 @@ description: Git使用笔记, 可做简单手册检索。
 
 
 - - -
-<a id="launch"></a>
-## 开始 ##
+## 开始<a id="launch"></a>
 
 通常我们需要先从远程仓库中取得数据，这个操作和其他如CVS或Subversion之类的VCS的'checkout'操作非常类似。
 
@@ -106,8 +103,7 @@ description: Git使用笔记, 可做简单手册检索。
 
 
 - - -
-<a id="working_cycle"></a>
-## 工作循环 ##
+## 工作循环<a id="working_cycle"></a>
 
 由于Git是所谓的DVCS（分布式版本控制系统），所以拥有本地仓库，和另外一个称之为'index'或'staged'的区域，用来保存那些跟踪但还未提交的文件信息。相对的，那些新增或修改的还没有进入版本控制的文件，我们称之为'unstaged'文件。
 
@@ -120,8 +116,7 @@ description: Git使用笔记, 可做简单手册检索。
 	     +------------------+---------------------+
 ```
 
-<a id="update"></a>
-### 更新 ###
+### 更新<a id="update"></a>
 
 首先，我们要从远程仓库将最新代码更新到本地。
 
@@ -153,8 +148,7 @@ Git还提供了一个一步到位的命令，`git pull`。
 	git pull origin foo:bar
 ```
 
-<a id="change"></a>
-### 更改 ###
+### 更改<a id="change"></a>
 
 OK，现在我们可以开始在工作目录中做更改，并使用`git add`或其他的命令提交到index区域。
 
@@ -178,8 +172,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 	git add new.c
 ```
 
-<a id="revert"></a>
-### 回复 ###
+### 回复<a id="revert"></a>
 
 有时候，我们可能提交失误，或者想回复最近的更改，Git同样提供了相应的命令来回复更改。
 
@@ -195,8 +188,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 	git reset --hard
 ```
 
-<a id="commit"></a>
-### 提交 ###
+### 提交<a id="commit"></a>
 
 比起其他的VCS，Git多了个本地仓库，我们需要比普通的提交多一个步骤以将更改提交到远程。
 
@@ -234,8 +226,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-<a id="branch"></a>
-## 分支 ##
+## 分支<a id="branch"></a>
 
 在Git中，分支好比一个指向某个commit的别名，因此在Git中，分支的使用频率相当高，开发新功能时，我们使用分支；修复bug，还是分支，其他很多的情况，同样是分支。总之，'branch early, and branch often'（早用多用 @_@!! ）。
 
@@ -293,8 +284,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-<a id="tag"></a>
-## 标签 ##
+## 标签<a id="tag"></a>
 
 标签是另一种指向commit的别名，通常用来标注某一个里程碑，开发版本之类的的东东，和'Branch'很相似。
 
@@ -311,8 +301,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-<a id="auxiliary_commands"></a>
-## 辅助命令 ##
+## 辅助命令<a id="auxiliary_commands"></a>
 
 之前我们已经使用过了`git status`命令，我们还可以用`git log`命令来查看更多的历史信息。
 
@@ -352,8 +341,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-<a id="addition"></a>
-## 附带内容 ##
+## 附带内容<a id="addition"></a>
 
 提交（Commit），是Git中最重要的概念，我们会在许多命令中需要指定相关的commit，有多种不同的方式来表示一个commit。假设，我们目前的提交如下。
 
@@ -373,8 +361,7 @@ OK，现在我们可以开始在工作目录中做更改，并使用`git add`或
 
 
 - - -
-<a id="compare_table"></a>
-## 对比表 ##
+## 对比表<a id="compare_table"></a>
 
 下面列举了SVN和Git相似的命令，以便于之前使用过SVN的同学理解。
 

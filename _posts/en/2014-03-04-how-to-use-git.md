@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to use Git
-categories: en program
+categories: en technology program
 language: en
 tags: VCS Git note
 
@@ -13,17 +13,17 @@ Here are some notes I'd like to share about using Git, let's start.
 
 Take the index as cheat sheet:
 
-- [`git clone <repository path>` -> First, we need to get data from remote repository.](#launch)
+- [`git clone <repository path>` -> First, we need to get data from remote repository.]({{ page.url }}#launch)
 
-- [How to do changes with the repository.](#working_cycle)
-	1. [`git fetch` -> Get data from remote repository to local repository.](#update)
-	2. [`git checkout` -> Checkout data from local repository to working tree.](#update)
-	3. [`git add <new files>` -> Add files to version control.](#change)
-	4. [`git reset` -> Revert the changes uncommitted.](#revert)
-	5. [`git commit` -> Commit the change to local repository.](#commit)
-	6. [`git push` -> Synchronize the commits from local repository to remote.](#commit)
+- [How to do changes with the repository.]({{ page.url }}#working_cycle)
+	1. [`git fetch` -> Get data from remote repository to local repository.]({{ page.url }}#update)
+	2. [`git checkout` -> Checkout data from local repository to working tree.]({{ page.url }}#update)
+	3. [`git add <new files>` -> Add files to version control.]({{ page.url }}#change)
+	4. [`git reset` -> Revert the changes uncommitted.]({{ page.url }}#revert)
+	5. [`git commit` -> Commit the change to local repository.]({{ page.url }}#commit)
+	6. [`git push` -> Synchronize the commits from local repository to remote.]({{ page.url }}#commit)
 
-- [Branch](#branch)
+- [Branch]({{ page.url }}#branch)
 	1. `git branch <name> <commit>` -> Create branches.
 	2. `git merge <name>` -> Merge changes from branch indicates by 'name'.
 	3. `git cherry-pick <commit>` -> Choose to duplicate specified commits.
@@ -31,17 +31,16 @@ Take the index as cheat sheet:
 	5. `git branch -d <name>` -> Remove unused branch.
 	6. `git checkout <name>` -> Switch to another branch.
 
-- [Tag](#tag)
+- [Tag]({{ page.url }}#tag)
 
-- [`git status`, `git diff`, ... -> Auxiliary Commands to help us check version info.](#auxiliary_commands)
+- [`git status`, `git diff`, ... -> Auxiliary Commands to help us check version info.]({{ page.url }}#auxiliary_commands)
 
-- [Additional info](#addition)
+- [Additional info]({{ page.url }}#addition)
 
-- [Comparing table with SVN](#compare_table)
+- [Comparing table with SVN]({{ page.url }}#compare_table)
 
 - - -
-<a id="install"></a>
-## Install ##
+## Install<a id="install"></a>
 
 The most simple way to install Git is to download the installer file directly from [official site](http://git-scm.com/downloads).
 
@@ -62,8 +61,7 @@ For the users who already installed Git before, try this to get latest one.
 
 
 - - -
-<a id="setup"></a>
-## Setup ##
+## Setup<a id="setup"></a>
 
 Set some configurations before we start to use Git.
 
@@ -81,8 +79,7 @@ Or change all configurations using editor at one time.
 
 
 - - -
-<a id="launch"></a>
-## Launch ##
+s## Launch<a id="launch"></a>
 
 Usually we need to get codes from existing remote repository first. This operation is mostly like the `checkout` operation of other VCS such as CVS or Subversion.
 
@@ -105,8 +102,7 @@ Or, we can also choose to initialize a local directory as working area first, th
 
 
 - - -
-<a id="working_cycle"></a>
-## Working Cycle ##
+## Working Cycle<a id="working_cycle"></a>
 
 Since Git is DVCS(Distributed control version system), it has a local repository and one more place to store info of files which are tracked but uncommitted, called 'index' or 'staged' area, correspondingly, the new created or modified files out of version control are named as 'unstaged' files.
 
@@ -119,8 +115,7 @@ Since Git is DVCS(Distributed control version system), it has a local repository
 	     +------------------+---------------------+
 ```
 
-<a id="update"></a>
-### Update ###
+### Update<a id="update"></a>
 
 First, we need 'update' latest data from remote repository to working area.
 
@@ -152,8 +147,7 @@ Git also has a shorthand command `git pull` to update the data from remote repos
 	git pull origin foo:bar
 ```
 
-<a id="change"></a>
-### Change ###
+### Change<a id="change"></a>
 
 OK, now we start to do some changes in working area to index by using `git add` or other commands.
 
@@ -177,8 +171,7 @@ OK, now we start to do some changes in working area to index by using `git add` 
 	git add new.c
 ```
 
-<a id="revert"></a>
-### Revert ###
+### Revert<a id="revert"></a>
 
 Sometimes, we may mistake to commit something, or we want to revert the recent changes, here are some commands satisfy the purpose.
 
@@ -194,8 +187,7 @@ Sometimes, we may mistake to commit something, or we want to revert the recent c
 	git reset --hard
 ```
 
-<a id="commit"></a>
-### Commit ###
+### Commit<a id="commit"></a>
 
 Since there are more areas in Git than other VCS, we need to one more step to do this job instead of single 'commit' operation.
 
@@ -233,8 +225,7 @@ And after some commits done in local repository, that we want to apply these cha
 
 
 - - -
-<a id="branch"></a>
-## Branch ##
+## Branch<a id="branch"></a>
 
 Branch is just reference points to commit in Git, so it is used more frequently than others, as always said, 'branch early, and branch often'. We create new branches for developing new feature, bug fixing, or some other things.
 
@@ -292,8 +283,7 @@ Here are several ways to rearrange the branches if necessary, `merge`, `rebase` 
 
 
 - - -
-<a id="tag"></a>
-## Tag ##
+## Tag<a id="tag"></a>
 
 Tag is another type of reference to commit, usually used for milestone mark or something else, which is very similar as 'Branch'.
 
@@ -310,8 +300,7 @@ Tag is another type of reference to commit, usually used for milestone mark or s
 
 
 - - -
-<a id="auxiliary_commands"></a>
-## Auxiliary Commands ##
+## Auxiliary Commands<a id="auxiliary_commands"></a>
 
 We already use the `git status` before, and `git log` can give us more detail history info.
 
@@ -351,8 +340,7 @@ And we can also get the difference between 2 states by running `git diff`.
 
 
 - - -
-<a id="addition"></a>
-## Additional info ##
+## Additional info<a id="addition"></a>
 
 'Commit', is the most important concept in Git, and there are many places we need to specify the detail commit id to be used in commands, Git provides several choices for us. Assume we have such commit tree.
 
@@ -372,8 +360,7 @@ Git also have the same predefined keyword 'HEAD', different than other VCS like 
 
 
 - - -
-<a id="compare_table"></a>
-## Compare Table ##
+## Compare Table<a id="compare_table"></a>
 
 As extra candy for the one who used SVN before, this is the compare table, which lists similar commands between SVN and Git.
 
