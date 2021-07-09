@@ -7,14 +7,18 @@ Number.normalize = function (n) {
 	// the reason not use `toExponential` method is precision problem, for example,
 	//	`(-0.000000000000000000000000000000023032399999999999).toExponential()`
 	n = String(n);
-	var s = n.replace(/^[+-]/, '').split('.'), int = s[0], frac = s[1] || '', exp = 0;
+	var s = n.replace(/^[+-]/, '').split('e')
+	var exp = +s[1] || 0
+	s = s[0].split('.')
+	var int = s[0], frac = s[1] || ''
 	if (int && int !== '0') {
 		s = int.length;
 		if (s === 1) {
-			return (n[0] === '-' ? '-' : '') + (frac ? int + '.' + frac.replace(/0+$/, '') : int);
+			s = (frac ? int + '.' + frac.replace(/0+$/, '') : int);
+		} else {
+			exp += s - 1;
+			s = int[0] + '.' + (int.slice(1) + frac).replace(/0+$/, '');
 		}
-		exp += s - 1;
-		s = int[0] + '.' + (int.slice(1) + frac).replace(/0+$/, '');
 	} else {
 		s = frac.replace(/^0*/, '');
 		exp += s.length - frac.length - 1;
