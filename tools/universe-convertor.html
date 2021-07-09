@@ -1,0 +1,276 @@
+<style>
+/*td { white-space: nowrap; }*/
+tr td { background: #ddd; }
+tr.detail td { background: #fff; }
+.hide tr.detail td { display: none; }
+</style>
+<div>
+	<table border="1" style="table-layout: auto; width: 100%">
+		<tbody id="grid">
+			<tr><td>名称</td></tr>
+			<tr><td>英文</td></tr>
+			<tr><td>范围</td></tr>
+			<tr><td>比例</td></tr>
+			<tr><td>大小</td></tr>
+			<tr><td>比例</td></tr>
+			<tr><td></td></tr>
+			<tr><td></td></tr>
+		</tbody>
+	</table>
+	<select id="time">
+		<option></option>
+		<option value="100Y">世纪</option>
+		<option value="Y">年</option>
+		<option value="D">日</option>
+	</select>
+	<table border="1" style="table-layout: auto">
+		<tbody id="tgrid">
+			<tr onclick="toggleDetails()"><td>事件</td><td>开始</td><td>结束</td><td></td><td></td></tr>
+		</tbody>
+	</table>
+</div>
+<script type="text/javascript" src="./float.js"></script>
+<script type="text/javascript">
+	// const UNITS = { 'Y': 24, 'Z': 21, 'E': 18, 'P': 15, 'T': 12, 'G': 9, 'M': 6, 'k': 3, '': 0, 'm': -3, 'µ': -6, 'n': -9, 'p': -12, 'f': -15 }
+	const NAMES = ['可观测宇宙', '拉尼亚凯亚超星系团', '室女座超星系团', '本星系群', '银河系', '猎户臂', '古尔德带', '本地星际云', '太阳洛希球', '奥尔特云', '太阳圈', '柯伊伯带', '海王星', '天王星', '土星', '木星', '小行星带', '火星', '地球', '金星', '水星', '月球', '太阳']
+	const ENNAMES = ['Observable Universe', 'Laniakea Supercluster', 'Virgo Supercluster', 'Local Group', 'Milky Way', 'Orion Arm', 'Gould Belt', 'Local Interstellar Cloud', 'Solar System', 'Oort Cloud', 'Scattered Disc', 'Kuiper Belt', 'Neptune', 'Uranus', 'Saturn', 'Jupiter', 'Asteroid belt', 'Mars', 'Earth', 'Venus', 'Mercury', 'Moon', 'Sun']
+	const SCOPES = ['93 Gly', '520 Mly', '110 Mly', '10 Mly', '100 kly', '10 kly', '3 kly', '30 ly', '4 ly', '200000 AU', '200 AU', '100 AU', '30.104 AU', '19.229 AU', '9.582 AU', '5.204 AU', '1.9~3.4 AU', '1.524 AU', '1 AU', '0.723 AU', '0.387 AU', '384.4 Mm', '1392000 km']
+	const DIAMETERS = [49528, 51118, 120536, 142984, , 6794, 12756, 12104, 4880, 3474, 1392000]
+	const UNITS = "yzafpnµm kMGTPEZY"
+	const OTHERS = {
+		'ly': 9.46e+15,
+		'AU': 149.6e+9,
+		'm': 1,
+		'cm': 0.01
+	}
+	function normalize (s) {
+		if (!s) return ''
+		let ss = s.split(' ')
+		let n = ss[0]
+		let u = ss[1]
+		if (!u) return Number.normalize(n)
+		if (OTHERS[u]) return Number.normalize(n * OTHERS[u])
+		let i = UNITS.indexOf(u[0])
+		if (i !== -1) {
+			n *= Math.pow(10, (i - 8) * 3)
+			u = u.substr(1)
+		}
+		return Number.normalize(n * (OTHERS[u] || 1))
+	}
+	function unnormalize (n, noOthers) {
+		let u = 'm'
+		if (!noOthers) {
+			for (let k in OTHERS) {
+				if (n > OTHERS[k]) {
+					n /= OTHERS[k]
+					u = k
+					break
+				}
+			}
+		}
+		let e = Math.floor(Math.log10(n))
+		let s = Math.floor(e / 3) // e - e % 3
+		if (s + 8 < 0) return ''
+		let unit = UNITS[s + 8]
+		return +(n / Math.pow(10, s * 3)).toFixed(2) + (unit === ' ' ? unit : ' ' + unit) + u
+	}
+	function $(id) {
+		return document.getElementById(id);
+	}
+
+	var on = document.addEventListener ? function(node, name, listener) {
+		node.addEventListener(name, listener);
+	} : function(node, name, listener) {
+		node.attachEvent('on' + name, listener);
+	}
+
+	// var tds = document.querySelectorAll('#grid td')
+	// for (let i = 1, l = tds.length; i < l; i += 6) {
+	// 	if (tds[i + 6]) {
+	// 		let x = +normalize(tds[i + 6].innerHTML)
+	// 		if (!x) {
+	// 			x = normalize(tds[i + 12].innerHTML)
+	// 		}
+	// 		tds[i + 1].innerHTML = +(normalize(tds[i].innerHTML) / x).toFixed(2)
+	// 	}
+	// 	let d = tds[i + 2].innerHTML
+	// 	if (d) tds[i + 3].innerHTML = +(parseInt(d) / 12756).toFixed(2)
+	// 	if (d) tds[i + 4].innerHTML = d + ' km'
+	// }
+
+	var grid = $('grid')
+	var td
+	var trs = document.querySelectorAll('#grid tr')
+	for (let i = 0, l = NAMES.length; i < l; i += 1) {
+		td = document.createElement('td')
+		td.innerHTML = NAMES[i]
+		trs[0].appendChild(td)
+
+		td = document.createElement('td')
+		td.innerHTML = ENNAMES[i]
+		trs[1].appendChild(td)
+
+		let cs = SCOPES[i]
+		td = document.createElement('td')
+		td.innerHTML = cs
+		trs[2].appendChild(td)
+
+		let ns = SCOPES[i + 1]
+		td = document.createElement('td')
+		if (ns) {
+			if (ns.indexOf('~') > 0) ns = SCOPES[i + 2]
+			if (ns) td.innerHTML = +(normalize(cs) / normalize(ns)).toFixed(2)
+		}
+		trs[3].appendChild(td)
+
+		let d = DIAMETERS[i - 12]
+		td = document.createElement('td')
+		if (d) td.innerHTML = d + ' km'
+		trs[4].appendChild(td)
+		td = document.createElement('td')
+		if (d) td.innerHTML = +(d / 12756).toFixed(2)
+		trs[5].appendChild(td)
+
+		td = document.createElement('td')
+		if (i === 0) td.innerHTML = '<input id="universe"></input>'
+		else if (i === l - 1) td.innerHTML = '<input id="sun"></input>'
+		trs[6].appendChild(td)
+		trs[7].appendChild(document.createElement('td'))
+	}
+
+	var tds = document.querySelectorAll('#grid td')
+	let nl = NAMES.length
+	on($('universe'), 'change', function () {
+		let v = this.value
+		if (!v) return
+		v = normalize(v)
+		for (let i = 2, l = nl + 1; i < l; i += 1) {
+			if (tds[l * 3 + i].innerText === '0') continue
+			let x = +tds[l * 3 + i - 1].innerText
+			if (!x) x = +tds[l * 3 + i - 2].innerText
+			if (i === nl) {
+				$('sun').value = unnormalize(v /= x)
+			} else {
+				tds[l * 6 + i].innerHTML = unnormalize(v /= x)
+			}
+			tds[l * 6 + i].title = v
+		}
+		let ev = v / 109.13
+		for (let i = 10, l = nl + 1; i < nl; i += 1) {
+			let x = +tds[l * 5 + i].innerText
+			if (x) {
+				tds[l * 7 + i].innerHTML = unnormalize(ev * x)
+				tds[l * 7 + i].title = ev * x
+			}
+		}
+	})
+	on($('sun'), 'change', function () {
+		let v = this.value
+		if (!v) return
+		v = normalize(v)
+		let ev = +v / 109.13
+		for (let i = nl - 1, l = nl + 1; i > 0; i -= 1) {
+			if (tds[l * 3 + i].innerText === '0') continue
+			let x = +tds[l * 3 + i].innerText
+			if (!x) x = +tds[l * 3 + i - 1].innerText
+			v *= x
+			if (i === 1) {
+				$('universe').value = unnormalize(v)
+			} else {
+				tds[l * 6 + i].innerHTML = unnormalize(v)
+			}
+			tds[l * 6 + i].title = v
+		}
+		for (let i = 10, l = nl + 1; i < nl; i += 1) {
+			let x = +tds[l * 5 + i].innerText
+			if (x) {
+				tds[l * 7 + i].innerHTML = unnormalize(ev * x)
+				tds[l * 7 + i].title = ev * x
+			}
+		}
+	})
+
+	const TIMES = {
+		'Y': 31536000,
+		'M': 2592000,
+		'W': 604800,
+		'D': 86400,
+		'h': 3600,
+		'm': 60,
+		's': 1
+	}
+
+	const TNAMES = [
+		'宇宙', '银河系',
+		'冥古宙', ' #月球形成', ' #生命起源', ' #海洋形成', 
+		'太古宙', ' 始太古代', ' 古太古代', '  #细菌', ' 中太古代', ' 新太古代', 
+		'元古宙', ' 古元古代', '  #大氧化事件', '  #休伦大冰期', '  #真核生物', '  #哥伦比亚超大陆', 
+		' 中元古代', '  #多细胞植物', '  #哥伦比亚超大陆解体', '  #罗迪尼亚超大陆', 
+		' 新元古代', '  #绿色植物', '  #多细胞动物', '  #罗迪尼亚超大陆解体', '  #成冰纪大冰期', 
+		'显生宙', ' 古生代', '  #节肢动物', '  #脊椎动物', '  #陆生植物', '  #安第斯-撒哈拉大冰期', '  #奥陶纪-志留纪大灭绝', '  #陆生动物', '  #昆虫', '  #晚泥盆纪大灭绝', '  #两栖类', '  #卡鲁大冰期', '  #爬行类', '  #二叠纪-三叠纪大灭绝', 
+		' 中生代', '  #恐龙', '  #三叠纪-侏罗纪大灭绝', '  #哺乳纲', '  #鸟纲', '  #白垩纪-古近纪大灭绝', 
+		' 新生代', '  #智人', ' 全新世']
+	const PERIODS = [
+		'13.798 Ga', '13.6 Ga',
+		['4.6 Ga','4 Ga'], '4.533 Ga', '4.28 Ga', '4.2 Ga', 
+		['4 Ga','2.5 Ga'], ['4 Ga','3.6 Ga'], ['3.6 Ga','3.2 Ga'], '3.5 Ga', ['3.2 Ga','2.8 Ga'], ['2.8 Ga','2.5 Ga'], 
+		['2.5 Ga','541 Ma'], ['2.5 Ga','1.6 Ga'], '2.45 Ga', ['2.4 Ga','2.1 Ga'], '2.2 Ga', ['1.8 Ga','1.35 Ga'], 
+		['1.6 Ga','1 Ga'], '1.6 Ga', '1.35 Ga', ['1.1 Ga','750 Ma'],
+		['1 Ga','541 Ma'], '850 Ma', '760 Ma', '750 Ma', ['720 Ma','630 Ma'], 
+		'541 Ma', ['541 Ma','251.902 Ma'], '521 Ma', '520 Ma', '472 Ma', ['450 Ma','420 Ma'], ['450 Ma','440 Ma'], '450 Ma', '395 Ma', ['375 Ma','360 Ma'], '365 Ma', ['360 Ma','260 Ma'], '312 Ma', ['251.94 Ma','251.88 Ma'], 
+		['251.902 Ma','66 Ma'], '233 Ma', '201.3 Ma', '167 Ma', '155 Ma', '66 Ma', 
+		'66 Ma', '2.58 Ma', '11.7 ka']
+	function convertTime(time, period, base = 'Y', mode = false) {
+		let x = normalize(time)
+		let s = normalize(period)
+		let t = 1
+		if (!(base in TIMES)) {
+			t = parseInt(base, 10) || 1
+			base = base[base.length - 1]
+		}
+		let date = new Date((978307200 + (mode ? s - x : x) * t * TIMES[base] / s) * 1000)
+		return date.toJSON()
+	}
+
+	grid = $('tgrid')
+	let s = grid.innerHTML
+	for (let i = 0, l = TNAMES.length; i < l; i += 1) {
+		let p = PERIODS[i]
+		let b = p, e = '', h = ''
+		if (typeof p !== 'string') {
+			b = p[0]
+			e = p[1]
+		}
+		let n = TNAMES[i]
+		s += (n.indexOf('#') === -1 ? '<tr' : '<tr class="detail"') + `><td>${n.replace(/[#\s]/g, '&nbsp;')}</td><td>${b}</td><td>${e}</td><td></td><td></td></tr>`
+	}
+	grid.innerHTML = s
+
+	let tds2 = document.querySelectorAll('#tgrid td')
+	function changeTime (v) {
+		let t
+		for (let i = 6, l = tds2.length; i < l; i += 5) {
+			let x = tds2[i].innerText
+			if (x) {
+				t = new Date(convertTime(x.replace('a', ''), '13.798 G', v, true)).toISOString()
+				tds2[i + 2].innerHTML = (v === 'D' ? t.replace(/^.+T/, '') : t.replace(v === 'Y' ? '2001-' : /^20/, '').replace('T', ' ')).replace(/\.\d+Z/, '')
+				x = tds2[i + 1].innerText
+				if (x) {
+					t = new Date(convertTime(x.replace('a', ''), '13.798 G', v, true)).toISOString()
+					tds2[i + 3].innerHTML = (v === 'D' ? t.replace(/^.+T/, '') : t.replace(v === 'Y' ? '2001-' : /^20/, '').replace('T', ' ')).replace(/\.\d+Z/, '')
+				}
+			}
+		}
+	}
+	on($('time'), 'change', function () {
+		let v = this.value
+		if (v) changeTime(v)
+	})
+	$('time').value = 'Y'
+	changeTime('Y')
+	let hide
+	function toggleDetails() {
+		$('tgrid').className = hide ? '' : 'hide'
+		hide = !hide
+	}
+</script>
